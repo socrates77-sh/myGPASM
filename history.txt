@@ -1,0 +1,50 @@
+======
+snutil
+======
+Rev:		Date:		Reason:
+0.0.3		12/6/29		eval version release	
+0.1.0		12/6/29		sn16 class add 4 insn (inca, jza, deca, djza)
+0.2.0		12/7/3		add cod output
+0.3.0		12/7/6		add prefix S2-CONFIG BIT; S3-CHIP_ID in S19 output
+0.4.0		12/7/10		sn16 class add 2 insn (rra, rla)
+0.5.0		12/7/13		add coff output, add env param PATH 
+0.6.0		12/8/22		correct "dt" assemble
+0.6.1		12/10/23	add processor MC33P94, MC33P716, MC30P011
+0.7.0		12/11/19	modify memonic rsubra, rsbcra etc.
+0.8.0		12/12/5		sn16 class add 2 insn (lcall, lgoto); add processor MC32P21
+0.8.1		12/12/14	correct lcall/lgoto opcode
+0.9.0		13/1/20		correct lcall/lgoto link
+1.0.0		13/3/19		add sn13 class; comra -> comr (sn14)
+1.1.0		13/3/20		adcar -> adcra (sn13)
+1.2.0		13/4/12		remove website
+1.3.0		13/6/19		nessary update for c compiler
+1.3.1		13/7/9		add processor MC32P64
+1.4.0		13/9/16		correct relocate error; expand mc30 OPF7 insn address to 7bit
+1.4.1_beta	13/10/15	add sn13b class, MC34P01
+1.4.2_beta	14/1/6		sn13b opcode update, MC34P01
+1.5.0		14/1/13		release sn13b class, MC34P01; remove adcai of sn16 class
+1.6.0		14/1/22		add sn16b modify lcall/lgoto; remove lcall/lgoto of of other class; add processor MC32P821, MC33P78, MC33P116, MC30P081
+1.6.1		14/1/23		correct gplink for lcall/lgoto
+1.7.0_beta	14/4/11		add sn13c for MC31P5130
+1.9.1
+                加入新型号7323  之前MC32P7323用的是3221 在超空间1K报错。
+        MC32P7323是8K的，超过8K报错，使用的是PRO_CLASS_16A内核，型号7323
+1.9.0
+                加入新内核 PRO_CLASS_SN16E      for     MC32T7333、MC9902
+        MC32P7323是8K的，超过8K报错，使用的是PRO_CLASS_16A内核，型号7323
+1.9.2	
+		add processor 4K7323 for space 4K
+	MC32P7323
+1.9.3
+		add processor 7212 for MC32P7212
+1.9.4 	
+		add processor 1K6220,05K6220 for MC30P6220	17/04/17
+1.9.5
+		add processor 1K7041,2K7041 for MC35P7041	17/04/18
+		modify 7333 setup for MC32F7333			17/04/21
+1.9.6
+		add processor 7122	for MC32F7122		17/04/27
+1.9.7		
+		add processor 9903 9904 for A380		17/05/15	
+1.9.8		
+		add processor 7030 for MC32P7030		17/05/25

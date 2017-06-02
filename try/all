@@ -1,0 +1,680 @@
+COFF File and Optional Headers
+COFF version         0x1240: SINOMCU_MAGIC_v2
+Processor Type       m301a
+Time Stamp           Fri Jul 13 19:40:30 2012
+Number of Sections   10
+Number of Symbols    120
+Characteristics      0x2
+  File is executable.
+
+Section Header
+Name                    INIT_CODE
+Physical address        0xb3
+Virtual address         0x59
+Size of Section         14
+Number of Relocations   0
+Number of Line Numbers  7
+Flags                   0x20
+  Executable code.
+
+Data
+0000b3:  0bff  movai	0xff
+0000b4:  15c5  iost	0x5
+0000b5:  15c6  iost	0x6
+0000b6:  000c  return
+0000b7:  0b30  movai	0x30
+0000b8:  15c1  option
+0000b9:  000c  return
+
+Line Number Table
+Line     Address  Symbol
+12       0xb3     init.asm
+13       0xb4     init.asm
+14       0xb5     init.asm
+15       0xb6     init.asm
+21       0xb7     init.asm
+22       0xb8     init.asm
+23       0xb9     init.asm
+
+Section Header
+Name                    GPR_DATA
+Physical address        0x23
+Virtual address         0x23
+Size of Section         11
+Number of Relocations   0
+Number of Line Numbers  0
+Flags                   0x80
+  Uninitialized data.
+
+Section Header
+Name                    I2C_COMM
+Physical address        0x1c
+Virtual address         0xe
+Size of Section         178
+Number of Relocations   0
+Number of Line Numbers  89
+Flags                   0x20
+  Executable code.
+
+Data
+00001c:  0b00  movai	0
+00001d:  158a  movra	0xa
+00001e:  0b0f  movai	0xf
+00001f:  1e25  andar	0x25
+000020:  0e24  addai	0x24
+000021:  3403  jbclr	0x3, 0
+000022:  198a  incr	0xa
+000023:  1582  movra	0x2
+000024:  2832  goto	0x32
+000025:  2837  goto	0x37
+000026:  283b  goto	0x3b
+000027:  2846  goto	0x46
+000028:  284e  goto	0x4e
+000029:  2853  goto	0x53
+00002a:  2857  goto	0x57
+00002b:  285e  goto	0x5e
+00002c:  2868  goto	0x68
+00002d:  000c  return
+00002e:  000c  return
+00002f:  000c  return
+000030:  000c  return
+000031:  000c  return
+000032:  1628  movar	0x28
+000033:  1584  movra	0x4
+000034:  19a5  incr	0x25
+000035:  3805  bset	0x5, 0
+000036:  000c  return
+000037:  3c03  bclr	0x3, 0
+000038:  14aa  rlr	0x2a
+000039:  19a5  incr	0x25
+00003a:  000c  return
+00003b:  3085  jbset	0x5, 0x1
+00003c:  2840  goto	0x40
+00003d:  3824  bset	0x24, 0
+00003e:  1da5  clrr	0x25
+00003f:  000c  return
+000040:  1600  movar	0
+000041:  3105  jbset	0x5, 0x2
+000042:  2844  goto	0x44
+000043:  19a5  incr	0x25
+000044:  1586  movra	0x6
+000045:  000c  return
+000046:  3185  jbset	0x5, 0x3
+000047:  284b  goto	0x4b
+000048:  3824  bset	0x24, 0
+000049:  1da5  clrr	0x25
+00004a:  284c  goto	0x4c
+00004b:  19a5  incr	0x25
+00004c:  3886  bset	0x6, 0x1
+00004d:  000c  return
+00004e:  1629  movar	0x29
+00004f:  1584  movra	0x4
+000050:  19a5  incr	0x25
+000051:  3806  bset	0x6, 0
+000052:  000c  return
+000053:  3803  bset	0x3, 0
+000054:  14aa  rlr	0x2a
+000055:  19a5  incr	0x25
+000056:  000c  return
+000057:  3106  jbset	0x6, 0x2
+000058:  285c  goto	0x5c
+000059:  3824  bset	0x24, 0
+00005a:  1da5  clrr	0x25
+00005b:  000c  return
+00005c:  19a5  incr	0x25
+00005d:  000c  return
+00005e:  1aa6  djzr	0x26
+00005f:  2863  goto	0x63
+000060:  1580  movra	0
+000061:  19a5  incr	0x25
+000062:  000c  return
+000063:  1580  movra	0
+000064:  1984  incr	0x4
+000065:  2864  goto	0x64
+000066:  3906  bset	0x6, 0x2
+000067:  000c  return
+000068:  3d06  bclr	0x6, 0x2
+000069:  1da5  clrr	0x25
+00006a:  3ba3  bset	0x23, 0x7
+00006b:  000c  return
+00006c:  1586  movra	0x6
+00006d:  0d1f  andai	0x1f
+00006e:  3103  jbset	0x3, 0x2
+00006f:  286c  goto	0x6c
+000070:  000c  return
+000071:  0b04  movai	0x4
+000072:  0b18  movai	0x18
+000073:  15c5  iost	0x5
+000074:  000c  return
+
+Line Number Table
+Line     Address  Symbol
+14       0x1c     i2ccomm.asm
+15       0x1d     i2ccomm.asm
+16       0x1e     i2ccomm.asm
+17       0x1f     i2ccomm.asm
+18       0x20     i2ccomm.asm
+19       0x21     i2ccomm.asm
+20       0x22     i2ccomm.asm
+22       0x23     i2ccomm.asm
+24       0x24     i2ccomm.asm
+25       0x25     i2ccomm.asm
+26       0x26     i2ccomm.asm
+27       0x27     i2ccomm.asm
+29       0x28     i2ccomm.asm
+30       0x29     i2ccomm.asm
+31       0x2a     i2ccomm.asm
+32       0x2b     i2ccomm.asm
+33       0x2c     i2ccomm.asm
+36       0x2d     i2ccomm.asm
+36       0x2e     i2ccomm.asm
+36       0x2f     i2ccomm.asm
+36       0x30     i2ccomm.asm
+36       0x31     i2ccomm.asm
+46       0x32     i2ccomm.asm
+47       0x33     i2ccomm.asm
+48       0x34     i2ccomm.asm
+49       0x35     i2ccomm.asm
+50       0x36     i2ccomm.asm
+54       0x37     i2ccomm.asm
+55       0x38     i2ccomm.asm
+56       0x39     i2ccomm.asm
+57       0x3a     i2ccomm.asm
+61       0x3b     i2ccomm.asm
+62       0x3c     i2ccomm.asm
+63       0x3d     i2ccomm.asm
+64       0x3e     i2ccomm.asm
+65       0x3f     i2ccomm.asm
+69       0x40     i2ccomm.asm
+70       0x41     i2ccomm.asm
+71       0x42     i2ccomm.asm
+72       0x43     i2ccomm.asm
+74       0x44     i2ccomm.asm
+75       0x45     i2ccomm.asm
+79       0x46     i2ccomm.asm
+80       0x47     i2ccomm.asm
+81       0x48     i2ccomm.asm
+82       0x49     i2ccomm.asm
+83       0x4a     i2ccomm.asm
+85       0x4b     i2ccomm.asm
+87       0x4c     i2ccomm.asm
+88       0x4d     i2ccomm.asm
+95       0x4e     i2ccomm.asm
+96       0x4f     i2ccomm.asm
+97       0x50     i2ccomm.asm
+98       0x51     i2ccomm.asm
+99       0x52     i2ccomm.asm
+103      0x53     i2ccomm.asm
+104      0x54     i2ccomm.asm
+105      0x55     i2ccomm.asm
+106      0x56     i2ccomm.asm
+110      0x57     i2ccomm.asm
+111      0x58     i2ccomm.asm
+112      0x59     i2ccomm.asm
+113      0x5a     i2ccomm.asm
+114      0x5b     i2ccomm.asm
+117      0x5c     i2ccomm.asm
+118      0x5d     i2ccomm.asm
+122      0x5e     i2ccomm.asm
+123      0x5f     i2ccomm.asm
+127      0x60     i2ccomm.asm
+128      0x61     i2ccomm.asm
+129      0x62     i2ccomm.asm
+133      0x63     i2ccomm.asm
+134      0x64     i2ccomm.asm
+135      0x65     i2ccomm.asm
+136      0x66     i2ccomm.asm
+137      0x67     i2ccomm.asm
+141      0x68     i2ccomm.asm
+142      0x69     i2ccomm.asm
+143      0x6a     i2ccomm.asm
+144      0x6b     i2ccomm.asm
+151      0x6c     i2ccomm.asm
+152      0x6d     i2ccomm.asm
+153      0x6e     i2ccomm.asm
+154      0x6f     i2ccomm.asm
+155      0x70     i2ccomm.asm
+162      0x71     i2ccomm.asm
+163      0x72     i2ccomm.asm
+164      0x73     i2ccomm.asm
+165      0x74     i2ccomm.asm
+
+Section Header
+Name                    .config
+Physical address        0x2000
+Virtual address         0x1000
+Size of Section         4
+Number of Relocations   0
+Number of Line Numbers  0
+Flags                   0x1020
+  Executable code.
+  Absolute.
+
+Data
+002000:  12fa  dw	0x12fa
+002001:  15ff  dw	0x15ff
+
+Section Header
+Name                    INT_VAR
+Physical address        0x20
+Virtual address         0x20
+Size of Section         3
+Number of Relocations   0
+Number of Line Numbers  0
+Flags                   0x1080
+  Uninitialized data.
+  Absolute.
+
+Section Header
+Name                    INT_VAR1
+Physical address        0x30
+Virtual address         0x30
+Size of Section         1
+Number of Relocations   0
+Number of Line Numbers  0
+Flags                   0x1080
+  Uninitialized data.
+  Absolute.
+
+Section Header
+Name                    STRING_DATA
+Physical address        0x31
+Virtual address         0x31
+Size of Section         6
+Number of Relocations   0
+Number of Line Numbers  0
+Flags                   0x80
+  Uninitialized data.
+
+Section Header
+Name                    RESET_VECTOR
+Physical address        0
+Virtual address         0
+Size of Section         6
+Number of Relocations   0
+Number of Line Numbers  3
+Flags                   0x1020
+  Executable code.
+  Absolute.
+
+Data
+000000:  0b00  movai	0
+000001:  158a  movra	0xa
+000002:  2875  goto	0x75
+
+Line Number Table
+Line     Address  Symbol
+15       0        mastri2c.asm
+16       0x1      mastri2c.asm
+17       0x2      mastri2c.asm
+
+Section Header
+Name                    INT_VECTOR
+Physical address        0x4
+Virtual address         0x2
+Size of Section         48
+Number of Relocations   0
+Number of Line Numbers  24
+Flags                   0x1020
+  Executable code.
+  Absolute.
+
+Data
+000004:  15a0  movra	0x20
+000005:  1603  movar	0x3
+000006:  1da1  clrr	0x21
+000007:  15a1  movra	0x21
+000008:  160a  movar	0xa
+000009:  15a2  movra	0x22
+00000a:  1d8a  clrr	0xa
+00000b:  3106  jbset	0x6, 0x2
+00000c:  280e  goto	0xe
+00000d:  201c  call	0x1c
+00000e:  3086  jbset	0x6, 0x1
+00000f:  2813  goto	0x13
+000010:  3206  jbset	0x6, 0x4
+000011:  2813  goto	0x13
+000012:  2085  call	0x85
+000013:  3206  jbset	0x6, 0x4
+000014:  2816  goto	0x16
+000015:  201c  call	0x1c
+000016:  1d83  clrr	0x3
+000017:  1622  movar	0x22
+000018:  158a  movra	0xa
+000019:  1621  movar	0x21
+00001a:  1583  movra	0x3
+00001b:  000d  retie
+
+Line Number Table
+Line     Address  Symbol
+23       0x4      mastri2c.asm
+24       0x5      mastri2c.asm
+25       0x6      mastri2c.asm
+26       0x7      mastri2c.asm
+27       0x8      mastri2c.asm
+28       0x9      mastri2c.asm
+29       0xa      mastri2c.asm
+31       0xb      mastri2c.asm
+32       0xc      mastri2c.asm
+33       0xd      mastri2c.asm
+36       0xe      mastri2c.asm
+37       0xf      mastri2c.asm
+38       0x10     mastri2c.asm
+39       0x11     mastri2c.asm
+40       0x12     mastri2c.asm
+45       0x13     mastri2c.asm
+46       0x14     mastri2c.asm
+47       0x15     mastri2c.asm
+50       0x16     mastri2c.asm
+51       0x17     mastri2c.asm
+52       0x18     mastri2c.asm
+53       0x19     mastri2c.asm
+54       0x1a     mastri2c.asm
+55       0x1b     mastri2c.asm
+
+Section Header
+Name                    MAIN
+Physical address        0x75
+Virtual address         0x3a
+Size of Section         124
+Number of Relocations   0
+Number of Line Numbers  62
+Flags                   0x20
+  Executable code.
+
+Data
+000075:  20b3  call	0xb3
+000076:  20b7  call	0xb7
+000077:  2071  call	0x71
+000078:  1da4  clrr	0x24
+000079:  1da3  clrr	0x23
+00007a:  1da5  clrr	0x25
+00007b:  20b0  call	0xb0
+00007c:  208c  call	0x8c
+00007d:  000e  clrwdt
+00007e:  3424  jbclr	0x24, 0
+00007f:  2088  call	0x88
+000080:  33a3  jbset	0x23, 0x7
+000081:  287d  goto	0x7d
+000082:  2096  call	0x96
+000083:  208c  call	0x8c
+000084:  287d  goto	0x7d
+000085:  1da5  clrr	0x25
+000086:  208c  call	0x8c
+000087:  000c  return
+000088:  3c24  bclr	0x24, 0
+000089:  1da5  clrr	0x25
+00008a:  208c  call	0x8c
+00008b:  000c  return
+00008c:  0b15  movai	0x15
+00008d:  15a7  movra	0x27
+00008e:  15a6  movra	0x26
+00008f:  0b31  movai	0x31
+000090:  15a8  movra	0x28
+000091:  0b34  movai	0x34
+000092:  15a9  movra	0x29
+000093:  0b01  movai	0x1
+000094:  15aa  movra	0x2a
+000095:  000c  return
+000096:  0b34  movai	0x34
+000097:  15ac  movra	0x2c
+000098:  0b31  movai	0x31
+000099:  15ad  movra	0x2d
+00009a:  162c  movar	0x2c
+00009b:  1584  movra	0x4
+00009c:  1600  movar	0
+00009d:  15ab  movra	0x2b
+00009e:  162d  movar	0x2d
+00009f:  1584  movra	0x4
+0000a0:  1600  movar	0
+0000a1:  12ab  subra	0x2b
+0000a2:  3103  jbset	0x3, 0x2
+0000a3:  28a9  goto	0xa9
+0000a4:  3503  jbclr	0x3, 0x2
+0000a5:  28ac  goto	0xac
+0000a6:  19ac  incr	0x2c
+0000a7:  19ad  incr	0x2d
+0000a8:  289a  goto	0x9a
+0000a9:  0b01  movai	0x1
+0000aa:  1086  xorra	0x6
+0000ab:  28ae  goto	0xae
+0000ac:  0b02  movai	0x2
+0000ad:  1086  xorra	0x6
+0000ae:  3fa3  bclr	0x23, 0x7
+0000af:  000c  return
+0000b0:  0b31  movai	0x31
+0000b1:  1584  movra	0x4
+0000b2:  000c  return
+
+Line Number Table
+Line     Address  Symbol
+63       0x75     mastri2c.asm
+64       0x76     mastri2c.asm
+65       0x77     mastri2c.asm
+66       0x78     mastri2c.asm
+67       0x79     mastri2c.asm
+68       0x7a     mastri2c.asm
+69       0x7b     mastri2c.asm
+70       0x7c     mastri2c.asm
+77       0x7d     mastri2c.asm
+78       0x7e     mastri2c.asm
+79       0x7f     mastri2c.asm
+80       0x80     mastri2c.asm
+81       0x81     mastri2c.asm
+83       0x82     mastri2c.asm
+84       0x83     mastri2c.asm
+85       0x84     mastri2c.asm
+91       0x85     mastri2c.asm
+92       0x86     mastri2c.asm
+93       0x87     mastri2c.asm
+99       0x88     mastri2c.asm
+100      0x89     mastri2c.asm
+101      0x8a     mastri2c.asm
+102      0x8b     mastri2c.asm
+108      0x8c     mastri2c.asm
+109      0x8d     mastri2c.asm
+110      0x8e     mastri2c.asm
+112      0x8f     mastri2c.asm
+113      0x90     mastri2c.asm
+115      0x91     mastri2c.asm
+116      0x92     mastri2c.asm
+118      0x93     mastri2c.asm
+119      0x94     mastri2c.asm
+120      0x95     mastri2c.asm
+127      0x96     mastri2c.asm
+128      0x97     mastri2c.asm
+129      0x98     mastri2c.asm
+130      0x99     mastri2c.asm
+133      0x9a     mastri2c.asm
+134      0x9b     mastri2c.asm
+135      0x9c     mastri2c.asm
+136      0x9d     mastri2c.asm
+137      0x9e     mastri2c.asm
+138      0x9f     mastri2c.asm
+139      0xa0     mastri2c.asm
+140      0xa1     mastri2c.asm
+141      0xa2     mastri2c.asm
+142      0xa3     mastri2c.asm
+143      0xa4     mastri2c.asm
+144      0xa5     mastri2c.asm
+145      0xa6     mastri2c.asm
+146      0xa7     mastri2c.asm
+147      0xa8     mastri2c.asm
+150      0xa9     mastri2c.asm
+151      0xaa     mastri2c.asm
+152      0xab     mastri2c.asm
+155      0xac     mastri2c.asm
+156      0xad     mastri2c.asm
+158      0xae     mastri2c.asm
+159      0xaf     mastri2c.asm
+166      0xb0     mastri2c.asm
+167      0xb1     mastri2c.asm
+168      0xb2     mastri2c.asm
+
+Symbol Table
+Idx  Name                     Section          Value      Type     DT           Class     NumAux 
+0001 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = init.asm
+      line included = 0
+      flags = 0
+0003 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = mc30p01a.inc
+      line included = 1
+      flags = 0
+0005 .list                    DEBUG            0x1        T_NULL   DT_NON       C_LIST    0   
+0006 .nolist                  DEBUG            0x3        T_NULL   DT_NON       C_LIST    0   
+0007 .list                    DEBUG            0xb1       T_NULL   DT_NON       C_LIST    0   
+0008 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0009 INIT_CODE                INIT_CODE        0xb3       T_NULL   DT_NON       C_SECTION 1   
+      length = 14
+      number of relocations = 0
+      number of line numbers = 7
+0011 init_ports               INIT_CODE        0xb3       T_NULL   DT_NON       C_EXT     0   
+0012 init_timer1              INIT_CODE        0xb7       T_NULL   DT_NON       C_EXT     0   
+0013 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0014 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = i2ccomm.asm
+      line included = 0
+      flags = 0
+0016 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = ../header/mc30p01a.inc
+      line included = 1
+      flags = 0
+0018 .list                    DEBUG            0x1        T_NULL   DT_NON       C_LIST    0   
+0019 .nolist                  DEBUG            0x3        T_NULL   DT_NON       C_LIST    0   
+0020 .list                    DEBUG            0xb1       T_NULL   DT_NON       C_LIST    0   
+0021 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0022 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = i2ccomm.inc
+      line included = 2
+      flags = 0
+0024 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = flags.inc
+      line included = 1
+      flags = 0
+0026 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0027 GPR_DATA                 GPR_DATA         0x23       T_NULL   DT_NON       C_SECTION 1   
+      length = 8
+      number of relocations = 0
+      number of line numbers = 0
+0029 sflag_event              GPR_DATA         0x23       T_NULL   DT_NON       C_EXT     0   
+0030 eflag_event              GPR_DATA         0x24       T_NULL   DT_NON       C_EXT     0   
+0031 i2cState                 GPR_DATA         0x25       T_NULL   DT_NON       C_EXT     0   
+0032 read_count               GPR_DATA         0x26       T_NULL   DT_NON       C_EXT     0   
+0033 write_count              GPR_DATA         0x27       T_NULL   DT_NON       C_EXT     0   
+0034 write_ptr                GPR_DATA         0x28       T_NULL   DT_NON       C_EXT     0   
+0035 read_ptr                 GPR_DATA         0x29       T_NULL   DT_NON       C_EXT     0   
+0036 temp_address             GPR_DATA         0x2a       T_NULL   DT_NON       C_EXT     0   
+0037 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0038 I2C_COMM                 I2C_COMM         0x1c       T_NULL   DT_NON       C_SECTION 1   
+      length = 178
+      number of relocations = 41
+      number of line numbers = 89
+0040 service_i2c              I2C_COMM         0x1c       T_NULL   DT_NON       C_EXT     0   
+0041 I2CJump                  I2C_COMM         0x23       T_NULL   DT_NON       C_LABEL   0   
+0042 I2CJumpEnd               I2C_COMM         0x2d       T_NULL   DT_NON       C_LABEL   0   
+0043 WrtStart                 I2C_COMM         0x32       T_NULL   DT_NON       C_LABEL   0   
+0044 SendWrtAddr              I2C_COMM         0x37       T_NULL   DT_NON       C_LABEL   0   
+0045 WrtAckTest               I2C_COMM         0x3b       T_NULL   DT_NON       C_LABEL   0   
+0046 WrtData                  I2C_COMM         0x40       T_NULL   DT_NON       C_LABEL   0   
+0047 send_byte                I2C_COMM         0x44       T_NULL   DT_NON       C_LABEL   0   
+0048 WrtStop                  I2C_COMM         0x46       T_NULL   DT_NON       C_LABEL   0   
+0049 no_error                 I2C_COMM         0x4b       T_NULL   DT_NON       C_LABEL   0   
+0050 stop                     I2C_COMM         0x4c       T_NULL   DT_NON       C_LABEL   0   
+0051 ReadStart                I2C_COMM         0x4e       T_NULL   DT_NON       C_LABEL   0   
+0052 SendReadAddr             I2C_COMM         0x53       T_NULL   DT_NON       C_LABEL   0   
+0053 ReadAckTest              I2C_COMM         0x57       T_NULL   DT_NON       C_LABEL   0   
+0054 StartReadData            I2C_COMM         0x5c       T_NULL   DT_NON       C_LABEL   0   
+0055 ReadData                 I2C_COMM         0x5e       T_NULL   DT_NON       C_LABEL   0   
+0056 SendReadNack             I2C_COMM         0x60       T_NULL   DT_NON       C_LABEL   0   
+0057 SendReadAck              I2C_COMM         0x63       T_NULL   DT_NON       C_LABEL   0   
+0058 _I2C_COMM_0049           I2C_COMM         0x65       T_NULL   DT_NON       C_LABEL   0   
+0059 ReadStop                 I2C_COMM         0x68       T_NULL   DT_NON       C_LABEL   0   
+0060 i2c_idle                 I2C_COMM         0x6c       T_NULL   DT_NON       C_LABEL   0   
+0061 _I2C_COMM_0053           I2C_COMM         0x6f       T_NULL   DT_NON       C_LABEL   0   
+0062 init_i2c                 I2C_COMM         0x71       T_NULL   DT_NON       C_EXT     0   
+0063 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0064 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = mastri2c.asm
+      line included = 0
+      flags = 0
+0066 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = mc30p01a.inc
+      line included = 2
+      flags = 0
+0068 .list                    DEBUG            0x1        T_NULL   DT_NON       C_LIST    0   
+0069 .nolist                  DEBUG            0x3        T_NULL   DT_NON       C_LIST    0   
+0070 .list                    DEBUG            0xb1       T_NULL   DT_NON       C_LIST    0   
+0071 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0072 .config                  .config          0x2000     T_NULL   DT_NON       C_SECTION 1   
+      length = 4
+      number of relocations = 0
+      number of line numbers = 0
+0074 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = mastri2c.inc
+      line included = 6
+      flags = 0
+0076 INT_VAR                  INT_VAR          0x20       T_NULL   DT_NON       C_SECTION 1   
+      length = 3
+      number of relocations = 0
+      number of line numbers = 0
+0078 w_temp                   INT_VAR          0x20       T_NULL   DT_NON       C_STAT    0   
+0079 status_temp              INT_VAR          0x21       T_NULL   DT_NON       C_STAT    0   
+0080 pclath_temp              INT_VAR          0x22       T_NULL   DT_NON       C_STAT    0   
+0081 INT_VAR1                 INT_VAR1         0x30       T_NULL   DT_NON       C_SECTION 1   
+      length = 1
+      number of relocations = 0
+      number of line numbers = 0
+0083 w_temp1                  INT_VAR1         0x30       T_NULL   DT_NON       C_STAT    0   
+0084 GPR_DATA                 GPR_DATA         0x2b       T_NULL   DT_NON       C_SECTION 1   
+      length = 3
+      number of relocations = 0
+      number of line numbers = 0
+0086 temp_hold                GPR_DATA         0x2b       T_NULL   DT_NON       C_STAT    0   
+0087 ptr1                     GPR_DATA         0x2c       T_NULL   DT_NON       C_STAT    0   
+0088 ptr2                     GPR_DATA         0x2d       T_NULL   DT_NON       C_STAT    0   
+0089 STRING_DATA              STRING_DATA      0x31       T_NULL   DT_NON       C_SECTION 1   
+      length = 6
+      number of relocations = 0
+      number of line numbers = 0
+0091 write_string             STRING_DATA      0x31       T_NULL   DT_NON       C_EXT     0   
+0092 read_string              STRING_DATA      0x34       T_NULL   DT_NON       C_EXT     0   
+0093 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0094 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = i2ccomm1.inc
+      line included = 7
+      flags = 0
+0096 .file                    DEBUG            0          T_NULL   DT_NON       C_FILE    1   
+      file = flags.inc
+      line included = 1
+      flags = 0
+0098 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0099 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+0100 RESET_VECTOR             RESET_VECTOR     0          T_NULL   DT_NON       C_SECTION 1   
+      length = 6
+      number of relocations = 2
+      number of line numbers = 3
+0102 INT_VECTOR               INT_VECTOR       0x4        T_NULL   DT_NON       C_SECTION 1   
+      length = 48
+      number of relocations = 13
+      number of line numbers = 24
+0104 test_buscoll             INT_VECTOR       0xe        T_NULL   DT_NON       C_LABEL   0   
+0105 test_timer1              INT_VECTOR       0x13       T_NULL   DT_NON       C_LABEL   0   
+0106 exit_isr                 INT_VECTOR       0x16       T_NULL   DT_NON       C_LABEL   0   
+0107 MAIN                     MAIN             0x75       T_NULL   DT_NON       C_SECTION 1   
+      length = 124
+      number of relocations = 43
+      number of line numbers = 62
+0109 start                    MAIN             0x75       T_NULL   DT_NON       C_LABEL   0   
+0110 main_loop                MAIN             0x7d       T_NULL   DT_NON       C_LABEL   0   
+0111 service_buscoll          MAIN             0x85       T_NULL   DT_NON       C_LABEL   0   
+0112 service_ackerror         MAIN             0x88       T_NULL   DT_NON       C_LABEL   0   
+0113 init_vars                MAIN             0x8c       T_NULL   DT_NON       C_LABEL   0   
+0114 string_compare           MAIN             0x96       T_NULL   DT_NON       C_LABEL   0   
+0115 loop                     MAIN             0x9a       T_NULL   DT_NON       C_LABEL   0   
+0116 not_equal                MAIN             0xa9       T_NULL   DT_NON       C_LABEL   0   
+0117 end_string               MAIN             0xac       T_NULL   DT_NON       C_LABEL   0   
+0118 exit                     MAIN             0xae       T_NULL   DT_NON       C_LABEL   0   
+0119 CopyRom2Ram              MAIN             0xb0       T_NULL   DT_NON       C_LABEL   0   
+0120 .eof                     DEBUG            0          T_NULL   DT_NON       C_EOF     0   
+

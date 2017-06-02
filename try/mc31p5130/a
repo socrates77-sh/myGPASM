@@ -1,0 +1,65 @@
+;CHIP ID: 0x5130
+
+000000:  0f80  addar	0
+000001:  0fc0  addra	0
+000002:  0f00  andar	0
+000003:  0f40  andra	0
+000004:  0ec0  clrr	0
+000005:  0e80  clra
+000006:  0e00  comar	0
+000007:  0e40  comr	0
+000008:  0d80  decar	0
+000009:  0dc0  decr	0
+00000a:  0d00  djzar	0
+00000b:  0d40  djzr	0
+00000c:  0c80  incar	0
+00000d:  0cc0  incr	0
+00000e:  0c00  jzar	0
+00000f:  0c40  jzr	0
+000010:  0b80  orar	0
+000011:  0bc0  orra	0
+000012:  0b00  movar	0
+000013:  0b40  movr	0
+000014:  0ac0  movra	0
+000015:  0a00  rlar	0
+000016:  0a40  rlr	0
+000017:  0980  rrar	0
+000018:  09c0  rrr	0
+000019:  0900  rsubar	0
+00001a:  0940  rsubra	0
+00001b:  0880  swapar	0
+00001c:  08c0  swapr	0
+00001d:  0800  xorar	0
+00001e:  0840  xorra	0
+00001f:  1e00  jbclr	0, 0
+000020:  1c00  jbset	0, 0
+000021:  1a00  bclr	0, 0
+000022:  1800  bset	0, 0
+000023:  0700  addai	0
+000024:  0600  andai	0
+000025:  0500  orai	0
+000026:  0400  movai	0
+000027:  0300  retai	0
+000028:  0200  isubai	0
+000029:  0100  xorai	0
+00002a:  0080  adcra	0
+00002b:  00c0  rsbcra	0
+00002c:  0015  rra
+00002d:  0014  rla
+00002e:  0013  inca
+00002f:  0012  jza
+000030:  0011  deca
+000031:  0010  djza
+000032:  000e  clrwdt
+000033:  000d  retie
+000034:  000c  return
+000035:  000b  stop
+000036:  0000  nop
+000037:  000a  daa
+000038:  0009  dsa
+000039:  1000  call	0
+00003a:  1400  goto	0
+00003b:  0a91  lcall	0x234
+00003c:  0034
+00003d:  0051  lgoto	0x234
+00003e:  0034

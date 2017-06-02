@@ -1,0 +1,447 @@
+gpasm-1.4.0 (Aug 29 2013)    mastri2c.asm       2013-9-16  17:36:21          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;list
+                      00002         #include mc30p011.inc               ; processor specific variable definitions
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+2000   0026           00003         __CONFIG _CONFIG0, (_FCPU_4T & _WDT_OFF)
+2001   0026           00004         __CONFIG _CONFIG1, ( _SMT_OFF & _CP_ALL)
+                      00005 
+                      00006 #include  "mastri2c.inc"             ;
+                      00001 
+                      00002 ;*******    INTERRUPT CONTEXT SAVE/RESTORE VARIABLES
+                      00003 INT_VAR        UDATA   0x20              ; create uninitialized data "udata" section
+0010                  00004 w_temp           RES     1               ;
+0010                  00005 status_temp      RES     1               ;
+0011                  00006 pclath_temp      RES     1
+                      00007 
+                      00008 
+                      00009 INT_VAR1       UDATA   0x30              ; reserve location 0xA0
+0018                  00010 w_temp1          RES     1
+                      00011 
+                      00012 
+                      00013 ;*******    GENERAL PURPOSE VARIABLES
+                      00014 GPR_DATA                UDATA
+0000                  00015 temp_hold        RES     1               ; temp variable for string compare
+0000                  00016 ptr1             RES     1               ; used as pointer in string compare 
+0001                  00017 ptr2             RES     1               ; used as pointer in string compare
+                      00018 
+                      00019 
+                      00020 STRING_DATA              UDATA  
+0000                  00021 write_string     RES      D'3'
+0001                  00022 read_string      RES      D'3'       
+                      00023 
+                      00024 
+                      00025 
+                      00026                 EXTERN          init_timer1          ; reference linkage for function
+                      00027                 EXTERN          init_ports           ; reference linkage for function
+                      00028 
+                      00007 #include  "i2ccomm1.inc"             ; required include file
+                      00001                 #include  "flags.inc"            ; required include file
+                      00001  
+                      00002 ; bits for variable sflag_event
+                      00003 #define  sh1         0                   ; place holder
+                      00004 #define  sh2         1                   ; place holder
+                      00005 #define  sh3         2                   ; place holder
+                      00006 #define  sh4         3                   ; place holder
+                      00007 #define  sh5         4                   ; place holder
+                      00008 #define  sh6         5                   ; place holder
+                      00009 #define  sh7         6                   ; place holder
+                      00010 #define  rw_done     7                   ; flag bit
+                      00011 
+                      00012 
+                      00013 ; bits for variable eflag_event
+                      00014 #define  ack_error   0                   ; flag bit
+                      00015 #define  eh1         1                   ; place holder
+                      00016 #define  eh2         2                   ; place holder
+                      00017 #define  eh3         3                   ; place holder
+                      00018 #define  eh4         4                   ; place holder
+                      00019 #define  eh5         5                   ; place holder
+                      00020 #define  eh6         6                   ; place holder
+                      00021 #define  eh7         7                   ; place holder
+                      00002 
+                      00003                 GLOBAL          write_string         ; make variable viewable for other modules
+                      00004                 GLOBAL          read_string          ; make variable viewable for other modules
+                      00005 
+                      00006                 EXTERN          sflag_event          ; reference linkage for variable  
+                      00007                 EXTERN          eflag_event          ; reference linkage for variable
+                      00008                 EXTERN          i2cState             ; reference linkage for variable
+                      00009                 EXTERN          read_count           ; reference linkage for variable
+                      00010                 EXTERN          write_count          ; reference linkage for variable
+                      00011                 EXTERN          write_ptr            ; reference linkage for variable
+                      00012                 EXTERN          read_ptr             ; reference linkage for variable
+                      00013                 EXTERN          temp_address         ; reference linkage for variable
+                      00014 
+                      00015                 EXTERN          init_i2c             ; reference linkage for function
+                      00016                 EXTERN          service_i2c          ; reference linkage for function
+                      00008 
+                      00009 #define  ADDRESS     0x01                ; Slave I2C address
+                      00010 
+                      00011 ;----------------------------------------------------------------------
+                      00012 ;   ********************* RESET VECTOR LOCATION  ********************
+                      00013 ;----------------------------------------------------------------------
+                      00014 RESET_VECTOR  CODE    0x000              ; processor reset vector
+0000   0B00           00015         movai high start
+0001   158A           00016         movra PCLATH
+0002   2800           00017         goto start
+                      00018 
+                      00019 ;----------------------------------------------------------------------
+                      00020 ;  ******************* INTERRUPT VECTOR LOCATION  *******************
+                      00021 ;----------------------------------------------------------------------
+                      00022 INT_VECTOR   CODE    0x004               ; interrupt vector location
+0004   1580           00023         movra w_temp
+0005   1603           00024         movar STATUS
+0006   1D80           00025         clrr status_temp
+0007   1580           00026         movra status_temp
+0008   160A           00027         movar PCLATH
+0009   1580           00028         movra pclath_temp
+000A   1D8A           00029         clrr PCLATH
+                      00030 
+000B   3106           00031         jbset P1, 2
+000C   2800           00032         goto test_buscoll
+000D   2000           00033         call service_i2c
+                      00034 
+000E                  00035 test_buscoll
+000E   3086           00036         jbset P1, 1
+000F   2800           00037         goto test_timer1
+0010   3206           00038         jbset P1, 4
+0011   2800           00039         goto test_timer1
+0012   2000           00040         call service_buscoll
+                      00041 
+                      00042 
+                      00043 ; TEST FOR TIMER1 ROLLOVER EVENT                
+0013                  00044 test_timer1
+0013   3206           00045         jbset P1, 4
+0014   2800           00046         goto exit_isr
+0015   2000           00047         call service_i2c
+                      00048 
+0016                  00049 exit_isr 
+0016   1D83           00050         clrr STATUS
+0017   1600           00051         movar pclath_temp
+0018   158A           00052         movra PCLATH
+0019   1600           00053         movar status_temp
+001A   1583           00054         movra STATUS
+001B   000D           00055         retie
+                      00056 
+                      00057 
+                      00058 ;----------------------------------------------------------------------
+                      00059 ;   ******************* MAIN CODE START LOCATION  ******************
+                      00060 ;----------------------------------------------------------------------
+                      00061 MAIN    CODE
+0000                  00062 start
+0000   2000           00063         call init_ports
+0001   2000           00064         call init_timer1
+0002   2000           00065         call init_i2c
+0003   1D80           00066         clrr eflag_event
+0004   1D80           00067         clrr sflag_event
+0005   1D80           00068         clrr i2cState
+0006   2000           00069         call CopyRom2Ram
+0007   2000           00070         call init_vars
+                      00071 
+                      00072 
+                      00073 ;*******************************************************************
+                      00074 ;                     MAIN LOOP BEGINS HERE
+                      00075 ;******************************************************************* 
+0008                  00076 main_loop 
+0008   000E           00077         clrwdt
+0009   3400           00078         jbclr eflag_event, ack_error
+000A   2000           00079         call service_ackerror
+000B   3380           00080         jbset sflag_event, rw_done
+000C   2800           00081         goto main_loop
+                      00082 
+000D   2000           00083         call string_compare
+000E   2000           00084         call init_vars
+000F   2800           00085         goto main_loop
+                      00086 
+                      00087 ;----------------------------------------------------------------------
+                      00088 ;   *************** Bus Collision Service Routine ******************
+                      00089 ;----------------------------------------------------------------------
+0010                  00090 service_buscoll  
+0010   1D80           00091         clrr i2cState
+0011   2000           00092         call init_vars
+0012   000C           00093         return
+                      00094 
+                      00095 ;----------------------------------------------------------------------
+                      00096 ;   ************* Acknowledge Error Service Routine ***************
+                      00097 ;----------------------------------------------------------------------
+0013                  00098 service_ackerror
+0013   3C00           00099         bclr eflag_event, ack_error
+0014   1D80           00100         clrr i2cState
+0015   2000           00101         call init_vars
+0016   000C           00102         return
+                      00103 
+                      00104 ;----------------------------------------------------------------------
+                      00105 ;   *****  INITIALIZE VARIABLES USED IN SERVICE_I2C FUNCTION  ******
+                      00106 ;----------------------------------------------------------------------
+0017                  00107 init_vars
+0017   0B15           00108         movai 21
+0018   1580           00109         movra write_count
+0019   1580           00110         movra read_count
+                      00111 
+001A   0B00           00112         movai write_string
+001B   1580           00113         movra write_ptr
+                      00114 
+001C   0B00           00115         movai read_string
+001D   1580           00116         movra read_ptr
+                      00117 
+001E   0B01           00118         movai ADDRESS
+001F   1580           00119         movra temp_address
+0020   000C           00120         return
+                      00121 
+                      00122 ;----------------------------------------------------------------------
+                      00123 ;  *******************  Compare Strings   ************************
+                      00124 ;----------------------------------------------------------------------
+                      00125 ;Compare the string written to and read back from the Slave
+0021                  00126 string_compare
+0021   0B00           00127         movai read_string
+0022   1580           00128         movra ptr1
+0023   0B00           00129         movai write_string
+0024   1580           00130         movra ptr2
+                      00131 
+0025                  00132 loop
+0025   1600           00133         movar ptr1
+0026   1584           00134         movra FSR
+0027   1600           00135         movar INDF
+0028   1580           00136         movra temp_hold
+0029   1600           00137         movar ptr2
+002A   1584           00138         movra FSR
+002B   1600           00139         movar INDF
+002C   1280           00140         rsubra temp_hold
+002D   3103           00141         jbset STATUS, Z
+002E   2800           00142         goto not_equal
+002F   3503           00143         jbclr STATUS, Z
+0030   2800           00144         goto end_string
+0031   1980           00145         incr ptr1
+0032   1980           00146         incr ptr2
+0033   2800           00147         goto loop
+                      00148 
+0034                  00149 not_equal
+0034   0B01           00150         movai 1
+0035   1086           00151         xorra P1
+0036   2800           00152         goto exit
+                      00153 
+0037                  00154 end_string
+0037   0B02           00155         movai 0x2
+0038   1086           00156         xorra P1
+0039                  00157 exit
+0039   3F80           00158         bclr sflag_event, rw_done
+003A   000C           00159         return
+                      00160 
+                      00161 ;----------------------------------------------------------------------
+                      00162 ;  *******************  Program Memory Read   *******************
+                      00163 ;----------------------------------------------------------------------
+                      00164 ;Read the message from location MessageTable
+003B                  00165 CopyRom2Ram
+003B   0B00           00166         movai write_string
+003C   1584           00167         movra FSR
+003D   000C           00168         return
+                      00169 ;----------------------------------------------------------------------
+                      00170 ;----------------------------------------------------------------------
+                      00171 
+                      00172         end
+gpasm-1.4.0 (Aug 29 2013)    mastri2c.asm       2013-9-16  17:36:21          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+CopyRom2Ram                       0000003B
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+eflag_event                       00000000
+end_string                        00000037
+exit                              00000039
+exit_isr                          00000016
+i2cState                          00000000
+init_i2c                          00000000
+init_ports                        00000000
+init_timer1                       00000000
+init_vars                         00000017
+loop                              00000025
+main_loop                         00000008
+not_equal                         00000034
+pclath_temp                       00000022
+ptr1                              00000001
+ptr2                              00000002
+read_count                        00000000
+read_ptr                          00000000
+read_string                       00000003
+service_ackerror                  00000013
+service_buscoll                   00000010
+service_i2c                       00000000
+sflag_event                       00000000
+start                             00000000
+status_temp                       00000021
+string_compare                    00000021
+temp_address                      00000000
+temp_hold                         00000000
+test_buscoll                      0000000E
+test_timer1                       00000013
+w_temp                            00000020
+w_temp1                           00000030
+write_count                       00000000
+write_ptr                         00000000
+write_string                      00000000
+ADDRESS                           0x01
+ack_error                         0
+eh1                               1
+eh2                               2
+eh3                               3
+eh4                               4
+eh5                               5
+eh6                               6
+eh7                               7
+rw_done                           7
+sh1                               0
+sh2                               1
+sh3                               2
+sh4                               3
+sh5                               4
+sh6                               5
+sh7                               6
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

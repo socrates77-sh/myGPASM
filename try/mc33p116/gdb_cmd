@@ -1,0 +1,36 @@
+#file ../../gpasm/gpasm
+#start -p mc33p116 -I. try.asm
+
+file ../../gplink/gplink
+start -I. -s x3778.lkr -o b -c b.o
+
+#file ../../gputils/gpdasm
+#start -p 33p116 b.s19
+
+#break write_lst
+#break write_src
+#break gp_disassemble
+#break find_insn_generic
+#break open_src
+#break readhex_s19
+#watch print_hex_info
+#break cod_init
+#break cod_lst_line
+#watch state.lst.src
+#break dump_line_symbols
+#break gp_read_coff
+#break do_insn
+#break opcode_init
+#break add_symbol
+#break directive.c:3436
+#break gpcofflink.c:1349
+#break main
+#break file_ok
+#break write_lst
+#break lst.c:311
+#break gpdis.c:68
+#break gplink.c:860
+#break gpdasm.c:117
+#break gpmemory.c:178
+#break gpwritehex.c:294
+break gpcofflink.c:1298

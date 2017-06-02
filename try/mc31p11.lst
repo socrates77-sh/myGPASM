@@ -1,0 +1,90 @@
+gpasm-1.9.3 (Mar 21 2017)    mc31p11.asm        2017-4-14  20:17:24          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;include ../header/mc30p01a.inc
+                      00002 ;include mc30p01a.inc
+                      00003 
+                      00004         ;processor mc30p01a
+                      00005         ;__CONFIG _CONFIG1, _BOR_24 & _MCLR_ON
+                      00006         ;__CONFIG _CONFIG2, _CP_ON & _OSCM_LP
+                      00007         ;__CONFIG 0x2003, _BOR_24 & _MCLR_ON
+                      00008         ;__CONFIG 0x2004, _CP_ON & _OSCM_LP
+                      00009 
+0000                  00010         title "title1"
+0000                  00011         subtitle "subtitle1"
+                      00012 
+                      00013 
+                      00014         constant pos=0x20
+  0000002A            00015 temp equ pos+10
+                      00016 
+                      00017         ORG 202h
+0202                  00018 start:
+0202   0300           00019         dt 0
+0203   0FAA           00020         addar temp
+0204   0FC5           00021         addra b'101'
+0205   0F2A           00022         andar temp
+0206   0F60           00023         andra 0x20
+0207   0ECB           00024         clrr d'11'
+0208   0E80           00025         clra
+                      00026 
+0209   1A62           00027         bclr 22h, 1
+020A   1C70           00028         jbset 30h, 1
+                      00029 
+020B   0764           00030         addai 100
+020C   04C8           00031         movai 200
+020D   03DE           00032         retai 222
+                      00033 
+020E   000E           00034         clrwdt
+020F   000D           00035         retie
+0210   000C           00036         return
+0211   000B           00037         stop
+0212   0000           00038         nop
+0213   000A           00039         daa
+0214   0009           00040         dsa
+                      00041 
+                      00042         ;adcar 23h
+                      00043 
+0215   1000           00044         call sub1
+0216   1400           00045         goto lb1
+0217                  00046 lb1:
+0217   0000           00047         nop
+0218                  00048 sub1:
+0218   000A           00049         daa
+0219   000C           00050         return
+                      00051 
+                      00052         ;int
+                      00053         ;option
+                      00054 
+                      00055         ;iost 7
+                      00056 
+021A   0AC4           00057         movra 44h
+021B   0F83           00058         addar 43h
+                      00059 
+                      00060         ;lcall start
+                      00061         ;lgoto start
+                      00062         
+021C   0000 0000 0000 00063         fill 0x0000, 6
+       0000 0000 0000 
+                      00064 
+                      00065         end
+gpasm-1.9.3 (Mar 21 2017)    mc31p11.asm        2017-4-14  20:17:24          PAGE  2
+title1
+subtitle1
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__31P11                           00000001
+lb1                               00000217
+pos                               00000020
+start                             00000202
+sub1                              00000218
+temp                              0000002A
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

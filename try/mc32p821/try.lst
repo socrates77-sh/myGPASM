@@ -1,0 +1,96 @@
+gpasm-1.6.0 (Jan 21 2014)    try.asm            2014-1-21  18:55:43          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 
+                      00002 
+0000                  00003         title "title1"
+0000                  00004         subtitle "subtitle1"
+                      00005 
+                      00006 
+                      00007         constant pos=0x20
+  0000002A            00008 temp equ pos+10
+                      00009 
+0202                  00010         ORG 202h
+0202                  00011 start:
+0202   3B00           00012         dt 0
+0203   5846           00013         movar 0x46
+0204   7C2A           00014         addar temp
+0205   782A           00015         andar temp
+0206   7A20           00016         andra 0x20
+                      00017         ;clrr d'11'
+0207   7400           00018         clra
+                      00019         ;movar T0CNT
+                      00020         ;movar DDR1
+                      00021 
+0208   D222           00022         bclr 22h, 1
+0209   E230           00023         jbset 30h, 1
+                      00024 
+020A   3F0A           00025         addai 10
+020B   3C14           00026         movai 20
+020C   3B16           00027         retai 22
+                      00028 
+020D   000E           00029         clrwdt
+020E   000D           00030         retie
+020F   000C           00031         return
+0210   000B           00032         stop
+0211   0000           00033         nop
+0212   000A           00034         daa
+0213   0009           00035         dsa
+                      00036 
+0214   1023           00037         adcar 23h
+                      00038 
+0215   8218           00039         call sub1
+0216   A217           00040         goto lb1
+                      00041 
+                      00042         ;lcall sub1
+                      00043         ;lgoto lb1
+0217                  00044 lb1:
+0217   0000           00045         nop
+0218                  00046 sub1:
+0218   000A           00047         daa
+0219   000C           00048         return
+                      00049 
+                      00050         ;int
+                      00051         ;option
+                      00052 
+                      00053         ;iost 7
+                      00054 
+                      00055         ;movra 44h
+                      00056         ;addar 43h
+                      00057 
+                      00058         ;lgoto start
+                      00059         ;lcall start
+                      00060 
+021A   0102 0102 0102 00061         fill 0x102, 5
+       0102 0102      
+                      00062         end
+gpasm-1.6.0 (Jan 21 2014)    try.asm            2014-1-21  18:55:43          PAGE  2
+title1
+subtitle1
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__32P821                          00000001
+lb1                               00000217
+pos                               00000020
+start                             00000202
+sub1                              00000218
+temp                              0000002A
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0200 : --XXXXXXXXXXXXXX XXXXXXXXXXXXXXX- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    29
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

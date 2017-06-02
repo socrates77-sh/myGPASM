@@ -1,0 +1,91 @@
+gpasm-1.7.0_beta (Apr 11 2014)all_code_mc31p5130.asm2014-4-11  14:14:41          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000   0F80           00001         addar 0
+0001   0FC0           00002         addra 0
+0002   0F00           00003         andar 0
+0003   0F40           00004         andra 0
+0004   0EC0           00005         clrr  0
+0005   0E80           00006         clra
+0006   0E00           00007         comar 0
+0007   0E40           00008         comr  0
+0008   0D80           00009         decar 0
+0009   0DC0           00010         decr  0
+000A   0D00           00011         djzar 0
+000B   0D40           00012         djzr  0
+000C   0C80           00013         incar 0
+000D   0CC0           00014         incr  0
+000E   0C00           00015         jzar  0
+000F   0C40           00016         jzr   0
+0010   0B80           00017         orar  0
+0011   0BC0           00018         orra  0
+0012   0B00           00019         movar 0
+0013   0B40           00020         movr  0
+0014   0AC0           00021         movra 0
+0015   0A00           00022         rlar  0
+0016   0A40           00023         rlr   0
+0017   0980           00024         rrar  0
+0018   09C0           00025         rrr   0
+0019   0900           00026         rsubar 0
+001A   0940           00027         rsubra 0
+001B   0880           00028         swapar 0
+001C   08C0           00029         swapr  0
+001D   0800           00030         xorar  0
+001E   0840           00031         xorra  0
+001F   1E00           00032         jbclr 0,0
+0020   1C00           00033         jbset 0,0
+0021   1A00           00034         bclr 0,0
+0022   1800           00035         bset 0,0
+0023   0700           00036         addai 0
+0024   0600           00037         andai 0
+0025   0500           00038         orai  0
+0026   0400           00039         movai 0
+0027   0300           00040         retai 0
+0028   0200           00041         isubai 0
+0029   0100           00042         xorai 0
+002A   0080           00043         adcra 0
+002B   00C0           00044         rsbcra 0
+002C   0015           00045         rra
+002D   0014           00046         rla
+002E   0013           00047         inca
+002F   0012           00048         jza
+0030   0011           00049         deca
+0031   0010           00050         djza
+0032   000E           00051         clrwdt
+0033   000D           00052         retie
+0034   000C           00053         return
+0035   000B           00054         stop
+0036   0000           00055         nop
+0037   000A           00056         daa
+0038   0009           00057         dsa
+0039   1000           00058         call  0
+003A   1400           00059         goto  0
+003B   0A91 0034      00060         lcall 0x1234
+003D   0051 0034      00061         lgoto 0x1234
+                      00062 
+                      00063         end
+gpasm-1.7.0_beta (Apr 11 2014)all_code_mc31p5130.asm2014-4-11  14:14:41          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__31P5130                         00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXX-
+
+All other memory blocks unused.
+
+Program Memory Words Used:    63
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

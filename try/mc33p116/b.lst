@@ -1,0 +1,28 @@
+gplink-1.6.1 (Jan 23 2014)
+Listing File Generated: 2014-1-23  14:15:04
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           	org 0x00
+                                           
+000000   212e     lcall   0x2e3f           	lcall loop
+000001   233f
+000002   202e     lgoto   0x2e3f           	lgoto loop
+000003   233f
+                                           
+                                           	org 0x2e3f
+                                           loop:
+002e3f   0000     nop                      	nop
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXX-------- ---------------- ---------------- ----------------
+5C40 : ---------------- ---------------- ---------------- --------------XX
+
+All other memory blocks unused.
+
+Program Memory Words Used:     5
+

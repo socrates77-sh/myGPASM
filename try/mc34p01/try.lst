@@ -1,0 +1,106 @@
+gpasm-1.6.0 (Jan 21 2014)    try.asm            2014-1-21  18:53:17          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;include ../header/mc30p01a.inc
+                      00002 ;#include mc34p01.inc
+                      00003 
+                      00004 
+                      00005         ;processor mc30p011
+                      00006         ;__CONFIG _CONFIG1, _BOR_24 & _MCLR_ON
+                      00007         ;__CONFIG _CONFIG2, _CP_ON & _OSCM_LP
+                      00008         ;__CONFIG 0x2003, _BOR_24 & _MCLR_ON
+                      00009         ;__CONFIG 0x2004, _CP_ON & _OSCM_LP
+                      00010 
+0000                  00011         title "title1"
+0000                  00012         subtitle "subtitle1"
+                      00013 
+                      00014 
+                      00015         constant pos=0x20
+  0000002A            00016 temp equ pos+10
+                      00017 
+0202                  00018         ORG 202h
+0202                  00019 start:
+0202   0300           00020         dt 0
+0203   0023           00021         iosr 3
+0204   0035           00022         iosw 5
+0205   0BB6           00023         movar 0x76
+0206   0B86           00024         movar 0x46
+0207   0B86           00025         movar 0x06
+0208   0F45           00026         andra 0x45
+0209   0FAA           00027         addar temp
+020A   0F2A           00028         andar temp
+020B   0F60           00029         andra 0x20
+                      00030         ;clrr d'11'
+020C   0001           00031         clra
+                      00032         ;movar T0CNT
+                      00033         ;movar DDR1
+                      00034 
+020D   1E62           00035         bclr 22h, 1
+020E   1870           00036         jbset 30h, 1
+                      00037 
+020F   070A           00038         addai 10
+0210   0414           00039         movai 20
+0211   0316           00040         retai 22
+                      00041 
+0212   0002           00042         clrwdt
+0213   0003           00043         retie
+0214   0004           00044         return
+0215   0005           00045         stop
+0216   0000           00046         nop
+0217   0006           00047         daa
+0218   0007           00048         dsa
+                      00049 
+0219   08A3           00050         adcar 23h
+                      00051 
+021A   121D           00052         call sub1
+021B   161C           00053         goto lb1
+021C                  00054 lb1:
+021C   0000           00055         nop
+021D                  00056 sub1:
+021D   0006           00057         daa
+021E   0004           00058         return
+                      00059 
+                      00060         ;int
+                      00061         ;option
+                      00062 
+                      00063         ;iost 7
+                      00064 
+                      00065         ;movra 44h
+                      00066         ;addar 43h
+                      00067 
+                      00068         ;lgoto start
+                      00069         ;lcall start
+                      00070 
+021F   0102 0102 0102 00071         fill 0x102, 5
+       0102 0102      
+                      00072         end
+gpasm-1.6.0 (Jan 21 2014)    try.asm            2014-1-21  18:53:17          PAGE  2
+title1
+subtitle1
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__34P01                           00000001
+lb1                               0000021C
+pos                               00000020
+start                             00000202
+sub1                              0000021D
+temp                              0000002A
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0200 : --XXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXX------------ ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    34
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

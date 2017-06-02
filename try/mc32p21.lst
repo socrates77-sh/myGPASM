@@ -1,0 +1,72 @@
+gpasm-1.5.0 (Jan 13 2014)    mc32p21.asm        2014-1-13  11:24:31          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 
+                      00002 ;       processor mc32p21
+                      00003 ;       __idlocs  0x1
+                      00004 ;       __CONFIG 0x2000, 0xff33
+                      00005 ;       __CONFIG 0x2001, 0x6677
+                      00006 
+                      00007         constant pos=0x20
+                      00008 #define table 0x1234
+                      00009 
+  00000030            00010 temp equ pos+10h
+                      00011 
+0100                  00012         ORG 100h
+                      00013 
+0100                  00014 start:
+                      00015 
+0100   3C12           00016         movai high table
+0101   3C12           00017         movai high (table + 0x0010)
+0102   3C12           00018         movai high (table - 0x0010)
+                      00019         ;movai high (table |0x0010)
+0103   5711           00020         movra 0x111
+                      00021         ;adcai 0x11
+0104   3711           00022         isbcai 0x11
+0105   3611           00023         asbcai 0x11
+0106   3C34           00024         movai low table
+0107   5612           00025         movra 0x12
+                      00026         ;mulra 0x13
+0108   2000 0122      00027         lgoto 0x0122
+010A   2100 03FC      00028         lcall main
+                      00029 
+03FC                  00030         org 0x03fc
+03FC                  00031 main:
+03FC   3C11           00032         movai 0x11
+                      00033         
+                      00034         
+                      00035 ;table:
+                      00036 ;       dw 0x55aa, 0x8877
+                      00037 
+                      00038         end
+gpasm-1.5.0 (Jan 13 2014)    mc32p21.asm        2014-1-13  11:24:31          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__32P21                           00000001
+main                              000003FC
+pos                               00000020
+start                             00000100
+temp                              00000030
+table                             0x1234
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0100 : XXXXXXXXXXXX---- ---------------- ---------------- ----------------
+03C0 : ---------------- ---------------- ---------------- ------------X---
+
+All other memory blocks unused.
+
+Program Memory Words Used:    13
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

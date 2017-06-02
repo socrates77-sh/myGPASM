@@ -1,0 +1,89 @@
+gplink-1.4.0 (Aug 29 2013)
+Map File - Created 2013-9-16  17:36:21
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+             RESET_VECTOR       code   00000000    program   0x000006
+               INT_VECTOR       code   0x000004    program   0x000030
+                 I2C_COMM       code   0x00001c    program   0x0000b2
+                     MAIN       code   0x000075    program   0x00007c
+                INIT_CODE       code   0x0000b3    program   0x00000a
+                  .config       code   0x002000    program   0x000004
+                  INT_VAR      udata   0x000020       data   0x000003
+                 GPR_DATA      udata   0x000023       data   0x00000b
+                 INT_VAR1      udata   0x000030       data   0x000001
+              STRING_DATA      udata   0x000031       data   0x000006
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            0x0000b3    0x0000b7
+                            0x00001c    0x000074
+                            0x002000    0x002001
+                            00000000    0x000002
+                            0x000004    0x00001b
+                            0x000075    0x0000b2
+ 
+                            185 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+               init_ports   0x0000b3    program     extern init.asm
+              init_timer1   0x0000b5    program     extern init.asm
+              sflag_event   0x000023       data     extern i2ccomm.inc
+              eflag_event   0x000024       data     extern i2ccomm.inc
+                 i2cState   0x000025       data     extern i2ccomm.inc
+               read_count   0x000026       data     extern i2ccomm.inc
+              write_count   0x000027       data     extern i2ccomm.inc
+                write_ptr   0x000028       data     extern i2ccomm.inc
+                 read_ptr   0x000029       data     extern i2ccomm.inc
+             temp_address   0x00002a       data     extern i2ccomm.inc
+              service_i2c   0x00001c    program     extern i2ccomm.asm
+                  I2CJump   0x000024    program     static i2ccomm.asm
+               I2CJumpEnd   0x00002e    program     static i2ccomm.asm
+                 WrtStart   0x000033    program     static i2ccomm.asm
+              SendWrtAddr   0x000038    program     static i2ccomm.asm
+               WrtAckTest   0x00003c    program     static i2ccomm.asm
+                  WrtData   0x000041    program     static i2ccomm.asm
+                send_byte   0x000045    program     static i2ccomm.asm
+                  WrtStop   0x000047    program     static i2ccomm.asm
+                 no_error   0x00004c    program     static i2ccomm.asm
+                    stop1   0x00004d    program     static i2ccomm.asm
+                ReadStart   0x00004f    program     static i2ccomm.asm
+             SendReadAddr   0x000054    program     static i2ccomm.asm
+              ReadAckTest   0x000058    program     static i2ccomm.asm
+            StartReadData   0x00005d    program     static i2ccomm.asm
+                 ReadData   0x00005f    program     static i2ccomm.asm
+             SendReadNack   0x000061    program     static i2ccomm.asm
+              SendReadAck   0x000064    program     static i2ccomm.asm
+           _I2C_COMM_004A   0x000066    program     static i2ccomm.asm
+                 ReadStop   0x000069    program     static i2ccomm.asm
+                 i2c_idle   0x00006d    program     static i2ccomm.asm
+           _I2C_COMM_0054   0x000070    program     static i2ccomm.asm
+                 init_i2c   0x000072    program     extern i2ccomm.asm
+                   w_temp   0x000020       data     static mastri2c.inc
+              status_temp   0x000021       data     static mastri2c.inc
+              pclath_temp   0x000022       data     static mastri2c.inc
+                  w_temp1   0x000030       data     static mastri2c.inc
+                temp_hold   0x00002b       data     static mastri2c.inc
+                     ptr1   0x00002c       data     static mastri2c.inc
+                     ptr2   0x00002d       data     static mastri2c.inc
+             write_string   0x000031       data     extern mastri2c.inc
+              read_string   0x000034       data     extern mastri2c.inc
+             test_buscoll   0x00000e    program     static mastri2c.asm
+              test_timer1   0x000013    program     static mastri2c.asm
+                 exit_isr   0x000016    program     static mastri2c.asm
+                    start   0x000075    program     static mastri2c.asm
+                main_loop   0x00007d    program     static mastri2c.asm
+          service_buscoll   0x000085    program     static mastri2c.asm
+         service_ackerror   0x000088    program     static mastri2c.asm
+                init_vars   0x00008c    program     static mastri2c.asm
+           string_compare   0x000096    program     static mastri2c.asm
+                     loop   0x00009a    program     static mastri2c.asm
+                not_equal   0x0000a9    program     static mastri2c.asm
+               end_string   0x0000ac    program     static mastri2c.asm
+                     exit   0x0000ae    program     static mastri2c.asm
+              CopyRom2Ram   0x0000b0    program     static mastri2c.asm
+ 

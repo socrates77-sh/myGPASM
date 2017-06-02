@@ -1,0 +1,7 @@
+cp top.s19 bak
+
+./gpasm -p mc30p011 -I../header -c init.asm
+./gpasm -p mc30p011 -I../header -c mastri2c.asm
+./gpasm -p mc30p011 -I../header -c i2ccomm.asm
+./gplink -I ../lkr -s mc30p011.lkr -c -m -o top init.o i2ccomm.o mastri2c.o
+

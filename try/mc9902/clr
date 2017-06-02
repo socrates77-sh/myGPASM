@@ -1,0 +1,3 @@
+rm -rfv *.cod
+rm -rfv *.s19
+rm -rfv *.lst

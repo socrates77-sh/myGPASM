@@ -1,0 +1,145 @@
+		LIST
+;mc30p011.inc   Standard Header File, Version 1.00 by Sinomcu
+		NOLIST
+;==========================================================================
+;
+;       Verify Processor
+;
+;==========================================================================
+
+        IFNDEF __30P011
+           MESSG "Processor-header file mismatch.  Verify selected processor."
+        ENDIF
+
+;==========================================================================
+;
+;       Register Definitions
+;
+;==========================================================================
+
+;----- Register Files------------------------------------------------------
+
+INDF                         EQU     H'0000'
+T0CNT                        EQU     H'0001'
+PCL                          EQU     H'0002'
+STATUS                       EQU     H'0003'
+FSR                          EQU     H'0004'
+P0                           EQU     H'0005'
+P1                           EQU     H'0006'
+MCR                          EQU     H'0008'
+KBIM                         EQU     H'0009'
+PCLATH                       EQU     H'000A'
+PDCON                        EQU     H'000B'
+ODCON                        EQU     H'000C'
+PUCON                        EQU     H'000D'
+INTECON                      EQU     H'000E'
+INTFLAG                      EQU     H'000F'
+T0CR                         EQU     H'0041'
+DDR0                         EQU     H'0045'
+DDR1                         EQU     H'0046'
+TMCR                         EQU     H'004B'
+T1CR                         EQU     H'004C'
+T1CNT                        EQU     H'004D'
+T1LOAD                       EQU     H'004E'
+T1DATA                       EQU     H'004F'
+
+;----- STATUS Bits --------------------------------------------------------
+
+RST                          EQU     H'0007'
+TO                           EQU     H'0004'
+PD                           EQU     H'0003'
+Z                            EQU     H'0002'
+DC                           EQU     H'0001'
+C                            EQU     H'0000'
+
+;----- MCR Bits --------------------------------------------------------
+
+WDTEN                        EQU     H'0007'
+EIS                          EQU     H'0006'
+
+;----- INTECON Bits --------------------------------------------------------
+
+T0IE                         EQU     H'0000'
+KBIE                         EQU     H'0001'
+INT0IE                       EQU     H'0002'
+GIE                          EQU     H'0007'
+
+;----- INTFLAG Bits --------------------------------------------------------
+
+T0IF                         EQU     H'0000'
+KBIF                         EQU     H'0001'
+INT0IF                       EQU     H'0002'
+
+;----- TMCR Bits --------------------------------------------------------
+
+T1IF                         EQU     H'0000'
+T1lE                         EQU     H'0001'
+TBS                          EQU     H'0007'
+
+;----- T1CR Bits --------------------------------------------------------
+
+T1PR0                         EQU     H'0000'
+T1PR1                         EQU     H'0001'
+T1PR2                         EQU     H'0002'
+T1PTS0                        EQU     H'0003'
+T1PTS1                        EQU     H'0004'
+BUZOUT                        EQU     H'0005'
+PWMOUT                        EQU     H'0006'
+TMR1EN                        EQU     H'0007'
+
+;==========================================================================
+;
+;       RAM Definition
+;
+;==========================================================================
+
+        __MAXRAM H'3F'
+        __BADRAM H'00'-H'06', H'08'-H'0F'
+        ;__BADRAM H'00'-H'06', H'08'-H'0F'
+;==========================================================================
+;
+;       Configuration Bits
+;
+;==========================================================================
+
+_CONFIG0                     EQU     H'2000'
+_CONFIG1                     EQU     H'2001'
+
+;OPBIT1 
+_CP_ALL                      EQU     H'1FFF'
+_OSC_IRC_RTC                 EQU     H'3FFF'
+_OSC_IRC                     EQU     H'37FF'
+_OSC_HXT                     EQU     H'2FFF'
+_OSC_LXT                     EQU     H'27FF'
+_SMT_OFF                     EQU     H'3FFF'
+_SMT_ON                      EQU     H'3DFF'
+_RD_FROM_PIN                 EQU     H'3FFF'
+_RD_FROM_REG                 EQU     H'3EFF'
+
+;OPBIT0 
+_WDT_ON                      EQU     H'3FFF'
+_WDT_OFF                     EQU     H'37FF'
+_PWRT_ON                     EQU     H'3FFF'
+_PWRT_OFF                    EQU     H'3BFF'
+_TWRT_18MS                   EQU     H'3FFF'
+_TWRT_4P5MS                  EQU     H'3EFF'
+_TWRT_288MS                  EQU     H'3DFF'
+_TWRT_72MS                   EQU     H'3CFF'
+_FCPU_4T                     EQU     H'3FFF'
+_FCPU_2T                     EQU     H'3F7F'
+_IRC_8M                      EQU     H'3FFF'
+_IRC_4M                      EQU     H'3FEF'
+_IRC_2M                      EQU     H'3FDF'
+_IRC_1M                      EQU     H'3FCF'
+_IRC_444K                    EQU     H'3FAF'
+_MCLR_ON                     EQU     H'3FFF'
+_MCLR_OFF                    EQU     H'3FF7'
+_VBOR_36                     EQU     H'3FFF'
+_VBOR_30                     EQU     H'3FFE'
+_VBOR_26                     EQU     H'3FFD'
+_VBOR_24                     EQU     H'3FFC'
+_VBOR_22                     EQU     H'3FFB'
+_VBOR_20                     EQU     H'3FFA'
+_VBOR_18                     EQU     H'3F79'
+_VBOR_15                     EQU     H'3F78'
+		LIST

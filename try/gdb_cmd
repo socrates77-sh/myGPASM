@@ -1,0 +1,27 @@
+#file ./gpasm
+#start -c a.asm
+
+#file ./gpdasm
+#start -p 32p21 a.s19
+
+file ./gplink
+start -s 32p21.lkr -c -o top a.o
+
+#break write_lst
+#break write_src
+#break gp_disassemble
+#break find_insn_generic
+#break open_src
+#break readhex_s19
+#watch print_hex_info
+#break cod_init
+#break cod_lst_line
+#watch state.lst.src
+#break dump_line_symbols
+#break gp_read_coff
+#break do_insn
+#break opcode_init
+#break add_symbol
+#break directive.c:4377
+break gpcofflink.c:1313
+break main

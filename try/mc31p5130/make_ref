@@ -1,0 +1,2 @@
+../../gpasm/gpasm -p mc33p116 -c -I. -o b.o b.asm
+../../gplink/gplink -I. -s x3778.lkr -o b -c b.o

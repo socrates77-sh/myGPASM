@@ -1,0 +1,1 @@
+../../gputils/gpdasm -p mc34p01 try.s19 > a

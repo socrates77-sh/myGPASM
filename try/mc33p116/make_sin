@@ -1,0 +1,1 @@
+../../gpasm/gpasm -p mc33p116 -I. $1

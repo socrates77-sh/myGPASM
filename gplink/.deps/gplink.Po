@@ -1,0 +1,132 @@
+gplink.o: gplink.c ../include/stdhdr.h ../config.h \
+ e:\mingw\include\stdio.h e:\mingw\include\_mingw.h \
+ e:\mingw\include\msvcrtver.h e:\mingw\include\w32api.h \
+ e:\mingw\include\sdkddkver.h \
+ e:\mingw\lib\gcc\mingw32\5.3.0\include\stddef.h \
+ e:\mingw\include\sys/types.h \
+ e:\mingw\lib\gcc\mingw32\5.3.0\include\stdarg.h \
+ e:\mingw\include\assert.h e:\mingw\include\sys\stat.h \
+ e:\mingw\include\sys\types.h e:\mingw\include\stdlib.h \
+ e:\mingw\include\unistd.h e:\mingw\include\io.h \
+ e:\mingw\include\stdint.h e:\mingw\include\process.h \
+ e:\mingw\include\getopt.h ../include/getopt.h e:\mingw\include\string.h \
+ e:\mingw\include\strings.h e:\mingw\include\wchar.h \
+ e:\mingw\include\time.h e:\mingw\include\ctype.h \
+ e:\mingw\include\wctype.h e:\mingw\include\errno.h \
+ e:\mingw\include\limits.h ../libgputils/libgputils.h \
+ ../libgputils/gptypes.h ../libgputils/gpsystem.h \
+ ../libgputils/gpmessage.h ../libgputils/gpmemory.h \
+ ../libgputils/gpopcode.h ../libgputils/gpprocessor.h \
+ ../libgputils/gpsymbol.h ../libgputils/gpdis.h \
+ ../libgputils/gpwritehex.h ../libgputils/gpreadhex.h \
+ ../libgputils/gpcoff.h ../libgputils/gparchive.h \
+ ../libgputils/gpcoffgen.h ../libgputils/gpcofflink.h \
+ ../libgputils/gpcoffopt.h ../libgputils/gpreadobj.h \
+ ../libgputils/gpwriteobj.h ../libgputils/gpcod.h gplink.h cod.h scan.h \
+ lst.h map.h script.h
+
+../include/stdhdr.h:
+
+../config.h:
+
+e:\mingw\include\stdio.h:
+
+e:\mingw\include\_mingw.h:
+
+e:\mingw\include\msvcrtver.h:
+
+e:\mingw\include\w32api.h:
+
+e:\mingw\include\sdkddkver.h:
+
+e:\mingw\lib\gcc\mingw32\5.3.0\include\stddef.h:
+
+e:\mingw\include\sys/types.h:
+
+e:\mingw\lib\gcc\mingw32\5.3.0\include\stdarg.h:
+
+e:\mingw\include\assert.h:
+
+e:\mingw\include\sys\stat.h:
+
+e:\mingw\include\sys\types.h:
+
+e:\mingw\include\stdlib.h:
+
+e:\mingw\include\unistd.h:
+
+e:\mingw\include\io.h:
+
+e:\mingw\include\stdint.h:
+
+e:\mingw\include\process.h:
+
+e:\mingw\include\getopt.h:
+
+../include/getopt.h:
+
+e:\mingw\include\string.h:
+
+e:\mingw\include\strings.h:
+
+e:\mingw\include\wchar.h:
+
+e:\mingw\include\time.h:
+
+e:\mingw\include\ctype.h:
+
+e:\mingw\include\wctype.h:
+
+e:\mingw\include\errno.h:
+
+e:\mingw\include\limits.h:
+
+../libgputils/libgputils.h:
+
+../libgputils/gptypes.h:
+
+../libgputils/gpsystem.h:
+
+../libgputils/gpmessage.h:
+
+../libgputils/gpmemory.h:
+
+../libgputils/gpopcode.h:
+
+../libgputils/gpprocessor.h:
+
+../libgputils/gpsymbol.h:
+
+../libgputils/gpdis.h:
+
+../libgputils/gpwritehex.h:
+
+../libgputils/gpreadhex.h:
+
+../libgputils/gpcoff.h:
+
+../libgputils/gparchive.h:
+
+../libgputils/gpcoffgen.h:
+
+../libgputils/gpcofflink.h:
+
+../libgputils/gpcoffopt.h:
+
+../libgputils/gpreadobj.h:
+
+../libgputils/gpwriteobj.h:
+
+../libgputils/gpcod.h:
+
+gplink.h:
+
+cod.h:
+
+scan.h:
+
+lst.h:
+
+map.h:
+
+script.h:

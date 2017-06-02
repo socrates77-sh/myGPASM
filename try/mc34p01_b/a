@@ -1,0 +1,33 @@
+;CHIP ID: 0x3401
+
+000202:  0300  retai	0
+000203:  0085  movra	0x5
+000204:  00c5  clrr	0x5
+000205:  0faa  addar	0x2a
+000206:  0f2a  andar	0x2a
+000207:  0f60  andra	0x20
+000208:  0001  clra
+000209:  0b81  movar	0x1
+00020a:  1662  bclr	0x22, 0x1
+00020b:  1070  jbset	0x30, 0x1
+00020c:  070a  addai	0xa
+00020d:  0414  movai	0x14
+00020e:  0316  retai	0x16
+00020f:  0002  clrwdt
+000210:  0003  retie
+000211:  0004  return
+000212:  0005  sleep
+000213:  0000  nop
+000214:  0006  daa
+000215:  0007  dsa
+000216:  08a3  adcar	0x23
+000217:  1a1a  call	0x21a
+000218:  1e19  goto	0x219
+000219:  0000  nop
+00021a:  0006  daa
+00021b:  0004  return
+00021c:  0102  xorai	0x2
+00021d:  0102  xorai	0x2
+00021e:  0102  xorai	0x2
+00021f:  0102  xorai	0x2
+000220:  0102  xorai	0x2

@@ -1,0 +1,49 @@
+gpasm-1.7.0_beta (Apr 11 2014)b.asm              2014-4-11  14:40:05          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000                  00001         org 0x00
+                      00002 
+0000   1330           00003         call loop1
+0001   1730           00004         goto loop1
+                      00005 
+0002   0AB1 003F      00006         lcall loop
+0004   0071 003F      00007         lgoto loop
+                      00008 
+0330                  00009         org 0x330
+0330                  00010 loop1:
+0330   0000           00011         nop
+                      00012 
+063F                  00013         org 0x63f
+063F                  00014 loop:
+Warning[220]: Address exceeds maximum range for this processor.
+063F   0000           00015         nop
+                      00016         end
+gpasm-1.7.0_beta (Apr 11 2014)b.asm              2014-4-11  14:40:05          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__31P5130                         00000001
+loop                              0000063F
+loop1                             00000330
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXX---------- ---------------- ---------------- ----------------
+0300 : ---------------- ---------------- ---------------- X---------------
+0600 : ---------------- ---------------- ---------------- ---------------X
+
+All other memory blocks unused.
+
+Program Memory Words Used:     8
+
+Errors   :     0
+Warnings :     1 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

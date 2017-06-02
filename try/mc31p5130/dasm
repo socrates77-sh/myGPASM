@@ -1,0 +1,2 @@
+../../gputils/gpdasm -p mc31p5130 all_code_mc31p5130.s19 > a
+#../../gputils/gpdasm -p mc31p5130 b.s19 > a

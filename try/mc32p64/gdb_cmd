@@ -1,0 +1,33 @@
+#file ../gpasm
+#start -p mc32p64 -I. aaa.asm
+
+##file ./gpdasm
+#start -p 32p21 a.s19
+
+file ../gpdasm
+start -p 30p011 aaa.s19
+
+#break write_lst
+#break write_src
+#break gp_disassemble
+#break find_insn_generic
+#break open_src
+#break readhex_s19
+#watch print_hex_info
+#break cod_init
+#break cod_lst_line
+#watch state.lst.src
+#break dump_line_symbols
+#break gp_read_coff
+#break do_insn
+#break opcode_init
+#break add_symbol
+#break directive.c:3729
+#break gpcofflink.c:1349
+#break main
+#break file_ok
+#break write_lst
+#break lst.c:311
+#break gpdis.c:73
+#break gplink.c:861
+break gpdasm.c:117

@@ -1,0 +1,5 @@
+cp top.s19 bak
+
+./gpasm -p mc31p11 -c mc31p11.asm
+./gplink -I ../lkr -s 31p11.lkr -c -o top mc31p11.o
+

@@ -1,0 +1,2 @@
+./gpasm -p mc30p011 -I../header try.asm
+

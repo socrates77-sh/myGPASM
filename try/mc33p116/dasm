@@ -1,0 +1,1 @@
+../../gputils/gpdasm -p mc33p116 all_code_mc33p116.s19 > a

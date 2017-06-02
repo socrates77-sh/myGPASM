@@ -1,0 +1,1 @@
+../../gpasm/gpasm -p mc32p64 -I. $1

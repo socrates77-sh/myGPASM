@@ -1,0 +1,726 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.5.4	//
+ADDR_LEN	lst.c	337;"	d	file:
+ASSIGN_AND	parse.c	/^     ASSIGN_AND = 288,$/;"	e	enum:yytokentype	file:
+ASSIGN_AND	parse.c	382;"	d	file:
+ASSIGN_DIVIDE	parse.c	/^     ASSIGN_DIVIDE = 284,$/;"	e	enum:yytokentype	file:
+ASSIGN_DIVIDE	parse.c	378;"	d	file:
+ASSIGN_LSH	parse.c	/^     ASSIGN_LSH = 286,$/;"	e	enum:yytokentype	file:
+ASSIGN_LSH	parse.c	380;"	d	file:
+ASSIGN_MINUS	parse.c	/^     ASSIGN_MINUS = 282,$/;"	e	enum:yytokentype	file:
+ASSIGN_MINUS	parse.c	376;"	d	file:
+ASSIGN_MODULUS	parse.c	/^     ASSIGN_MODULUS = 285,$/;"	e	enum:yytokentype	file:
+ASSIGN_MODULUS	parse.c	379;"	d	file:
+ASSIGN_MULTIPLY	parse.c	/^     ASSIGN_MULTIPLY = 283,$/;"	e	enum:yytokentype	file:
+ASSIGN_MULTIPLY	parse.c	377;"	d	file:
+ASSIGN_OR	parse.c	/^     ASSIGN_OR = 289,$/;"	e	enum:yytokentype	file:
+ASSIGN_OR	parse.c	383;"	d	file:
+ASSIGN_PLUS	parse.c	/^     ASSIGN_PLUS = 281,$/;"	e	enum:yytokentype	file:
+ASSIGN_PLUS	parse.c	375;"	d	file:
+ASSIGN_RSH	parse.c	/^     ASSIGN_RSH = 287,$/;"	e	enum:yytokentype	file:
+ASSIGN_RSH	parse.c	381;"	d	file:
+ASSIGN_XOR	parse.c	/^     ASSIGN_XOR = 290,$/;"	e	enum:yytokentype	file:
+ASSIGN_XOR	parse.c	384;"	d	file:
+ATTRIB_COND	directive.c	39;"	d	file:
+BEGIN	scan.c	125;"	d	file:
+BUFFER_SIZE	macro.c	32;"	d	file:
+CBLOCK	parse.c	/^     CBLOCK = 260,$/;"	e	enum:yytokentype	file:
+CBLOCK	parse.c	354;"	d	file:
+COD_LST_FIRST_LINE	cod.c	211;"	d	file:
+COD_SYM_EXTRA	cod.c	301;"	d	file:
+COD_SYM_TYPE	cod.c	299;"	d	file:
+COD_SYM_VALUE	cod.c	300;"	d	file:
+CONCAT	parse.c	/^     CONCAT = 300,$/;"	e	enum:yytokentype	file:
+CONCAT	parse.c	394;"	d	file:
+DEBUG_LINE	parse.c	/^     DEBUG_LINE = 261,$/;"	e	enum:yytokentype	file:
+DEBUG_LINE	parse.c	355;"	d	file:
+DECREMENT	parse.c	/^     DECREMENT = 292,$/;"	e	enum:yytokentype	file:
+DECREMENT	parse.c	386;"	d	file:
+DEFINE	parse.c	/^     DEFINE = 269,$/;"	e	enum:yytokentype	file:
+DEFINE	parse.c	363;"	d	file:
+ECHO	scan.c	1317;"	d	file:
+ENDC	parse.c	/^     ENDC = 262,$/;"	e	enum:yytokentype	file:
+ENDC	parse.c	356;"	d	file:
+EOB_ACT_CONTINUE_SCAN	scan.c	168;"	d	file:
+EOB_ACT_END_OF_FILE	scan.c	169;"	d	file:
+EOB_ACT_LAST_MATCH	scan.c	170;"	d	file:
+EQUAL	parse.c	/^     EQUAL = 277,$/;"	e	enum:yytokentype	file:
+EQUAL	parse.c	371;"	d	file:
+ERRORLEVEL	parse.c	/^     ERRORLEVEL = 263,$/;"	e	enum:yytokentype	file:
+ERRORLEVEL	parse.c	357;"	d	file:
+FILES_PER_BLOCK	cod.c	148;"	d	file:
+FILL	parse.c	/^     FILL = 264,$/;"	e	enum:yytokentype	file:
+FILL	parse.c	358;"	d	file:
+FLEXINT_H	scan.c	29;"	d	file:
+FLEX_BETA	scan.c	13;"	d	file:
+FLEX_SCANNER	scan.c	8;"	d	file:
+GET_OPTIONS	gpasm.c	44;"	d	file:
+GP_INPUT	scan.c	1176;"	d	file:
+GREATER_EQUAL	parse.c	/^     GREATER_EQUAL = 275,$/;"	e	enum:yytokentype	file:
+GREATER_EQUAL	parse.c	369;"	d	file:
+HIGH	parse.c	/^     HIGH = 271,$/;"	e	enum:yytokentype	file:
+HIGH	parse.c	365;"	d	file:
+IDENTIFIER	parse.c	/^     IDENTIFIER = 259,$/;"	e	enum:yytokentype	file:
+IDENTIFIER	parse.c	353;"	d	file:
+INCREMENT	parse.c	/^     INCREMENT = 291,$/;"	e	enum:yytokentype	file:
+INCREMENT	parse.c	385;"	d	file:
+INDFOFFSET	parse.c	/^     INDFOFFSET = 295,$/;"	e	enum:yytokentype	file:
+INDFOFFSET	parse.c	389;"	d	file:
+INITIAL	scan.c	1221;"	d	file:
+INT16_MAX	scan.c	71;"	d	file:
+INT16_MIN	scan.c	62;"	d	file:
+INT32_MAX	scan.c	74;"	d	file:
+INT32_MIN	scan.c	65;"	d	file:
+INT8_MAX	scan.c	68;"	d	file:
+INT8_MIN	scan.c	59;"	d	file:
+IS_PIC16	lst.c	243;"	d	file:
+LABEL	parse.c	/^     LABEL = 258,$/;"	e	enum:yytokentype	file:
+LABEL	parse.c	352;"	d	file:
+LEN	directive.c	2692;"	d	file:
+LEN	directive.c	2694;"	d	file:
+LEN	directive.c	2713;"	d	file:
+LEN	directive.c	2715;"	d	file:
+LESS_EQUAL	parse.c	/^     LESS_EQUAL = 276,$/;"	e	enum:yytokentype	file:
+LESS_EQUAL	parse.c	370;"	d	file:
+LINENUM_POS	lst.c	37;"	d	file:
+LINENUM_POS	lst.c	39;"	d	file:
+LIST	parse.c	/^     LIST = 265,$/;"	e	enum:yytokentype	file:
+LIST	parse.c	359;"	d	file:
+LOGICAL_AND	parse.c	/^     LOGICAL_AND = 279,$/;"	e	enum:yytokentype	file:
+LOGICAL_AND	parse.c	373;"	d	file:
+LOGICAL_OR	parse.c	/^     LOGICAL_OR = 280,$/;"	e	enum:yytokentype	file:
+LOGICAL_OR	parse.c	374;"	d	file:
+LOW	parse.c	/^     LOW = 272,$/;"	e	enum:yytokentype	file:
+LOW	parse.c	366;"	d	file:
+LSH	parse.c	/^     LSH = 273,$/;"	e	enum:yytokentype	file:
+LSH	parse.c	367;"	d	file:
+MAX_SYM_LEN	cod.c	302;"	d	file:
+MEM_IS_USED	lst.c	191;"	d	file:
+MPASM_LIST	lst.c	34;"	d	file:
+NOT_EQUAL	parse.c	/^     NOT_EQUAL = 278,$/;"	e	enum:yytokentype	file:
+NOT_EQUAL	parse.c	372;"	d	file:
+NUMBER	parse.c	/^     NUMBER = 266,$/;"	e	enum:yytokentype	file:
+NUMBER	parse.c	360;"	d	file:
+OPERATOR	scan.c	1159;"	d	file:
+POSTDECREMENT	parse.c	/^     POSTDECREMENT = 294,$/;"	e	enum:yytokentype	file:
+POSTDECREMENT	parse.c	388;"	d	file:
+POSTINCREMENT	parse.c	/^     POSTINCREMENT = 293,$/;"	e	enum:yytokentype	file:
+POSTINCREMENT	parse.c	387;"	d	file:
+PROCESSOR	parse.c	/^     PROCESSOR = 267,$/;"	e	enum:yytokentype	file:
+PROCESSOR	parse.c	361;"	d	file:
+REJECT	scan.c	1114;"	d	file:
+RSH	parse.c	/^     RSH = 274,$/;"	e	enum:yytokentype	file:
+RSH	parse.c	368;"	d	file:
+STRING	parse.c	/^     STRING = 268,$/;"	e	enum:yytokentype	file:
+STRING	parse.c	362;"	d	file:
+STRINGIFY	lst.c	42;"	d	file:
+TBL_NO_CHANGE	parse.c	/^     TBL_NO_CHANGE = 296,$/;"	e	enum:yytokentype	file:
+TBL_NO_CHANGE	parse.c	390;"	d	file:
+TBL_POST_DEC	parse.c	/^     TBL_POST_DEC = 298,$/;"	e	enum:yytokentype	file:
+TBL_POST_DEC	parse.c	392;"	d	file:
+TBL_POST_INC	parse.c	/^     TBL_POST_INC = 297,$/;"	e	enum:yytokentype	file:
+TBL_POST_INC	parse.c	391;"	d	file:
+TBL_PRE_INC	parse.c	/^     TBL_PRE_INC = 299,$/;"	e	enum:yytokentype	file:
+TBL_PRE_INC	parse.c	393;"	d	file:
+UINT16_MAX	scan.c	80;"	d	file:
+UINT32_MAX	scan.c	83;"	d	file:
+UINT8_MAX	scan.c	77;"	d	file:
+UPPER	parse.c	/^     UPPER = 270,$/;"	e	enum:yytokentype	file:
+UPPER	parse.c	364;"	d	file:
+VAR	parse.c	/^     VAR = 301,$/;"	e	enum:yytokentype	file:
+VAR	parse.c	395;"	d	file:
+VARLAB_BEGIN	parse.c	/^     VARLAB_BEGIN = 302,$/;"	e	enum:yytokentype	file:
+VARLAB_BEGIN	parse.c	396;"	d	file:
+VAR_BEGIN	parse.c	/^     VAR_BEGIN = 303,$/;"	e	enum:yytokentype	file:
+VAR_BEGIN	parse.c	397;"	d	file:
+VAR_END	parse.c	/^     VAR_END = 304$/;"	e	enum:yytokentype	file:
+VAR_END	parse.c	398;"	d	file:
+YYABORT	parse.c	1078;"	d	file:
+YYACCEPT	parse.c	1077;"	d	file:
+YYBACKUP	parse.c	1090;"	d	file:
+YYBISON	parse.c	46;"	d	file:
+YYBISON_VERSION	parse.c	49;"	d	file:
+YYCOPY	parse.c	609;"	d	file:
+YYCOPY	parse.c	612;"	d	file:
+YYDEBUG	parse.c	279;"	d	file:
+YYDPRINTF	parse.c	1170;"	d	file:
+YYDPRINTF	parse.c	1319;"	d	file:
+YYEMPTY	parse.c	1074;"	d	file:
+YYEOF	parse.c	1075;"	d	file:
+YYERRCODE	parse.c	1109;"	d	file:
+YYERROR	parse.c	1079;"	d	file:
+YYERROR_VERBOSE	parse.c	284;"	d	file:
+YYERROR_VERBOSE	parse.c	285;"	d	file:
+YYERROR_VERBOSE	parse.c	287;"	d	file:
+YYFAIL	parse.c	1086;"	d	file:
+YYFINAL	parse.c	642;"	d	file:
+YYFPRINTF	parse.c	1167;"	d	file:
+YYFREE	parse.c	575;"	d	file:
+YYID	parse.c	/^YYID (yyi)$/;"	f	file:
+YYID	parse.c	499;"	d	file:
+YYINITDEPTH	parse.c	1328;"	d	file:
+YYLAST	parse.c	644;"	d	file:
+YYLEX	parse.c	1157;"	d	file:
+YYLEX	parse.c	1159;"	d	file:
+YYLLOC_DEFAULT	parse.c	1118;"	d	file:
+YYLSP_NEEDED	parse.c	64;"	d	file:
+YYMALLOC	parse.c	568;"	d	file:
+YYMAXDEPTH	parse.c	1339;"	d	file:
+YYMAXUTOK	parse.c	657;"	d	file:
+YYNNTS	parse.c	649;"	d	file:
+YYNRULES	parse.c	651;"	d	file:
+YYNSTATES	parse.c	653;"	d	file:
+YYNTOKENS	parse.c	647;"	d	file:
+YYPACT_NINF	parse.c	900;"	d	file:
+YYPOPSTACK	parse.c	1679;"	d	file:
+YYPULL	parse.c	61;"	d	file:
+YYPURE	parse.c	55;"	d	file:
+YYPUSH	parse.c	58;"	d	file:
+YYRECOVERING	parse.c	1088;"	d	file:
+YYRHSLOC	parse.c	1116;"	d	file:
+YYSIZE_MAXIMUM	parse.c	476;"	d	file:
+YYSIZE_T	parse.c	464;"	d	file:
+YYSIZE_T	parse.c	466;"	d	file:
+YYSIZE_T	parse.c	470;"	d	file:
+YYSIZE_T	parse.c	472;"	d	file:
+YYSKELETON_NAME	parse.c	52;"	d	file:
+YYSTACK_ALLOC	parse.c	522;"	d	file:
+YYSTACK_ALLOC	parse.c	526;"	d	file:
+YYSTACK_ALLOC	parse.c	531;"	d	file:
+YYSTACK_ALLOC	parse.c	554;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	parse.c	551;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	parse.c	557;"	d	file:
+YYSTACK_BYTES	parse.c	601;"	d	file:
+YYSTACK_FREE	parse.c	545;"	d	file:
+YYSTACK_FREE	parse.c	555;"	d	file:
+YYSTACK_GAP_MAXIMUM	parse.c	597;"	d	file:
+YYSTACK_RELOCATE	parse.c	1761;"	d	file:
+YYSTACK_RELOCATE	parse.c	628;"	d	file:
+YYSTATE	scan.c	132;"	d	file:
+YYSTYPE	parse.c	/^typedef union YYSTYPE$/;"	u	file:
+YYSTYPE	parse.c	/^} YYSTYPE;$/;"	t	file:
+YYSTYPE_IS_DECLARED	parse.c	421;"	d	file:
+YYSTYPE_IS_TRIVIAL	parse.c	419;"	d	file:
+YYTABLES_NAME	scan.c	3171;"	d	file:
+YYTABLE_NINF	parse.c	939;"	d	file:
+YYTERROR	parse.c	1108;"	d	file:
+YYTOKENTYPE	parse.c	298;"	d	file:
+YYTOKEN_TABLE	parse.c	292;"	d	file:
+YYTRANSLATE	parse.c	659;"	d	file:
+YYUNDEFTOK	parse.c	656;"	d	file:
+YYUSE	parse.c	492;"	d	file:
+YYUSE	parse.c	494;"	d	file:
+YY_	parse.c	482;"	d	file:
+YY_	parse.c	486;"	d	file:
+YY_AT_BOL	scan.c	339;"	d	file:
+YY_BREAK	scan.c	1396;"	d	file:
+YY_BUFFER_EOF_PENDING	scan.c	255;"	d	file:
+YY_BUFFER_NEW	scan.c	243;"	d	file:
+YY_BUFFER_NORMAL	scan.c	244;"	d	file:
+YY_BUFFER_STATE	scan.c	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	file:
+YY_BUF_SIZE	scan.c	149;"	d	file:
+YY_BUF_SIZE	scan.c	151;"	d	file:
+YY_CHAR	scan.c	/^typedef unsigned char YY_CHAR;$/;"	t	file:
+YY_CURRENT_BUFFER	scan.c	271;"	d	file:
+YY_CURRENT_BUFFER_LVALUE	scan.c	278;"	d	file:
+YY_DECL	scan.c	1384;"	d	file:
+YY_DECL_IS_OURS	scan.c	1380;"	d	file:
+YY_DO_BEFORE_ACTION	scan.c	367;"	d	file:
+YY_END_OF_BUFFER	scan.c	375;"	d	file:
+YY_END_OF_BUFFER_CHAR	scan.c	140;"	d	file:
+YY_EXIT_FAILURE	scan.c	2969;"	d	file:
+YY_EXTRA_TYPE	scan.c	1236;"	d	file:
+YY_FATAL_ERROR	scan.c	1371;"	d	file:
+YY_FLEX_MAJOR_VERSION	scan.c	9;"	d	file:
+YY_FLEX_MINOR_VERSION	scan.c	10;"	d	file:
+YY_FLEX_SUBMINOR_VERSION	scan.c	11;"	d	file:
+YY_FLUSH_BUFFER	scan.c	307;"	d	file:
+YY_INPUT	scan.c	1205;"	d	file:
+YY_INPUT	scan.c	1324;"	d	file:
+YY_INT_ALIGNED	scan.c	4;"	d	file:
+YY_LESS_LINENO	scan.c	172;"	d	file:
+YY_LOCATION_PRINT	parse.c	1144;"	d	file:
+YY_LOCATION_PRINT	parse.c	1149;"	d	file:
+YY_MORE_ADJ	scan.c	1116;"	d	file:
+YY_NEW_FILE	scan.c	138;"	d	file:
+YY_NO_UNPUT	scan.c	1161;"	d	file:
+YY_NULL	scan.c	112;"	d	file:
+YY_NUM_RULES	scan.c	374;"	d	file:
+YY_READ_BUF_SIZE	scan.c	1306;"	d	file:
+YY_READ_BUF_SIZE	scan.c	1308;"	d	file:
+YY_REDUCE_PRINT	parse.c	1309;"	d	file:
+YY_REDUCE_PRINT	parse.c	1322;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	scan.c	1117;"	d	file:
+YY_RULE_SETUP	scan.c	1399;"	d	file:
+YY_SC_TO_UI	scan.c	119;"	d	file:
+YY_SKIP_YYWRAP	scan.c	344;"	d	file:
+YY_STACK_PRINT	parse.c	1271;"	d	file:
+YY_STACK_PRINT	parse.c	1321;"	d	file:
+YY_START	scan.c	131;"	d	file:
+YY_START_STACK_INCR	scan.c	1366;"	d	file:
+YY_STATE_BUF_SIZE	scan.c	157;"	d	file:
+YY_STATE_EOF	scan.c	135;"	d	file:
+YY_STRUCT_YY_BUFFER_STATE	scan.c	196;"	d	file:
+YY_SYMBOL_PRINT	parse.c	1176;"	d	file:
+YY_SYMBOL_PRINT	parse.c	1320;"	d	file:
+YY_TYPEDEF_YY_BUFFER_STATE	scan.c	160;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	scan.c	191;"	d	file:
+YY_USER_ACTION	scan.c	1391;"	d	file:
+YY_USE_CONST	scan.c	100;"	d	file:
+YY_USE_CONST	scan.c	93;"	d	file:
+_STDLIB_H	parse.c	536;"	d	file:
+_STDLIB_H	parse.c	564;"	d	file:
+__STDC_LIMIT_MACROS	scan.c	39;"	d	file:
+_copy_config	coff.c	/^_copy_config(void)$/;"	f	file:
+_do_16_config	directive.c	/^static gpasmVal _do_16_config(gpasmVal r,$/;"	f	file:
+_do_pagesel	directive.c	/^static gpasmVal _do_pagesel(gpasmVal r,$/;"	f	file:
+_str	lst.c	43;"	d	file:
+_update_reloc_ptr	coff.c	/^_update_reloc_ptr(void)$/;"	f	file:
+_update_section_size	coff.c	/^_update_section_size(void)$/;"	f	file:
+_update_section_symbol	coff.c	/^_update_section_symbol(gp_section_type *section)$/;"	f	file:
+add_code	gperror.c	/^void add_code(int code)$/;"	f
+add_file	util.c	/^struct file_context * add_file(unsigned int type, const char *name)$/;"	f
+add_macro_table	macro.c	/^add_macro_table(struct symbol_table *table)$/;"	f	file:
+add_path	gpasm.c	/^add_path(const char *path)$/;"	f
+add_reloc	evaluate.c	/^add_reloc(struct pnode *p, short offset, unsigned short type)$/;"	f	file:
+add_symbol_constant	special.c	/^struct pnode *add_symbol_constant(struct pnode *parms, int value)$/;"	f
+alloca	parse.c	529;"	d	file:
+arg_buffer	macro.c	/^static char arg_buffer[BUFFER_SIZE];$/;"	v	file:
+arg_index	macro.c	/^static int arg_index;$/;"	v	file:
+asm_enabled	directive.c	/^int asm_enabled(void)$/;"	f
+assemble	gpasm.c	/^assemble(void)$/;"	f
+begin_cblock	directive.c	/^void begin_cblock(struct pnode *c)$/;"	f
+blocks	cod.c	/^static int blocks = 0;$/;"	v	file:
+bquote	scan.c	1222;"	d	file:
+can_evaluate	evaluate.c	/^int can_evaluate(struct pnode *p)$/;"	f
+can_evaluate_concatenation	evaluate.c	/^int can_evaluate_concatenation(struct pnode *p)$/;"	f
+cat_string	macro.c	/^cat_string(char *string)$/;"	f	file:
+cat_symbol	macro.c	/^cat_symbol(int op)$/;"	f	file:
+cblock_expr	directive.c	/^void cblock_expr(struct pnode *s)$/;"	f
+cblock_expr_incr	directive.c	/^void cblock_expr_incr(struct pnode *s, struct pnode *incr)$/;"	f
+check_code	gperror.c	/^static int check_code(int code)$/;"	f	file:
+check_defines	scan.c	/^check_defines(char *symbol)$/;"	f	file:
+check_flag	directive.c	/^static int check_flag(int flag)$/;"	f	file:
+checkwrite	directive.c	/^static unsigned short checkwrite(unsigned short value)$/;"	f	file:
+close_file	scan.c	/^void close_file(void)$/;"	f
+cmd_processor	gpasm.c	/^static gp_boolean cmd_processor = false;$/;"	v	file:
+cod_close_file	cod.c	/^cod_close_file(void)$/;"	f
+cod_emit_opcode	cod.c	/^cod_emit_opcode(int address,int opcode)$/;"	f	file:
+cod_init	cod.c	/^cod_init(void)$/;"	f
+cod_lst_line	cod.c	/^cod_lst_line(int line_type)$/;"	f
+cod_lst_line_number	cod.c	/^static int cod_lst_line_number = 0;$/;"	v	file:
+cod_write_code	cod.c	/^cod_write_code(void)$/;"	f	file:
+cod_write_symbols	cod.c	/^cod_write_symbols(struct symbol **symbol_list, int num_symbols)$/;"	f
+coerce_str1	util.c	/^void coerce_str1(struct pnode *exp)$/;"	f
+coff_add_directsym	coff.c	/^coff_add_directsym(unsigned char command, const char *string)$/;"	f
+coff_add_eofsym	coff.c	/^coff_add_eofsym(void)$/;"	f
+coff_add_filesym	coff.c	/^coff_add_filesym(const char *name, int isinclude)$/;"	f
+coff_add_identsym	coff.c	/^coff_add_identsym(const char *string)$/;"	f
+coff_add_listsym	coff.c	/^coff_add_listsym(void)$/;"	f
+coff_add_nolistsym	coff.c	/^coff_add_nolistsym(void)$/;"	f
+coff_add_sym	coff.c	/^coff_add_sym(const char *name, int value, enum gpasmValTypes type)$/;"	f
+coff_close_file	coff.c	/^coff_close_file(void)$/;"	f
+coff_init	coff.c	/^coff_init(void)$/;"	f
+coff_linenum	coff.c	/^coff_linenum(int emitted)$/;"	f
+coff_local_name	coff.c	/^coff_local_name(const char *name)$/;"	f
+coff_new_section	coff.c	/^coff_new_section(const char *name, int addr, int flags)$/;"	f
+coff_reloc	coff.c	/^coff_reloc(int symbol, short offset, unsigned short type)$/;"	f
+config_16_check_defaults	directive.c	/^static void config_16_check_defaults(const struct gp_cfg_device *p_dev)$/;"	f	file:
+config_16_set_mem	directive.c	/^static void config_16_set_mem(const struct gp_cfg_device *p_dev, int ca, unsigned char byte, unsigned char mask)$/;"	f	file:
+config_16_used	directive.c	/^static gp_boolean config_16_used;$/;"	v	file:
+config_add_section	directive.c	/^static gp_boolean config_add_section(int ca)$/;"	f	file:
+config_us_used	directive.c	/^static gp_boolean config_us_used;$/;"	v	file:
+continue_cblock	directive.c	/^void continue_cblock(void)$/;"	f
+convert_escape_chars	util.c	/^convert_escape_chars(const char *ps, int *value)$/;"	f
+convert_escaped_char	util.c	/^convert_escaped_char(char *str, char c)$/;"	f
+copy_macro_body	macro.c	/^void copy_macro_body(struct macro_body *b, char *buffer, size_t sizeof_buffer)$/;"	f
+count_reloc	evaluate.c	/^int count_reloc(struct pnode *p)$/;"	f
+define	scan.c	1224;"	d	file:
+defines	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	e	enum:identtype	file:
+definition	scan.c	1225;"	d	file:
+deps_add	deps.c	/^deps_add(char *file_name)$/;"	f
+deps_close	deps.c	/^deps_close(void)$/;"	f
+deps_init	deps.c	/^deps_init(void)$/;"	f
+directives	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	e	enum:identtype	file:
+do_16_config	directive.c	/^static gpasmVal do_16_config(gpasmVal r,$/;"	f	file:
+do_access_ovr	directive.c	/^static gpasmVal do_access_ovr(gpasmVal r,$/;"	f	file:
+do_addcf	special.c	/^static gpasmVal do_addcf(gpasmVal r,$/;"	f	file:
+do_adddcf	special.c	/^static gpasmVal do_adddcf(gpasmVal r,$/;"	f	file:
+do_b	special.c	/^static gpasmVal do_b(gpasmVal r,$/;"	f	file:
+do_badram	directive.c	/^static gpasmVal do_badram(gpasmVal r,$/;"	f	file:
+do_badrom	directive.c	/^static gpasmVal do_badrom(gpasmVal r,$/;"	f	file:
+do_bankisel	directive.c	/^static gpasmVal do_bankisel(gpasmVal r,$/;"	f	file:
+do_banksel	directive.c	/^static gpasmVal do_banksel(gpasmVal r,$/;"	f	file:
+do_bc	special.c	/^static gpasmVal do_bc(gpasmVal r,$/;"	f	file:
+do_bdc	special.c	/^static gpasmVal do_bdc(gpasmVal r,$/;"	f	file:
+do_bnc	special.c	/^static gpasmVal do_bnc(gpasmVal r,$/;"	f	file:
+do_bndc	special.c	/^static gpasmVal do_bndc(gpasmVal r,$/;"	f	file:
+do_bnz	special.c	/^static gpasmVal do_bnz(gpasmVal r,$/;"	f	file:
+do_bz	special.c	/^static gpasmVal do_bz(gpasmVal r,$/;"	f	file:
+do_clrc	special.c	/^static gpasmVal do_clrc(gpasmVal r,$/;"	f	file:
+do_clrdc	special.c	/^static gpasmVal do_clrdc(gpasmVal r,$/;"	f	file:
+do_clrz	special.c	/^static gpasmVal do_clrz(gpasmVal r,$/;"	f	file:
+do_code	directive.c	/^static gpasmVal do_code(gpasmVal r,$/;"	f	file:
+do_code_pack	directive.c	/^static gpasmVal do_code_pack(gpasmVal r,$/;"	f	file:
+do_config	directive.c	/^static gpasmVal do_config(gpasmVal r,$/;"	f	file:
+do_constant	directive.c	/^static gpasmVal do_constant(gpasmVal r,$/;"	f	file:
+do_da	directive.c	/^static gpasmVal do_da(gpasmVal r,$/;"	f	file:
+do_data	directive.c	/^static gpasmVal do_data(gpasmVal r,$/;"	f	file:
+do_db	directive.c	/^static gpasmVal do_db(gpasmVal r,$/;"	f	file:
+do_de	directive.c	/^static gpasmVal do_de(gpasmVal r,$/;"	f	file:
+do_def	directive.c	/^static gpasmVal do_def(gpasmVal r,$/;"	f	file:
+do_define	directive.c	/^static gpasmVal do_define(gpasmVal r,$/;"	f	file:
+do_dim	directive.c	/^static gpasmVal do_dim(gpasmVal r,$/;"	f	file:
+do_direct	directive.c	/^static gpasmVal do_direct(gpasmVal r,$/;"	f	file:
+do_dt	directive.c	/^static gpasmVal do_dt(gpasmVal r,$/;"	f	file:
+do_dw	directive.c	/^static gpasmVal do_dw(gpasmVal r,$/;"	f	file:
+do_else	directive.c	/^static gpasmVal do_else(gpasmVal r,$/;"	f	file:
+do_end	directive.c	/^static gpasmVal do_end(gpasmVal r,$/;"	f	file:
+do_endif	directive.c	/^static gpasmVal do_endif(gpasmVal r,$/;"	f	file:
+do_endm	directive.c	/^static gpasmVal do_endm(gpasmVal r,$/;"	f	file:
+do_endw	directive.c	/^static gpasmVal do_endw(gpasmVal r,$/;"	f	file:
+do_eof	directive.c	/^static gpasmVal do_eof(gpasmVal r,$/;"	f	file:
+do_equ	directive.c	/^static gpasmVal do_equ(gpasmVal r,$/;"	f	file:
+do_errlvl	directive.c	/^static gpasmVal do_errlvl(gpasmVal r,$/;"	f	file:
+do_error	directive.c	/^static gpasmVal do_error(gpasmVal r,$/;"	f	file:
+do_exitm	directive.c	/^static gpasmVal do_exitm(gpasmVal r,$/;"	f	file:
+do_expand	directive.c	/^static gpasmVal do_expand(gpasmVal r,$/;"	f	file:
+do_extern	directive.c	/^static gpasmVal do_extern(gpasmVal r,$/;"	f	file:
+do_file	directive.c	/^static gpasmVal do_file(gpasmVal r,$/;"	f	file:
+do_fill	directive.c	/^static gpasmVal do_fill(gpasmVal r,$/;"	f	file:
+do_global	directive.c	/^static gpasmVal do_global(gpasmVal r,$/;"	f	file:
+do_idata	directive.c	/^static gpasmVal do_idata(gpasmVal r,$/;"	f	file:
+do_idata_acs	directive.c	/^static gpasmVal do_idata_acs(gpasmVal r,$/;"	f	file:
+do_ident	directive.c	/^static gpasmVal do_ident(gpasmVal r,$/;"	f	file:
+do_idlocs	directive.c	/^static gpasmVal do_idlocs(gpasmVal r,$/;"	f	file:
+do_if	directive.c	/^static gpasmVal do_if(gpasmVal r,$/;"	f	file:
+do_ifdef	directive.c	/^static gpasmVal do_ifdef(gpasmVal r,$/;"	f	file:
+do_ifndef	directive.c	/^static gpasmVal do_ifndef(gpasmVal r,$/;"	f	file:
+do_include	directive.c	/^static gpasmVal do_include(gpasmVal r,$/;"	f	file:
+do_insn	directive.c	/^gpasmVal do_insn(char *name, struct pnode *parms)$/;"	f
+do_lcall	special.c	/^static gpasmVal do_lcall(gpasmVal r,$/;"	f	file:
+do_lgoto	special.c	/^static gpasmVal do_lgoto(gpasmVal r,$/;"	f	file:
+do_line	directive.c	/^static gpasmVal do_line(gpasmVal r,$/;"	f	file:
+do_list	directive.c	/^static gpasmVal do_list(gpasmVal r,$/;"	f	file:
+do_local	directive.c	/^static gpasmVal do_local(gpasmVal r,$/;"	f	file:
+do_macro	directive.c	/^static gpasmVal do_macro(gpasmVal r,$/;"	f	file:
+do_maxram	directive.c	/^static gpasmVal do_maxram(gpasmVal r,$/;"	f	file:
+do_maxrom	directive.c	/^static gpasmVal do_maxrom(gpasmVal r,$/;"	f	file:
+do_messg	directive.c	/^static gpasmVal do_messg(gpasmVal r,$/;"	f	file:
+do_mode	special.c	/^static gpasmVal do_mode(gpasmVal r,$/;"	f	file:
+do_movfw	special.c	/^static gpasmVal do_movfw(gpasmVal r,$/;"	f	file:
+do_negf	special.c	/^static gpasmVal do_negf(gpasmVal r,$/;"	f	file:
+do_noexpand	directive.c	/^static gpasmVal do_noexpand(gpasmVal r,$/;"	f	file:
+do_nolist	directive.c	/^static gpasmVal do_nolist(gpasmVal r,$/;"	f	file:
+do_or_append_insn	util.c	/^gpasmVal do_or_append_insn(char *op, struct pnode *parms)$/;"	f
+do_org	directive.c	/^static gpasmVal do_org(gpasmVal r,$/;"	f	file:
+do_page	directive.c	/^static gpasmVal do_page(gpasmVal r,$/;"	f	file:
+do_pagesel	directive.c	/^static gpasmVal do_pagesel(gpasmVal r,$/;"	f	file:
+do_pageselw	directive.c	/^static gpasmVal do_pageselw(gpasmVal r,$/;"	f	file:
+do_processor	directive.c	/^static gpasmVal do_processor(gpasmVal r,$/;"	f	file:
+do_radix	directive.c	/^static gpasmVal do_radix(gpasmVal r,$/;"	f	file:
+do_res	directive.c	/^static gpasmVal do_res(gpasmVal r,$/;"	f	file:
+do_set	directive.c	/^static gpasmVal do_set(gpasmVal r,$/;"	f	file:
+do_setc	special.c	/^static gpasmVal do_setc(gpasmVal r,$/;"	f	file:
+do_setdc	special.c	/^static gpasmVal do_setdc(gpasmVal r,$/;"	f	file:
+do_setz	special.c	/^static gpasmVal do_setz(gpasmVal r,$/;"	f	file:
+do_skpc	special.c	/^static gpasmVal do_skpc(gpasmVal r,$/;"	f	file:
+do_skpdc	special.c	/^static gpasmVal do_skpdc(gpasmVal r,$/;"	f	file:
+do_skpnc	special.c	/^static gpasmVal do_skpnc(gpasmVal r,$/;"	f	file:
+do_skpndc	special.c	/^static gpasmVal do_skpndc(gpasmVal r,$/;"	f	file:
+do_skpnz	special.c	/^static gpasmVal do_skpnz(gpasmVal r,$/;"	f	file:
+do_skpz	special.c	/^static gpasmVal do_skpz(gpasmVal r,$/;"	f	file:
+do_space	directive.c	/^static gpasmVal do_space(gpasmVal r,$/;"	f	file:
+do_subcf	special.c	/^static gpasmVal do_subcf(gpasmVal r,$/;"	f	file:
+do_subdcf	special.c	/^static gpasmVal do_subdcf(gpasmVal r,$/;"	f	file:
+do_subtitle	directive.c	/^static gpasmVal do_subtitle(gpasmVal r,$/;"	f	file:
+do_title	directive.c	/^static gpasmVal do_title(gpasmVal r,$/;"	f	file:
+do_tstf	special.c	/^static gpasmVal do_tstf(gpasmVal r,$/;"	f	file:
+do_type	directive.c	/^static gpasmVal do_type(gpasmVal r,$/;"	f	file:
+do_udata	directive.c	/^static gpasmVal do_udata(gpasmVal r,$/;"	f	file:
+do_udata_acs	directive.c	/^static gpasmVal do_udata_acs(gpasmVal r,$/;"	f	file:
+do_udata_ovr	directive.c	/^static gpasmVal do_udata_ovr(gpasmVal r,$/;"	f	file:
+do_udata_shr	directive.c	/^static gpasmVal do_udata_shr(gpasmVal r,$/;"	f	file:
+do_undefine	directive.c	/^static gpasmVal do_undefine(gpasmVal r,$/;"	f	file:
+do_variable	directive.c	/^static gpasmVal do_variable(gpasmVal r,$/;"	f	file:
+do_while	directive.c	/^static gpasmVal do_while(gpasmVal r,$/;"	f	file:
+emit	directive.c	/^static void emit(unsigned short value)$/;"	f	file:
+emit_byte	directive.c	/^static void emit_byte(unsigned char value)$/;"	f	file:
+emit_check	directive.c	/^static void emit_check(int insn, int argument, int mask)$/;"	f	file:
+emit_check_relative	directive.c	/^static void emit_check_relative(int insn, int argument, int mask, int range)$/;"	f	file:
+emit_data	directive.c	/^static int emit_data(struct pnode *L, int char_shift)$/;"	f	file:
+enforce_arity	evaluate.c	/^int enforce_arity(int arity, int must_be)$/;"	f
+enforce_simple	evaluate.c	/^int enforce_simple(struct pnode *p)$/;"	f
+enter_if	directive.c	/^static void enter_if(void)$/;"	f	file:
+error_list	gperror.c	/^struct error_list {$/;"	s	file:
+errorcodes_list	gperror.c	/^static struct error_list *errorcodes_list = NULL;$/;"	v	file:
+eval_fill_number	evaluate.c	/^int eval_fill_number(struct pnode *p)$/;"	f
+evaluate	evaluate.c	/^gpasmVal evaluate(struct pnode *p)$/;"	f
+evaluate_concatenation	evaluate.c	/^char *evaluate_concatenation(struct pnode *p)$/;"	f
+execute_exitm	scan.c	/^void execute_exitm(void)$/;"	f
+execute_macro	scan.c	/^void execute_macro(struct macro_head *h, int is_while)$/;"	f
+file_ok	directive.c	/^void file_ok(unsigned int file)$/;"	f
+flex_int16_t	scan.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
+flex_int16_t	scan.c	/^typedef short int flex_int16_t;$/;"	t	file:
+flex_int32_t	scan.c	/^typedef int flex_int32_t;$/;"	t	file:
+flex_int32_t	scan.c	/^typedef int32_t flex_int32_t;$/;"	t	file:
+flex_int8_t	scan.c	/^typedef int8_t flex_int8_t;$/;"	t	file:
+flex_int8_t	scan.c	/^typedef signed char flex_int8_t;$/;"	t	file:
+flex_uint16_t	scan.c	/^typedef uint16_t flex_uint16_t;$/;"	t	file:
+flex_uint16_t	scan.c	/^typedef unsigned short int flex_uint16_t;$/;"	t	file:
+flex_uint32_t	scan.c	/^typedef uint32_t flex_uint32_t;$/;"	t	file:
+flex_uint32_t	scan.c	/^typedef unsigned int flex_uint32_t;$/;"	t	file:
+flex_uint8_t	scan.c	/^typedef uint8_t flex_uint8_t;$/;"	t	file:
+flex_uint8_t	scan.c	/^typedef unsigned char flex_uint8_t; $/;"	t	file:
+force_decimal	scan.c	/^int force_decimal; \/* Used to force radix to decimal for some directives *\/$/;"	v
+force_ident	scan.c	/^int force_ident; \/* Used to force numbers to identifiers for processor names *\/$/;"	v
+found_end	scan.c	/^int found_end(void)$/;"	f
+found_eof	scan.c	/^static int found_eof(void)$/;"	f	file:
+free_files	util.c	/^void free_files(void)$/;"	f
+globals	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	e	enum:identtype	file:
+gp_geterror	gperror.c	/^char *gp_geterror(unsigned int code)$/;"	f
+gp_getmessage	gperror.c	/^char *gp_getmessage(unsigned int code)$/;"	f
+gp_getwarning	gperror.c	/^char *gp_getwarning(unsigned int code)$/;"	f
+gpasm_magic	util.c	/^int gpasm_magic(const char *c)$/;"	f
+gperror	gperror.c	/^void gperror(unsigned int code,$/;"	f
+gpmessage	gperror.c	/^void gpmessage(unsigned int code,$/;"	f
+gpwarning	gperror.c	/^void gpwarning(unsigned int code,$/;"	f
+hex_init	util.c	/^void hex_init(void)$/;"	f
+i	parse.c	/^  gpasmVal i;$/;"	m	union:YYSTYPE	file:
+identify	scan.c	/^enum identtype identify(char *text)$/;"	f
+identtype	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	g	file:
+init	gpasm.c	/^init(void)$/;"	f
+init_DirBlock	cod.c	/^init_DirBlock(DirBlockInfo *a_dir)$/;"	f	file:
+last	util.c	/^static struct file_context *last = NULL;$/;"	v	file:
+line_number	macro.c	/^  int line_number;            \/* sanity check, better not change *\/$/;"	m	struct:macro_table	file:
+list_length	evaluate.c	/^int list_length(struct pnode *L)$/;"	f
+list_symbol_member	directive.c	/^static int list_symbol_member(struct pnode *M, struct pnode *L)$/;"	f	file:
+lnquote	scan.c	1223;"	d	file:
+longopts	gpasm.c	/^static struct option longopts[] =$/;"	v	file:
+lst_check_page_start	lst.c	/^static void lst_check_page_start(void)$/;"	f	file:
+lst_close	lst.c	/^void lst_close(void)$/;"	f
+lst_data	lst.c	/^unsigned int lst_data(unsigned int pos, unsigned int byte_org,$/;"	f
+lst_defines_table	lst.c	/^void lst_defines_table(struct symbol_table *table)$/;"	f
+lst_eol	lst.c	/^static void lst_eol(void)$/;"	f	file:
+lst_format_line	lst.c	/^void lst_format_line(const char *src_line, int value)$/;"	f
+lst_init	lst.c	/^void lst_init(void)$/;"	f
+lst_line	lst.c	/^void lst_line(const char *format, ...)$/;"	f
+lst_memory_map	lst.c	/^void lst_memory_map(MemBlock *m)$/;"	f
+lst_printf	lst.c	/^static int lst_printf(const char *format, ...)$/;"	f	file:
+lst_spaces	lst.c	/^static int lst_spaces(int n)$/;"	f	file:
+lst_symbol_table	lst.c	/^void lst_symbol_table(struct symbol_table *table)$/;"	f
+lst_throw	lst.c	/^void lst_throw(void)$/;"	f
+macro_append	util.c	/^void macro_append(void)$/;"	f
+macro_parms_ok	directive.c	/^static int macro_parms_ok(struct pnode *parms)$/;"	f	file:
+macro_parms_simple	directive.c	/^static int macro_parms_simple(struct pnode *parms)$/;"	f	file:
+macro_parms_unique	directive.c	/^static int macro_parms_unique(struct pnode *parms)$/;"	f	file:
+macro_table	macro.c	/^struct macro_table {$/;"	s	file:
+macro_table_list	macro.c	/^static struct macro_table * macro_table_list = NULL;$/;"	v	file:
+macros	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	e	enum:identtype	file:
+main	main.c	/^main(int argc, char *argv[])$/;"	f
+main_dir	cod.c	/^static DirBlockInfo main_dir;$/;"	v	file:
+make_constant_list	special.c	/^struct pnode *make_constant_list(int value1, int value2)$/;"	f
+make_macro_buffer	macro.c	/^make_macro_buffer(struct macro_head *h)$/;"	f
+maybe_evaluate	evaluate.c	/^gpasmVal maybe_evaluate(struct pnode *p)$/;"	f
+maybe_evaluate_concat	evaluate.c	/^char *maybe_evaluate_concat(struct pnode *p)$/;"	f
+mk_1op	parse.c	/^static struct pnode *mk_1op(int op, struct pnode *p0)$/;"	f	file:
+mk_2op	parse.c	/^static struct pnode *mk_2op(int op, struct pnode *p0, struct pnode *p1)$/;"	f	file:
+mk_constant	parse.c	/^struct pnode *mk_constant(int value)$/;"	f
+mk_list	parse.c	/^struct pnode *mk_list(struct pnode *head, struct pnode *tail)$/;"	f
+mk_offset	parse.c	/^struct pnode *mk_offset(struct pnode *p)$/;"	f
+mk_pnode	parse.c	/^static struct pnode *mk_pnode(enum pnode_tag tag)$/;"	f	file:
+mk_string	parse.c	/^static struct pnode *mk_string(char *value)$/;"	f	file:
+mk_symbol	parse.c	/^static struct pnode *mk_symbol(char *value)$/;"	f	file:
+next	gperror.c	/^  struct error_list *next;$/;"	m	struct:error_list	file:
+next	macro.c	/^  struct macro_table *next;$/;"	m	struct:macro_table	file:
+next_line	parse.c	/^void next_line(int value)$/;"	f
+node_to_string	macro.c	/^node_to_string(struct pnode *p)$/;"	f	file:
+num_op_0	directive.c	/^const int num_op_0 = TABLE_SIZE(op_0);$/;"	v
+num_op_1	directive.c	/^const int num_op_1 = TABLE_SIZE(op_1);$/;"	v
+num_op_special	special.c	/^const int num_op_special = TABLE_SIZE(special);$/;"	v
+off_or_on	directive.c	/^static int off_or_on(struct pnode *p)$/;"	f	file:
+op_0	directive.c	/^struct insn op_0[] = {$/;"	v
+op_1	directive.c	/^struct insn op_1[] = {$/;"	v
+op_sx_mode	special.c	/^struct insn op_sx_mode = { "mode", 0, 0, INSN_CLASS_FUNC, 0, do_mode };$/;"	v
+opcode_init	directive.c	/^void opcode_init(int stage)$/;"	f
+opcodes	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	e	enum:identtype	file:
+open_src	scan.c	/^void open_src(const char *name, int isinclude)$/;"	f
+p	parse.c	/^  struct pnode *p;$/;"	m	union:YYSTYPE	file:
+print_macro_body	util.c	/^void print_macro_body(struct macro_body *mac)$/;"	f
+print_macro_node	util.c	/^void print_macro_node(struct macro_body *mac)$/;"	f
+print_pnode	util.c	/^void print_pnode(struct pnode *p)$/;"	f
+process_args	gpasm.c	/^process_args( int argc, char *argv[])$/;"	f
+processor_name	gpasm.c	/^static char *processor_name = NULL;$/;"	v	file:
+purge_temp_symbols	util.c	/^void purge_temp_symbols(struct symbol_table *table) {$/;"	f
+push_macro_symbol_table	macro.c	/^push_macro_symbol_table(struct symbol_table *table)$/;"	f
+push_string	scan.c	/^static void push_string(char *str)$/;"	f	file:
+quoted	scan.c	/^static int quoted; \/* Used to prevent #define expansion in ifdef and$/;"	v	file:
+reloc_evaluate	evaluate.c	/^gpasmVal reloc_evaluate(struct pnode *p, unsigned short type)$/;"	f
+repeat_while	scan.c	/^void repeat_while(void)$/;"	f
+return_op	parse.c	/^int return_op(int operation)$/;"	f
+s	parse.c	/^  char *s;$/;"	m	union:YYSTYPE	file:
+same_section	evaluate.c	/^same_section(struct pnode *p)$/;"	f	file:
+search_pathes	scan.c	/^search_pathes(struct source_context *new, const char *name)$/;"	f	file:
+select_errorlevel	util.c	/^void select_errorlevel(int level)$/;"	f
+select_expand	util.c	/^void select_expand(const char *expand)$/;"	f
+select_hexformat	util.c	/^void select_hexformat(const char *format_name)$/;"	f
+select_processor	processor.c	/^void select_processor(char *name)$/;"	f
+select_radix	util.c	/^void select_radix(const char *radix_name)$/;"	f
+set_bankisel	directive.c	/^set_bankisel(int address)$/;"	f	file:
+set_global	util.c	/^void set_global(const char *name,$/;"	f
+set_label	parse.c	/^gpasmVal set_label(char *label, struct pnode *parms)$/;"	f
+setup_macro	macro.c	/^void setup_macro(struct macro_head *h, int arity, struct pnode *parms)$/;"	f
+short	parse.c	432;"	d	file:
+show_usage	gpasm.c	/^show_usage(void)$/;"	f	file:
+special	special.c	/^struct insn special[] = {$/;"	v
+state	gpasm.c	/^struct gpasm_state state;$/;"	v
+stringtolong	util.c	/^stringtolong(const char *string, int radix)$/;"	f
+table	macro.c	/^  struct symbol_table *table;$/;"	m	struct:macro_table	file:
+unknown_type	scan.c	/^enum identtype { defines, directives, globals, macros, opcodes, unknown_type };$/;"	e	enum:identtype	file:
+unput	scan.c	188;"	d	file:
+value	gperror.c	/^  int value;$/;"	m	struct:error_list	file:
+write_cod_block	cod.c	/^write_cod_block(DirBlockInfo *dbp, $/;"	f	file:
+write_cod_range_block	cod.c	/^write_cod_range_block(unsigned int address, Block *rb)$/;"	f	file:
+write_directory	cod.c	/^write_directory(void)$/;"	f	file:
+write_file_block	cod.c	/^write_file_block(void)$/;"	f	file:
+yy_accept	scan.c	/^static yyconst flex_int16_t yy_accept[459] =$/;"	v	file:
+yy_at_bol	scan.c	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:
+yy_base	scan.c	/^static yyconst flex_int16_t yy_base[493] =$/;"	v	file:
+yy_bs_column	scan.c	/^    int yy_bs_column; \/**< The column count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_bs_lineno	scan.c	/^    int yy_bs_lineno; \/**< The line count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_pos	scan.c	/^	char *yy_buf_pos;		\/* current position in input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_size	scan.c	/^	yy_size_t yy_buf_size;$/;"	m	struct:yy_buffer_state	file:
+yy_buffer_stack	scan.c	/^static YY_BUFFER_STATE * yy_buffer_stack = 0; \/**< Stack as an array. *\/$/;"	v	file:
+yy_buffer_stack_max	scan.c	/^static size_t yy_buffer_stack_max = 0; \/**< capacity of stack. *\/$/;"	v	file:
+yy_buffer_stack_top	scan.c	/^static size_t yy_buffer_stack_top = 0; \/**< index of top of stack. *\/$/;"	v	file:
+yy_buffer_state	scan.c	/^struct yy_buffer_state$/;"	s	file:
+yy_buffer_status	scan.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:
+yy_c_buf_p	scan.c	/^static char *yy_c_buf_p = (char *) 0;$/;"	v	file:
+yy_ch_buf	scan.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_chk	scan.c	/^static yyconst flex_int16_t yy_chk[2268] =$/;"	v	file:
+yy_create_buffer	scan.c	/^    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )$/;"	f
+yy_def	scan.c	/^static yyconst flex_int16_t yy_def[493] =$/;"	v	file:
+yy_delete_buffer	scan.c	/^    void yy_delete_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_did_buffer_switch_on_eof	scan.c	/^static int yy_did_buffer_switch_on_eof;$/;"	v	file:
+yy_ec	scan.c	/^static yyconst flex_int32_t yy_ec[256] =$/;"	v	file:
+yy_fatal_error	scan.c	/^static void yy_fatal_error (yyconst char* msg )$/;"	f	file:
+yy_fill_buffer	scan.c	/^	int yy_fill_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_flex_debug	scan.c	/^int yy_flex_debug = 0;$/;"	v
+yy_flex_strlen	scan.c	/^static int yy_flex_strlen (yyconst char * s )$/;"	f	file:
+yy_flex_strncpy	scan.c	/^static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )$/;"	f	file:
+yy_flush_buffer	scan.c	/^    void yy_flush_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_get_next_buffer	scan.c	/^static int yy_get_next_buffer (void)$/;"	f	file:
+yy_get_previous_state	scan.c	/^    static yy_state_type yy_get_previous_state (void)$/;"	f	file:
+yy_hold_char	scan.c	/^static char yy_hold_char;$/;"	v	file:
+yy_init	scan.c	/^static int yy_init = 0;		\/* whether we need to initialize *\/$/;"	v	file:
+yy_init_buffer	scan.c	/^    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )$/;"	f	file:
+yy_init_globals	scan.c	/^static int yy_init_globals (void)$/;"	f	file:
+yy_input_file	scan.c	/^	FILE *yy_input_file;$/;"	m	struct:yy_buffer_state	file:
+yy_is_interactive	scan.c	/^	int yy_is_interactive;$/;"	m	struct:yy_buffer_state	file:
+yy_is_our_buffer	scan.c	/^	int yy_is_our_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_last_accepting_cpos	scan.c	/^static char *yy_last_accepting_cpos;$/;"	v	file:
+yy_last_accepting_state	scan.c	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
+yy_load_buffer_state	scan.c	/^static void yy_load_buffer_state  (void)$/;"	f	file:
+yy_meta	scan.c	/^static yyconst flex_int32_t yy_meta[76] =$/;"	v	file:
+yy_n_chars	scan.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:
+yy_n_chars	scan.c	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
+yy_new_buffer	scan.c	317;"	d	file:
+yy_nxt	scan.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:
+yy_nxt	scan.c	/^static yyconst flex_int16_t yy_nxt[2268] =$/;"	v	file:
+yy_reduce_print	parse.c	/^yy_reduce_print (yyvsp, yyrule)$/;"	f	file:
+yy_scan_buffer	scan.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f
+yy_scan_bytes	scan.c	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )$/;"	f
+yy_scan_string	scan.c	/^YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )$/;"	f
+yy_set_bol	scan.c	329;"	d	file:
+yy_set_interactive	scan.c	319;"	d	file:
+yy_size_t	scan.c	/^typedef size_t yy_size_t;$/;"	t	file:
+yy_stack_print	parse.c	/^yy_stack_print (yybottom, yytop)$/;"	f	file:
+yy_start	scan.c	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	file:
+yy_state_type	scan.c	/^typedef int yy_state_type;$/;"	t	file:
+yy_switch_to_buffer	scan.c	/^    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )$/;"	f
+yy_symbol_print	parse.c	/^yy_symbol_print (yyoutput, yytype, yyvaluep)$/;"	f	file:
+yy_symbol_value_print	parse.c	/^yy_symbol_value_print (yyoutput, yytype, yyvaluep)$/;"	f	file:
+yy_trans_info	scan.c	/^struct yy_trans_info$/;"	s	file:
+yy_try_NUL_trans	scan.c	/^    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )$/;"	f	file:
+yy_verify	scan.c	/^	flex_int32_t yy_verify;$/;"	m	struct:yy_trans_info	file:
+yyalloc	parse.c	/^union yyalloc$/;"	u	file:
+yyalloc	scan.c	/^void *yyalloc (yy_size_t  size )$/;"	f
+yychar	parse.c	/^int yychar;$/;"	v
+yycheck	parse.c	/^static const yytype_int16 yycheck[] =$/;"	v	file:
+yyclearin	parse.c	1073;"	d	file:
+yyconst	scan.c	106;"	d	file:
+yyconst	scan.c	108;"	d	file:
+yydebug	parse.c	/^int yydebug;$/;"	v
+yydefact	parse.c	/^static const yytype_uint8 yydefact[] =$/;"	v	file:
+yydefgoto	parse.c	/^static const yytype_int16 yydefgoto[] =$/;"	v	file:
+yydestruct	parse.c	/^yydestruct (yymsg, yytype, yyvaluep)$/;"	f	file:
+yyensure_buffer_stack	scan.c	/^static void yyensure_buffer_stack (void)$/;"	f	file:
+yyerrok	parse.c	1072;"	d	file:
+yyerror	parse.c	/^void yyerror(char *message)$/;"	f
+yyfree	scan.c	/^void yyfree (void * ptr )$/;"	f
+yyget_debug	scan.c	/^int yyget_debug  (void)$/;"	f
+yyget_in	scan.c	/^FILE *yyget_in  (void)$/;"	f
+yyget_leng	scan.c	/^int yyget_leng  (void)$/;"	f
+yyget_lineno	scan.c	/^int yyget_lineno  (void)$/;"	f
+yyget_out	scan.c	/^FILE *yyget_out  (void)$/;"	f
+yyget_text	scan.c	/^char *yyget_text  (void)$/;"	f
+yyin	scan.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yyinput	scan.c	/^    static int yyinput (void)$/;"	f	file:
+yyleng	scan.c	/^int yyleng;$/;"	v
+yyless	scan.c	175;"	d	file:
+yyless	scan.c	2980;"	d	file:
+yyless	scan.c	2981;"	d	file:
+yylex_destroy	scan.c	/^int yylex_destroy  (void)$/;"	f
+yylineno	scan.c	/^int yylineno = 1;$/;"	v
+yylval	parse.c	/^YYSTYPE yylval;$/;"	v
+yymore	scan.c	1115;"	d	file:
+yynerrs	parse.c	/^int yynerrs;$/;"	v
+yyout	scan.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yypact	parse.c	/^static const yytype_int16 yypact[] =$/;"	v	file:
+yypgoto	parse.c	/^static const yytype_int16 yypgoto[] =$/;"	v	file:
+yypop_buffer_state	scan.c	/^void yypop_buffer_state (void)$/;"	f
+yyprhs	parse.c	/^static const yytype_uint16 yyprhs[] =$/;"	v	file:
+yypush_buffer_state	scan.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer )$/;"	f
+yyr1	parse.c	/^static const yytype_uint8 yyr1[] =$/;"	v	file:
+yyr2	parse.c	/^static const yytype_uint8 yyr2[] =$/;"	v	file:
+yyrealloc	scan.c	/^void *yyrealloc  (void * ptr, yy_size_t  size )$/;"	f
+yyrestart	scan.c	/^    void yyrestart  (FILE * input_file )$/;"	f
+yyrhs	parse.c	/^static const yytype_int8 yyrhs[] =$/;"	v	file:
+yyrline	parse.c	/^static const yytype_uint16 yyrline[] =$/;"	v	file:
+yyset_debug	scan.c	/^void yyset_debug (int  bdebug )$/;"	f
+yyset_in	scan.c	/^void yyset_in (FILE *  in_str )$/;"	f
+yyset_lineno	scan.c	/^void yyset_lineno (int  line_number )$/;"	f
+yyset_out	scan.c	/^void yyset_out (FILE *  out_str )$/;"	f
+yyss_alloc	parse.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:
+yystos	parse.c	/^static const yytype_uint8 yystos[] =$/;"	v	file:
+yystpcpy	parse.c	/^yystpcpy (yydest, yysrc)$/;"	f	file:
+yystpcpy	parse.c	1371;"	d	file:
+yystrlen	parse.c	/^yystrlen (yystr)$/;"	f	file:
+yystrlen	parse.c	1348;"	d	file:
+yystype	parse.c	420;"	d	file:
+yysyntax_error	parse.c	/^yysyntax_error (char *yyresult, int yystate, int yychar)$/;"	f	file:
+yytable	parse.c	/^static const yytype_int16 yytable[] =$/;"	v	file:
+yyterminate	scan.c	1361;"	d	file:
+yytext	scan.c	/^char *yytext;$/;"	v
+yytext_ptr	scan.c	357;"	d	file:
+yytname	parse.c	/^static const char *const yytname[] =$/;"	v	file:
+yytnamerr	parse.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	file:
+yytokentype	parse.c	/^   enum yytokentype {$/;"	g	file:
+yytoknum	parse.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	file:
+yytranslate	parse.c	/^static const yytype_uint8 yytranslate[] =$/;"	v	file:
+yytype_int16	parse.c	/^typedef YYTYPE_INT16 yytype_int16;$/;"	t	file:
+yytype_int16	parse.c	/^typedef short int yytype_int16;$/;"	t	file:
+yytype_int8	parse.c	/^typedef YYTYPE_INT8 yytype_int8;$/;"	t	file:
+yytype_int8	parse.c	/^typedef short int yytype_int8;$/;"	t	file:
+yytype_int8	parse.c	/^typedef signed char yytype_int8;$/;"	t	file:
+yytype_uint16	parse.c	/^typedef YYTYPE_UINT16 yytype_uint16;$/;"	t	file:
+yytype_uint16	parse.c	/^typedef unsigned short int yytype_uint16;$/;"	t	file:
+yytype_uint8	parse.c	/^typedef YYTYPE_UINT8 yytype_uint8;$/;"	t	file:
+yytype_uint8	parse.c	/^typedef unsigned char yytype_uint8;$/;"	t	file:
+yyunput	scan.c	/^    static void yyunput (int c, register char * yy_bp )$/;"	f	file:
+yyvs_alloc	parse.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:
+yywrap	scan.c	343;"	d	file:

@@ -1,0 +1,1 @@
+gpasm: gpwriteobj.c:45: _gp_coffgen_addstring: Assertion `!(nbytes > 0xffff)' failed.

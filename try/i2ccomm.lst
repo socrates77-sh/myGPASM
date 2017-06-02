@@ -1,0 +1,430 @@
+gpasm-1.4.0 (Aug 29 2013)    i2ccomm.asm        2013-9-16  17:36:21          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 #include mc30p011.inc 
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00002 #include  "i2ccomm.inc"       
+                      00001 #include  "flags.inc"            ; required include file
+                      00001  
+                      00002 ; bits for variable sflag_event
+                      00003 #define  sh1         0                   ; place holder
+                      00004 #define  sh2         1                   ; place holder
+                      00005 #define  sh3         2                   ; place holder
+                      00006 #define  sh4         3                   ; place holder
+                      00007 #define  sh5         4                   ; place holder
+                      00008 #define  sh6         5                   ; place holder
+                      00009 #define  sh7         6                   ; place holder
+                      00010 #define  rw_done     7                   ; flag bit
+                      00011 
+                      00012 
+                      00013 ; bits for variable eflag_event
+                      00014 #define  ack_error   0                   ; flag bit
+                      00015 #define  eh1         1                   ; place holder
+                      00016 #define  eh2         2                   ; place holder
+                      00017 #define  eh3         3                   ; place holder
+                      00018 #define  eh4         4                   ; place holder
+                      00019 #define  eh5         5                   ; place holder
+                      00020 #define  eh6         6                   ; place holder
+                      00021 #define  eh7         7                   ; place holder
+                      00002 
+  0000000F            00003 i2cSizeMask             EQU             0x0F
+                      00004 
+                      00005 
+                      00006         GLOBAL          sflag_event          ; make variable viewable for other modules 
+                      00007         GLOBAL          eflag_event          ; make variable viewable for other modules
+                      00008         GLOBAL          i2cState             ; make variable viewable for other modules
+                      00009         GLOBAL          read_count           ; make variable viewable for other modules
+                      00010         GLOBAL          write_count          ; make variable viewable for other modules
+                      00011         GLOBAL          write_ptr            ; make variable viewable for other modules
+                      00012         GLOBAL          read_ptr             ; make variable viewable for other modules
+                      00013         GLOBAL          temp_address         ; make variable viewable for other modules
+                      00014 
+                      00015         GLOBAL          init_i2c             ; make function viewable for other modules
+                      00016         GLOBAL          service_i2c          ; make function viewable for other modules
+                      00017 
+                      00018 
+                      00019 
+                      00020 ;*******    GENERAL PURPOSE VARIABLES
+                      00021 GPR_DATA                UDATA
+0000                  00022 sflag_event      RES     1               ; variable for i2c general status flags
+0000                  00023 eflag_event      RES     1               ; variable for i2c error status flags
+0001                  00024 i2cState         RES     1               ; I2C state machine variable
+0001                  00025 read_count       RES     1               ; variable used for slave read byte count
+0002                  00026 write_count      RES     1               ; variable used for slave write byte count
+0002                  00027 write_ptr        RES     1               ; variable used for pointer (writes to)
+0003                  00028 read_ptr         RES     1               ; variable used for pointer (reads from)
+0003                  00029 temp_address     RES     1               ; variable used for passing address to functions
+                      00030                 
+                      00031 
+                      00003 
+                      00004 #define  FOSC        D'8000000'
+                      00005 #define  I2CClock    D'400000'
+                      00006 #define  ClockValue  (((FOSC/I2CClock)/4) -1) ; 
+                      00007         
+                      00008 
+                      00009 ;----------------------------------------------------------------------
+                      00010 ;   ***********************  I2C Service  *************************
+                      00011 ;----------------------------------------------------------------------
+                      00012 I2C_COMM        CODE    
+0000                  00013 service_i2c:
+0000   15C6           00014         movra DDR1
+0001   0B00           00015         movai high I2CJump
+0002   158A           00016         movra PCLATH
+0003   0B0F           00017         movai i2cSizeMask
+0004   1E00           00018         andar i2cState
+0005   0E00           00019         addai low (I2CJump + 1)
+0006   3403           00020         jbclr STATUS, C
+0007   198A           00021         incr PCLATH
+0008                  00022 I2CJump:
+0008   1582           00023         movra PCL
+                      00024 
+0009   2800           00025         goto WrtStart
+000A   2800           00026         goto SendWrtAddr
+000B   2800           00027         goto WrtAckTest
+000C   2800           00028         goto WrtStop
+                      00029 
+000D   2800           00030         goto ReadStart
+000E   2800           00031         goto SendReadAddr
+000F   2800           00032         goto ReadAckTest
+0010   2800           00033         goto ReadData
+0011   2800           00034         goto ReadStop
+                      00035 
+0012                  00036 I2CJumpEnd               
+0012   000C 000C 000C 00037         Fill (return),  (I2CJump-I2CJumpEnd) + i2cSizeMask 
+       000C 000C      
+                      00038 
+                      00039 
+                      00040 
+                      00041 
+                      00042 ;----------------------------------------------------------------------
+                      00043 ;   ********************* Write data to Slave   *********************
+                      00044 ;----------------------------------------------------------------------
+                      00045 ; Generate I2C bus start condition               [ I2C STATE -> 0 ]
+0017                  00046 WrtStart
+0017   1600           00047         movar write_ptr
+0018   1584           00048         movra FSR
+0019   1980           00049         incr i2cState
+001A   3805           00050         bset P0, 0
+001B   000C           00051         return
+                      00052 
+                      00053 ; Generate I2C address write (R/W=0)             [ I2C STATE -> 1 ]
+001C                  00054 SendWrtAddr
+001C   3C03           00055         bclr STATUS, C
+001D   1480           00056         rlr temp_address
+001E   1980           00057         incr i2cState
+001F   000C           00058         return
+                      00059 
+                      00060 ; Test acknowledge after address and data write  [ I2C STATE -> 2 ]
+0020                  00061 WrtAckTest
+0020   3085           00062         jbset P0, 1
+0021   2800           00063         goto WrtData
+0022   3800           00064         bset eflag_event, ack_error
+0023   1D80           00065         clrr i2cState
+0024   000C           00066         return
+                      00067 
+                      00068 ; Generate I2C write data condition
+0025                  00069 WrtData
+0025   1600           00070         movar INDF
+0026   3105           00071         jbset P0, 2
+0027   2800           00072         goto send_byte
+0028   1980           00073         incr i2cState
+0029                  00074 send_byte
+0029   1586           00075         movra P1
+002A   000C           00076         return
+                      00077 
+                      00078 ; Generate I2C bus stop condition                [ I2C STATE -> 3 ]
+002B                  00079 WrtStop
+002B   3185           00080         jbset P0, 3
+002C   2800           00081         goto no_error
+002D   3800           00082         bset eflag_event, ack_error
+002E   1D80           00083         clrr i2cState
+002F   2800           00084         goto stop1
+0030                  00085 no_error
+0030   1980           00086         incr i2cState
+0031                  00087 stop1
+0031   3886           00088         bset P1, 1
+0032   000C           00089         return
+                      00090 
+                      00091 ;----------------------------------------------------------------------
+                      00092 ;   ********************* Read data from Slave   *********************
+                      00093 ;----------------------------------------------------------------------
+                      00094 ; Generate I2C start condition                   [ I2C STATE -> 4 ]
+0033                  00095 ReadStart
+0033   1600           00096         movar read_ptr
+0034   1584           00097         movra FSR
+0035   1980           00098         incr i2cState
+0036   3806           00099         bset P1, 0
+0037   000C           00100         return
+                      00101 
+                      00102 ; Generate I2C address write (R/W=1)             [ I2C STATE -> 5 ]
+0038                  00103 SendReadAddr 
+0038   3803           00104         bset STATUS, C
+0039   1480           00105         rlr temp_address
+003A   1980           00106         incr i2cState
+003B   000C           00107         return
+                      00108 
+                      00109 ; Test acknowledge after address write           [ I2C STATE -> 6 ]
+003C                  00110 ReadAckTest
+003C   3106           00111         jbset P1, 2
+003D   2800           00112         goto StartReadData
+003E   3800           00113         bset eflag_event, ack_error
+003F   1D80           00114         clrr i2cState
+0040   000C           00115         return
+                      00116 
+0041                  00117 StartReadData
+0041   1980           00118         incr i2cState
+0042   000C           00119         return
+                      00120 
+                      00121 ; Read slave I2C                                 [ I2C STATE -> 7 ]
+0043                  00122 ReadData
+0043   1A80           00123         djzr read_count
+0044   2800           00124         goto SendReadAck
+                      00125 
+                      00126 ; Send Not Acknowledge
+0045                  00127 SendReadNack
+0045   1580           00128         movra INDF
+0046   1980           00129         incr i2cState
+0047   000C           00130         return
+                      00131 
+                      00132 ; Send Acknowledge
+0048                  00133 SendReadAck
+0048   1580           00134         movra INDF
+0049   1984           00135         incr FSR
+004A   2800           00136         goto $-1
+004B   3906           00137         bset P1, 2
+004C   000C           00138         return
+                      00139 
+                      00140 ; Generate I2C stop condition                    [ I2C STATE -> 8 ]
+004D                  00141 ReadStop
+004D   3D06           00142         bclr P1, 2
+004E   1D80           00143         clrr i2cState
+004F   3B80           00144         bset sflag_event, rw_done
+0050   000C           00145         return
+                      00146         
+                      00147 ;----------------------------------------------------------------------
+                      00148 ;   ******************* Generic bus idle check ***********************
+                      00149 ;----------------------------------------------------------------------
+                      00150 ; test for i2c bus idle state; not implemented in this code (example only)
+0051                  00151 i2c_idle   
+0051   1586           00152         movra P1
+0052   0D1F           00153         andai 0x1f
+0053   3103           00154         jbset STATUS, Z
+0054   2800           00155         goto $-3
+0055   000C           00156         return
+                      00157 
+                      00158 ;----------------------------------------------------------------------
+                      00159 ;  ******************* INITIALIZE MSSP MODULE  *******************
+                      00160 ;----------------------------------------------------------------------
+                      00161 
+0056                  00162 init_i2c
+0056   0B04           00163         movai ClockValue
+0057   0B18           00164         movai b'00011000'
+                      00165         ;iost 5
+0058   000C           00166         return
+                      00167 
+                      00168         end
+gpasm-1.4.0 (Aug 29 2013)    i2ccomm.asm        2013-9-16  17:36:21          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+I2CJump                           00000008
+I2CJumpEnd                        00000012
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+ReadAckTest                       0000003C
+ReadData                          00000043
+ReadStart                         00000033
+ReadStop                          0000004D
+STATUS                            00000003
+SendReadAck                       00000048
+SendReadAddr                      00000038
+SendReadNack                      00000045
+SendWrtAddr                       0000001C
+StartReadData                     00000041
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+WrtAckTest                        00000020
+WrtData                           00000025
+WrtStart                          00000017
+WrtStop                           0000002B
+Z                                 00000002
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_I2C_COMM_004A                    0000004A
+_I2C_COMM_0054                    00000054
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+eflag_event                       00000001
+i2cSizeMask                       0000000F
+i2cState                          00000002
+i2c_idle                          00000051
+init_i2c                          00000056
+no_error                          00000030
+read_count                        00000003
+read_ptr                          00000006
+send_byte                         00000029
+service_i2c                       00000000
+sflag_event                       00000000
+stop1                             00000031
+temp_address                      00000007
+write_count                       00000004
+write_ptr                         00000005
+ClockValue                        (((FOSC/I2CClock)/4) -1)
+FOSC                              D'8000000'
+I2CClock                          D'400000'
+ack_error                         0
+eh1                               1
+eh2                               2
+eh3                               3
+eh4                               4
+eh5                               5
+eh6                               6
+eh7                               7
+rw_done                           7
+sh1                               0
+sh2                               1
+sh3                               2
+sh4                               3
+sh5                               4
+sh6                               5
+sh7                               6
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
