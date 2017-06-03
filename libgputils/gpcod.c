@@ -25,44 +25,40 @@ Boston, MA 02111-1307, USA.  */
 /* copy a string to a cod block using the pascal convention, i.e. the 
    string length occupies the first string location */
 
-void 
-gp_cod_strncpy(unsigned char *dest, const char *src, int max_len)
+void gp_cod_strncpy(unsigned char *dest, const char *src, int max_len)
 {
   int len = strlen(src);
-  dest[-1] = ( (max_len>len) ? len : max_len );
+  dest[-1] = ((max_len > len) ? len : max_len);
   memcpy(dest, src, dest[-1]);
 }
 
 /* gp_cod_clear - write zeroes to a code block, unless the code block ptr 
    is null. */
 
-void
-gp_cod_clear(Block *b)
+void gp_cod_clear(Block *b)
 {
   int i;
 
-  if(b && b->block)
-    for(i=0; i<COD_BLOCK_SIZE; i++)
+  if (b && b->block)
+    for (i = 0; i < COD_BLOCK_SIZE; i++)
       b->block[i] = 0;
   else
     assert(0);
 }
 
-void
-gp_cod_delete(Block *b)
+void gp_cod_delete(Block *b)
 {
 
-  if(b && b->block) {
+  if (b && b->block)
+  {
     free(b->block);
     b->block = NULL;
   }
   else
     assert(0);
-
 }
 
-void
-gp_cod_next(Block *b, int *block_number)
+void gp_cod_next(Block *b, int *block_number)
 {
   assert(b != NULL);
   gp_cod_clear(b);
@@ -70,8 +66,7 @@ gp_cod_next(Block *b, int *block_number)
   *block_number = *block_number + 1;
 }
 
-void
-gp_cod_create(Block *b, int *block_number)
+void gp_cod_create(Block *b, int *block_number)
 {
 
   assert(b != NULL);
@@ -80,21 +75,18 @@ gp_cod_create(Block *b, int *block_number)
   gp_cod_clear(b);
   b->block_number = *block_number;
   *block_number = *block_number + 1;
-
 }
 
-void
-gp_cod_date(unsigned char *buffer, size_t sizeof_buffer)
+void gp_cod_date(unsigned char *buffer, size_t sizeof_buffer)
 {
-  #define TEMP_SIZE 32
+#define TEMP_SIZE 32
   char temp[TEMP_SIZE];
   time_t now;
   struct tm *now_tm;
 
   static const char mon_name[12][4] = {
-    "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0",
-    "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0"
-  };
+      "Jan\0", "Feb\0", "Mar\0", "Apr\0", "May\0", "Jun\0",
+      "Jul\0", "Aug\0", "Sep\0", "Oct\0", "Nov\0", "Dec\0"};
 
   time(&now);
   now_tm = localtime(&now);
@@ -107,8 +99,7 @@ gp_cod_date(unsigned char *buffer, size_t sizeof_buffer)
   memcpy(buffer, temp, sizeof_buffer);
 }
 
-void
-gp_cod_time(unsigned char *buffer, size_t sizeof_buffer)
+void gp_cod_time(unsigned char *buffer, size_t sizeof_buffer)
 {
   time_t now;
   struct tm *now_tm;
@@ -118,7 +109,7 @@ gp_cod_time(unsigned char *buffer, size_t sizeof_buffer)
   now_tm = localtime(&now);
 
   value = ((now_tm->tm_hour) * 100) + now_tm->tm_min;
-  
+
   buffer[0] = value & 0xff;
   buffer[1] = (value >> 8) & 0xff;
   buffer[2] = now_tm->tm_sec & 0xff;

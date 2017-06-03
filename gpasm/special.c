@@ -158,7 +158,8 @@ static gpasmVal do_clrc(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -173,7 +174,8 @@ static gpasmVal do_clrdc(gpasmVal r,
                          struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -188,7 +190,8 @@ static gpasmVal do_clrz(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -227,7 +230,8 @@ static gpasmVal do_movfw(gpasmVal r,
                          struct pnode *parms)
 {
 
-  if (enforce_arity(arity, 1)) {
+  if (enforce_arity(arity, 1))
+  {
     do_insn("movf", add_symbol_constant(parms, 0));
   }
 
@@ -240,10 +244,13 @@ static gpasmVal do_negf(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if ((arity == 1) || (arity == 2)) {
+  if ((arity == 1) || (arity == 2))
+  {
     do_insn("comf", add_symbol_constant(parms, 1));
     do_insn("incf", parms);
-  } else {
+  }
+  else
+  {
     enforce_arity(arity, 2);
   }
 
@@ -256,7 +263,8 @@ static gpasmVal do_setc(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -271,7 +279,8 @@ static gpasmVal do_setdc(gpasmVal r,
                          struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -286,7 +295,8 @@ static gpasmVal do_setz(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -301,7 +311,8 @@ static gpasmVal do_skpc(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -316,7 +327,8 @@ static gpasmVal do_skpdc(gpasmVal r,
                          struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -331,7 +343,8 @@ static gpasmVal do_skpz(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -346,7 +359,8 @@ static gpasmVal do_skpnc(gpasmVal r,
                          struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -361,7 +375,8 @@ static gpasmVal do_skpndc(gpasmVal r,
                           struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -376,7 +391,8 @@ static gpasmVal do_skpnz(gpasmVal r,
                          struct pnode *parms)
 {
 
-  if (arity) {
+  if (arity)
+  {
     gperror(GPE_TOO_MANY_ARGU, NULL);
   }
 
@@ -398,9 +414,9 @@ static gpasmVal do_subcf(gpasmVal r,
 }
 
 static gpasmVal do_subdcf(gpasmVal r,
-                         char *name,
-                         int arity,
-                         struct pnode *parms)
+                          char *name,
+                          int arity,
+                          struct pnode *parms)
 {
 
   do_insn("btfsc", make_constant_list(3, 1));
@@ -415,7 +431,8 @@ static gpasmVal do_tstf(gpasmVal r,
                         struct pnode *parms)
 {
 
-  if (enforce_arity(arity, 1)) {
+  if (enforce_arity(arity, 1))
+  {
     do_insn("movf", add_symbol_constant(parms, 1));
   }
 
@@ -427,10 +444,12 @@ static gpasmVal do_mode(gpasmVal r,
                         int arity,
                         struct pnode *parms)
 {
-  if (enforce_arity(arity, 1)) {
-    struct pnode* val = HEAD(parms);
+  if (enforce_arity(arity, 1))
+  {
+    struct pnode *val = HEAD(parms);
     if ((val->tag == constant) &&
-        (val->value.constant > 0x1f)) {
+        (val->value.constant > 0x1f))
+    {
       gpwarning(GPW_RANGE, NULL);
       val->value.constant &= 0x1f;
     }
@@ -442,36 +461,35 @@ static gpasmVal do_mode(gpasmVal r,
 
 /* PIC 12-bit and 14-bit "Special" instruction set */
 struct insn special[] = {
-  { "addcf",    0, 0, INSN_CLASS_FUNC, 0, do_addcf },
-  { "adddcf",   0, 0, INSN_CLASS_FUNC, 0, do_adddcf },
-  { "b",        0, 0, INSN_CLASS_FUNC, 0, do_b },
-  { "bc",       0, 0, INSN_CLASS_FUNC, 0, do_bc },
-  { "bdc",      0, 0, INSN_CLASS_FUNC, 0, do_bdc },
-  { "bz",       0, 0, INSN_CLASS_FUNC, 0, do_bz },
-  { "bnc",      0, 0, INSN_CLASS_FUNC, 0, do_bnc },
-  { "bndc",     0, 0, INSN_CLASS_FUNC, 0, do_bndc },
-  { "bnz",      0, 0, INSN_CLASS_FUNC, 0, do_bnz },
-  { "clrc",     0, 0, INSN_CLASS_FUNC, 0, do_clrc },
-  { "clrdc",    0, 0, INSN_CLASS_FUNC, 0, do_clrdc },
-  { "clrz",     0, 0, INSN_CLASS_FUNC, 0, do_clrz },
-  { "lcall1",    0, 0, INSN_CLASS_FUNC, 0, do_lcall },
-  { "lgoto1",    0, 0, INSN_CLASS_FUNC, 0, do_lgoto },
-  { "movfw",    0, 0, INSN_CLASS_FUNC, 0, do_movfw },
-  { "negf",     0, 0, INSN_CLASS_FUNC, 0, do_negf },
-  { "setc",     0, 0, INSN_CLASS_FUNC, 0, do_setc },
-  { "setdc",    0, 0, INSN_CLASS_FUNC, 0, do_setdc },
-  { "setz",     0, 0, INSN_CLASS_FUNC, 0, do_setz },
-  { "skpc",     0, 0, INSN_CLASS_FUNC, 0, do_skpc },
-  { "skpdc",    0, 0, INSN_CLASS_FUNC, 0, do_skpdc },
-  { "skpz",     0, 0, INSN_CLASS_FUNC, 0, do_skpz },
-  { "skpnc",    0, 0, INSN_CLASS_FUNC, 0, do_skpnc },
-  { "skpndc",   0, 0, INSN_CLASS_FUNC, 0, do_skpndc },
-  { "skpnz",    0, 0, INSN_CLASS_FUNC, 0, do_skpnz },
-  { "subcf",    0, 0, INSN_CLASS_FUNC, 0, do_subcf },
-  { "subdcf",   0, 0, INSN_CLASS_FUNC, 0, do_subdcf },
-  { "tstf",     0, 0, INSN_CLASS_FUNC, 0, do_tstf }
-};
+    {"addcf", 0, 0, INSN_CLASS_FUNC, 0, do_addcf},
+    {"adddcf", 0, 0, INSN_CLASS_FUNC, 0, do_adddcf},
+    {"b", 0, 0, INSN_CLASS_FUNC, 0, do_b},
+    {"bc", 0, 0, INSN_CLASS_FUNC, 0, do_bc},
+    {"bdc", 0, 0, INSN_CLASS_FUNC, 0, do_bdc},
+    {"bz", 0, 0, INSN_CLASS_FUNC, 0, do_bz},
+    {"bnc", 0, 0, INSN_CLASS_FUNC, 0, do_bnc},
+    {"bndc", 0, 0, INSN_CLASS_FUNC, 0, do_bndc},
+    {"bnz", 0, 0, INSN_CLASS_FUNC, 0, do_bnz},
+    {"clrc", 0, 0, INSN_CLASS_FUNC, 0, do_clrc},
+    {"clrdc", 0, 0, INSN_CLASS_FUNC, 0, do_clrdc},
+    {"clrz", 0, 0, INSN_CLASS_FUNC, 0, do_clrz},
+    {"lcall1", 0, 0, INSN_CLASS_FUNC, 0, do_lcall},
+    {"lgoto1", 0, 0, INSN_CLASS_FUNC, 0, do_lgoto},
+    {"movfw", 0, 0, INSN_CLASS_FUNC, 0, do_movfw},
+    {"negf", 0, 0, INSN_CLASS_FUNC, 0, do_negf},
+    {"setc", 0, 0, INSN_CLASS_FUNC, 0, do_setc},
+    {"setdc", 0, 0, INSN_CLASS_FUNC, 0, do_setdc},
+    {"setz", 0, 0, INSN_CLASS_FUNC, 0, do_setz},
+    {"skpc", 0, 0, INSN_CLASS_FUNC, 0, do_skpc},
+    {"skpdc", 0, 0, INSN_CLASS_FUNC, 0, do_skpdc},
+    {"skpz", 0, 0, INSN_CLASS_FUNC, 0, do_skpz},
+    {"skpnc", 0, 0, INSN_CLASS_FUNC, 0, do_skpnc},
+    {"skpndc", 0, 0, INSN_CLASS_FUNC, 0, do_skpndc},
+    {"skpnz", 0, 0, INSN_CLASS_FUNC, 0, do_skpnz},
+    {"subcf", 0, 0, INSN_CLASS_FUNC, 0, do_subcf},
+    {"subdcf", 0, 0, INSN_CLASS_FUNC, 0, do_subdcf},
+    {"tstf", 0, 0, INSN_CLASS_FUNC, 0, do_tstf}};
 
 const int num_op_special = TABLE_SIZE(special);
 
-struct insn op_sx_mode = { "mode", 0, 0, INSN_CLASS_FUNC, 0, do_mode };
+struct insn op_sx_mode = {"mode", 0, 0, INSN_CLASS_FUNC, 0, do_mode};

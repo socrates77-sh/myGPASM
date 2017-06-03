@@ -30,24 +30,31 @@ void select_processor(char *name)
 {
   const struct px *found = NULL;
 
-  if (state.cmd_line.processor) {
+  if (state.cmd_line.processor)
+  {
     gpwarning(GPW_CMDLINE_PROC, NULL);
-  } else {
+  }
+  else
+  {
     found = gp_find_processor(name);
-    if (found) {
+    if (found)
+    {
       int badrom_idx;
-      if (state.processor == no_processor) {
+      if (state.processor == no_processor)
+      {
         state.processor = found;
-           state.maxrom = found->maxrom;
+        state.maxrom = found->maxrom;
         /* initialize badrom from internal processor info */
         state.badrom = NULL;
-        for (badrom_idx = 0; badrom_idx < MAX_BADROM; badrom_idx+=2) {
+        for (badrom_idx = 0; badrom_idx < MAX_BADROM; badrom_idx += 2)
+        {
           long start, end;
           start = found->badrom[badrom_idx];
-          end = found->badrom[badrom_idx+1];
+          end = found->badrom[badrom_idx + 1];
           if ((start == -1) || (end == -1))
             break;
-          else {
+          else
+          {
             struct range_pair *new_pair = malloc(sizeof(struct range_pair));
             new_pair->start = start;
             new_pair->end = end;
@@ -56,29 +63,38 @@ void select_processor(char *name)
           }
         }
         set_global(found->defined_as, 1, PERMANENT, gvt_constant);
-      } else if (state.processor != found ) {
+      }
+      else if (state.processor != found)
+      {
         gpwarning(GPW_REDEFINING_PROC, NULL);
         gperror(GPE_EXTRA_PROC, NULL);
       }
-    } else {
-      if (state.pass) {
+    }
+    else
+    {
+      if (state.pass)
+      {
         gperror(GPE_UNKNOWN_PROC, NULL);
-      } else {
-        printf("Didn't find any processor named: %s\nHere are the supported processors:\n",name);
+      }
+      else
+      {
+        printf("Didn't find any processor named: %s\nHere are the supported processors:\n", name);
         gp_dump_processor_list(true, 0);
         exit(1);
       }
     }
     /* load the instruction sets if necessary */
     if ((state.processor_chosen == 0) &&
-        (state.processor != no_processor)) {
-      opcode_init(1);   /* General directives */
+        (state.processor != no_processor))
+    {
+      opcode_init(1); /* General directives */
       /* seperate the directives from the opcodes */
       state.stBuiltin = push_symbol_table(state.stBuiltin, true);
-      opcode_init(2);   /* Processor-specific */
+      opcode_init(2); /* Processor-specific */
       if (state.device.class != PROC_CLASS_PIC16E &&
-          state.device.class != PROC_CLASS_PIC16) {
-        opcode_init(3);   /* Special pseudo ops for 12 and 14 bit devices */
+          state.device.class != PROC_CLASS_PIC16)
+      {
+        opcode_init(3); /* Special pseudo ops for 12 and 14 bit devices */
       }
       state.processor_chosen = 1;
     }

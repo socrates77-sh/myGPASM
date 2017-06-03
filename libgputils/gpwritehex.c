@@ -23,10 +23,10 @@ Boston, MA 02111-1307, USA.  */
 #include "libgputils.h"
 
 /* mode flags */
-#define all   0
-#define low   1
-#define high  2
-#define swap  3  /* swap bytes for inhx16 format */
+#define all 0
+#define low 1
+#define high 2
+#define swap 3 /* swap bytes for inhx16 format */
 
 static int sum;
 static char *newline;
@@ -76,17 +76,21 @@ static void end_record_s19()
 void data_line(int start, int stop, int mode)
 {
   new_record();
-  if (mode == all) {
+  if (mode == all)
+  {
     write_byte(stop - start);
     write_bg_word(start);
     write_byte(0);
-    while (start < stop) {
+    while (start < stop)
+    {
       unsigned char b;
       if (!b_memory_get(memory, start++, &b))
         b = 0xff;
       write_byte(b);
     }
-  } else if (mode == swap) {
+  }
+  else if (mode == swap)
+  {
     /* MPLINK 2.40, 3.80, 4.11 and 4.3x do not support inhx16 format.
      * (FIXME I have no idea where it comes from or if it can be used
      * for whatever purpose it was written for.) */
@@ -94,19 +98,23 @@ void data_line(int start, int stop, int mode)
     write_byte((stop - start) / 2);
     write_bg_word(start / 2);
     write_byte(0);
-    while (start < stop) {
+    while (start < stop)
+    {
       unsigned char b;
       if (!b_memory_get(memory, (start++) ^ 1, &b))
         b = 0xff;
       write_byte(b);
     }
-  } else {
+  }
+  else
+  {
     write_byte(stop - start);
     write_bg_word(start);
     write_byte(0);
     if (mode == high)
       ++start;
-    while (start < stop) {
+    while (start < stop)
+    {
       unsigned char b;
       if (!b_memory_get(memory, start, &b))
         b = 0xff;
@@ -117,34 +125,34 @@ void data_line(int start, int stop, int mode)
   end_record();
 }
 
-
 void data_line_s19(int start, int stop, pic_processor_t processor)
 {
-	if (start == gp_processor_org_to_byte(processor->class, processor->config_addrs[0]))
-		fprintf(hex, "S2");
-	else
-		fprintf(hex, "S1");
-	sum = 0;
-    write_byte(stop-start+3);
-    write_bg_word(start);
-    while (start < stop) {
-      unsigned char b;
-      if (!b_memory_get(memory, start++, &b))
-        b = 0x00;
-      write_byte(b);
-	}
-    end_record_s19();
+  if (start == gp_processor_org_to_byte(processor->class, processor->config_addrs[0]))
+    fprintf(hex, "S2");
+  else
+    fprintf(hex, "S1");
+  sum = 0;
+  write_byte(stop - start + 3);
+  write_bg_word(start);
+  while (start < stop)
+  {
+    unsigned char b;
+    if (!b_memory_get(memory, start++, &b))
+      b = 0x00;
+    write_byte(b);
+  }
+  end_record_s19();
 }
 
 void data_line_id(pic_processor_t processor)
 {
-	fprintf(hex, "S3");
-	sum = 0;
-    write_byte(5);
-    write_bg_word(0);
-	write_byte(processor->chip_id & 0xff);
-	write_byte(processor->chip_id >> 8);
-    end_record_s19();
+  fprintf(hex, "S3");
+  sum = 0;
+  write_byte(5);
+  write_bg_word(0);
+  write_byte(processor->chip_id & 0xff);
+  write_byte(processor->chip_id >> 8);
+  end_record_s19();
 }
 
 void seg_address_line(int segment)
@@ -171,28 +179,36 @@ void write_i_mem(enum formats hex_format, int mode, unsigned int core_size)
   MemBlock *m = memory;
   int i, j, maximum;
 
-  while(m) {
+  while (m)
+  {
     i = m->base << I_MEM_BITS;
 
     maximum = i + MAX_I_MEM;
 
-    if (hex_format == inhx32) {
+    if (hex_format == inhx32)
+    {
       /* FIXME would mode swap require division by 2? */
       seg_address_line(m->base);
     }
-    else {
+    else
+    {
       assert(m->base == 0);
     }
 
-    while (i < maximum) {
+    while (i < maximum)
+    {
       unsigned char b;
-      if (!b_memory_get(memory, i, &b)) {
+      if (!b_memory_get(memory, i, &b))
+      {
         ++i;
-      } else {
+      }
+      else
+      {
         j = i;
-        while (b_memory_get(memory, i, &b)) {
+        while (b_memory_get(memory, i, &b))
+        {
           ++i;
-          if (((mode == all) || (mode == swap))  && ((i & 0xf) == 0))
+          if (((mode == all) || (mode == swap)) && ((i & 0xf) == 0))
             break;
           if ((i & 0x1f) == 0)
             break;
@@ -228,20 +244,26 @@ void write_i_mem_s19(unsigned int core_size, pic_processor_t processor)
   MemBlock *m = memory;
   int i, j, maximum;
 
-  while(m) {
+  while (m)
+  {
     i = m->base << I_MEM_BITS;
 
     maximum = i + MAX_I_MEM;
 
     assert(m->base == 0);
 
-    while (i < maximum) {
+    while (i < maximum)
+    {
       unsigned char b;
-      if (!b_memory_get(memory, i, &b)) {
+      if (!b_memory_get(memory, i, &b))
+      {
         ++i;
-      } else {
+      }
+      else
+      {
         j = i;
-        while (b_memory_get(memory, i, &b)) {
+        while (b_memory_get(memory, i, &b))
+        {
           ++i;
           if ((i & 0x1f) == 0)
             break;
@@ -254,7 +276,6 @@ void write_i_mem_s19(unsigned int core_size, pic_processor_t processor)
   }
   data_line_id(processor);
   fprintf(hex, "S903FFFFFE\n");
-
 }
 /*
 void write_i_mem_s19(unsigned int core_size)
@@ -276,13 +297,13 @@ void write_i_mem_s19(unsigned int core_size)
 }
 */
 
-int writehex (char *basefilename,
-              MemBlock *m,
-              enum formats hex_format,
-              int numerrors,
-              int dos_newlines,
-              unsigned int core_size,
-			  pic_processor_t processor)
+int writehex(char *basefilename,
+             MemBlock *m,
+             enum formats hex_format,
+             int numerrors,
+             int dos_newlines,
+             unsigned int core_size,
+             pic_processor_t processor)
 {
   char s19filename[BUFSIZ];
   /*
@@ -293,13 +314,16 @@ int writehex (char *basefilename,
 
   memory = m;
 
-  if (dos_newlines) {
+  if (dos_newlines)
+  {
     newline = "\r\n";
-  } else {
+  }
+  else
+  {
     newline = "\n";
   }
 
-   /* build file names */
+  /* build file names */
   snprintf(s19filename, sizeof(s19filename), "%s.s19", basefilename);
   /*
   snprintf(hexfilename, sizeof(hexfilename), "%s.hex", basefilename);
@@ -307,10 +331,11 @@ int writehex (char *basefilename,
   snprintf(highhex, sizeof(highhex), "%s.hxh", basefilename);
   */
 
-  if (numerrors) {
+  if (numerrors)
+  {
     /* Remove the hex files (if any) */
     unlink(s19filename);
-	/*
+    /*
     unlink(hexfilename);
     unlink(lowhex);
     unlink(highhex);
@@ -360,15 +385,16 @@ int writehex (char *basefilename,
 
   }
 */
-    hex = fopen(s19filename, "wt");
-    if (hex == NULL) {
-      perror(s19filename);
-      exit(1);
-    }
-    write_i_mem_s19(core_size, processor);
-	printf("(FF) %s\n", s19filename);
+  hex = fopen(s19filename, "wt");
+  if (hex == NULL)
+  {
+    perror(s19filename);
+    exit(1);
+  }
+  write_i_mem_s19(core_size, processor);
+  printf("(FF) %s\n", s19filename);
 
-    fclose(hex);
+  fclose(hex);
 
   return 0;
 }
@@ -379,10 +405,13 @@ int check_writehex(MemBlock *m,
 {
   int error = 0;
 
-  if (hex_format != inhx32) {
+  if (hex_format != inhx32)
+  {
 
-    while(m) {
-      if (m->base > 0) {
+    while (m)
+    {
+      if (m->base > 0)
+      {
         error = 1;
       }
       m = m->next;

@@ -43,17 +43,17 @@ void directory_block(void)
   printf("Source file       %s\n",
          &block[COD_DIR_SOURCE]);
   printf("Date              %s\n",
-         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_DATE],7));
+         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_DATE], 7));
 
   time = gp_getl16(&block[COD_DIR_TIME]);
 
   printf("Time              %02d:%02d\n", time / 100, time % 100);
   printf("Compiler version  %s\n",
-         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_VERSION],19));
+         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_VERSION], 19));
   printf("Compiler          %s\n",
-         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_COMPILER],12));
+         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_COMPILER], 12));
   printf("Notice            %s\n",
-         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_NOTICE],64));
+         substr(temp_buf, sizeof(temp_buf), &block[COD_DIR_NOTICE], 64));
 
   processor_name = substr(temp_buf,
                           sizeof(temp_buf),
@@ -63,7 +63,8 @@ void directory_block(void)
 
   bytes_for_address = gp_getl16(&block[COD_DIR_ADDRSIZE]);
   printf("Bytes for address: %d\n", bytes_for_address);
-  if (bytes_for_address != 4) {
+  if (bytes_for_address != 4)
+  {
     printf("WARNING: address size looks suspicious\n");
   }
 
@@ -72,29 +73,29 @@ void directory_block(void)
 
   printf("Short symbol table start block:  0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_SYMTAB]),
-         gp_getl16(&block[COD_DIR_SYMTAB+2]));
+         gp_getl16(&block[COD_DIR_SYMTAB + 2]));
   printf("Long symbol table start block:   0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_LSYMTAB]),
-         gp_getl16(&block[COD_DIR_LSYMTAB+2]));
+         gp_getl16(&block[COD_DIR_LSYMTAB + 2]));
   printf("File name table start block:     0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_NAMTAB]),
-         gp_getl16(&block[COD_DIR_NAMTAB+2]));
+         gp_getl16(&block[COD_DIR_NAMTAB + 2]));
   printf("Source info table start block:   0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_LSTTAB]),
-         gp_getl16(&block[COD_DIR_LSTTAB+2]));
+         gp_getl16(&block[COD_DIR_LSTTAB + 2]));
   printf("Rom table start block:           0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_MEMMAP]),
-         gp_getl16(&block[COD_DIR_MEMMAP+2]));
+         gp_getl16(&block[COD_DIR_MEMMAP + 2]));
   printf("Local scope table start block:   0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_LOCALVAR]),
-         gp_getl16(&block[COD_DIR_LOCALVAR+2]));
+         gp_getl16(&block[COD_DIR_LOCALVAR + 2]));
   printf("Debug messages start block:      0x%04x  end block:  0x%04x\n",
          gp_getl16(&block[COD_DIR_MESSTAB]),
-         gp_getl16(&block[COD_DIR_MESSTAB+2]));
+         gp_getl16(&block[COD_DIR_MESSTAB + 2]));
 
   printf("\nNext directory block");
-  if(gp_getl16(&block[COD_DIR_NEXTDIR]))
-    printf(":  %d\n",gp_getl16(&block[COD_DIR_NEXTDIR]));
+  if (gp_getl16(&block[COD_DIR_NEXTDIR]))
+    printf(":  %d\n", gp_getl16(&block[COD_DIR_NEXTDIR]));
   else
     printf(" is empty\n");
 
@@ -113,11 +114,9 @@ void directory_block(void)
     printf("memmap address %d\n",ptr_offset((char *)&dir->MemMapOFS,block) );
     printf("lsymtab address %d\n",ptr_offset((char *)&dir->Lsymtab,block) );
   */
-
-
 }
 
-void read_block(unsigned char * block, int block_number)
+void read_block(unsigned char *block, int block_number)
 {
 
   fseek(codefile, block_number * COD_BLOCK_SIZE, SEEK_SET);
@@ -131,7 +130,6 @@ void create_block(Block *b)
 
   b->block = malloc(COD_BLOCK_SIZE);
   gp_cod_clear(b);
-
 }
 
 void read_directory(void)
@@ -143,17 +141,21 @@ void read_directory(void)
 
   dbi = &main_dir;
 
-  do {
+  do
+  {
     int next_dir_block = gp_getl16(&dbi->dir.block[COD_DIR_NEXTDIR]);
 
-    if(next_dir_block) {
+    if (next_dir_block)
+    {
       dbi->next_dir_block_info = (DirBlockInfo *)malloc(sizeof(DirBlockInfo));
       dbi = dbi->next_dir_block_info;
       create_block(&dbi->dir);
       read_block(dbi->dir.block, next_dir_block);
-    } else {
+    }
+    else
+    {
       dbi->next_dir_block_info = NULL;
       return;
     }
-  } while(1);
+  } while (1);
 }

@@ -24,8 +24,7 @@ Boston, MA 02111-1307, USA.  */
 
 /* Remove any weak symbols in the object. */
 
-void
-gp_coffopt_remove_weak(gp_object_type *object)
+void gp_coffopt_remove_weak(gp_object_type *object)
 {
   gp_symbol_type *symbol;
 
@@ -33,10 +32,12 @@ gp_coffopt_remove_weak(gp_object_type *object)
 
   /* Search the symbol table for extern symbols. */
   symbol = object->symbols;
-  while (symbol != NULL) {
-    if ((symbol->class == C_EXT) && 
+  while (symbol != NULL)
+  {
+    if ((symbol->class == C_EXT) &&
         (symbol->section_number == N_UNDEF) &&
-        (!gp_coffgen_has_reloc(object, symbol))) {
+        (!gp_coffgen_has_reloc(object, symbol)))
+    {
       gp_debug("  removed weak symbol \"%s\"", symbol->name);
       gp_coffgen_delsymbol(object, symbol);
     }
@@ -50,8 +51,7 @@ gp_coffopt_remove_weak(gp_object_type *object)
 /* Remove any relocatable section that doesn't have a symbol pointed to by
    a relocation. */
 
-void
-gp_coffopt_remove_dead_sections(gp_object_type *object, int pass)
+void gp_coffopt_remove_dead_sections(gp_object_type *object, int pass)
 {
   gp_section_type *section;
   gp_reloc_type *relocation;
@@ -60,32 +60,37 @@ gp_coffopt_remove_dead_sections(gp_object_type *object, int pass)
   gp_debug("removing dead sections pass %i", pass);
 
   section = object->sections;
-  while (section != NULL) {
+  while (section != NULL)
+  {
     /* mark all sections as unused */
     section->is_used = false;
     section = section->next;
   }
 
   section = object->sections;
-  while (section != NULL) {
+  while (section != NULL)
+  {
     /* mark all sections that relocations point to as unused */
     relocation = section->relocations;
-    while (relocation != NULL) {
+    while (relocation != NULL)
+    {
       if (relocation->symbol->section)
         relocation->symbol->section->is_used = true;
       else
         gp_warning("relocation symbol %s has no section",
-            relocation->symbol->name);
+                   relocation->symbol->name);
       relocation = relocation->next;
     }
     section = section->next;
   }
 
   section = object->sections;
-  while (section != NULL) {
+  while (section != NULL)
+  {
     /* FIXME: maybe don't remove if it is in protected memory */
     if ((!section->is_used) &&
-        !(section->flags & STYP_ABS)) {
+        !(section->flags & STYP_ABS))
+    {
       gp_debug("removing section %s", section->name);
       gp_coffgen_delsectionsyms(object, section);
       gp_coffgen_delsection(object, section);
@@ -95,10 +100,11 @@ gp_coffopt_remove_dead_sections(gp_object_type *object, int pass)
     section = section->next;
   }
 
-  if (section_removed) {
+  if (section_removed)
+  {
     /* take another pass */
     gp_coffopt_remove_dead_sections(object, pass++);
   }
-  
+
   return;
 }

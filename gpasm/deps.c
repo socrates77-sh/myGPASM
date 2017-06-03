@@ -24,32 +24,39 @@ Boston, MA 02111-1307, USA.  */
 #include "libgputils.h"
 #include "gpasm.h"
 
-void
-deps_init(void)
+void deps_init(void)
 {
   char output_file[BUFSIZ];
 
-  if (state.depfile != named) {
+  if (state.depfile != named)
+  {
     snprintf(state.depfilename, sizeof(state.depfilename),
              "%s.d", state.basefilename);
   }
 
-  if (state.depfile == suppress) {
+  if (state.depfile == suppress)
+  {
     state.dep.enabled = false;
-	unlink(state.depfilename);
-  } else {
+    unlink(state.depfilename);
+  }
+  else
+  {
     state.dep.f = fopen(state.depfilename, "w");
-    if (state.dep.f == NULL) {
+    if (state.dep.f == NULL)
+    {
       perror(state.depfilename);
       exit(1);
     }
     state.dep.enabled = true;
 
     /* output file names may not be setup, so make one */
-    if (state.mode == relocatable) {
+    if (state.mode == relocatable)
+    {
       snprintf(output_file, sizeof(output_file),
                "%s.o", state.basefilename);
-    } else {
+    }
+    else
+    {
       snprintf(output_file, sizeof(output_file),
                "%s.s19", state.basefilename);
     }
@@ -58,20 +65,20 @@ deps_init(void)
   }
 }
 
-void
-deps_add(char *file_name)
+void deps_add(char *file_name)
 {
-  if (state.dep.enabled) {
+  if (state.dep.enabled)
+  {
     fprintf(state.dep.f, " \\\n  %s", file_name);
   }
 }
 
-void
-deps_close(void)
+void deps_close(void)
 {
-  if (state.dep.enabled) {
+  if (state.dep.enabled)
+  {
     fprintf(state.dep.f, "\n");
-	printf("(FF) %s\n", state.depfilename);
+    printf("(FF) %s\n", state.depfilename);
     fclose(state.dep.f);
   }
 }

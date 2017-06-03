@@ -33,10 +33,14 @@ int enforce_arity(int arity, int must_be)
 {
   if (arity == must_be)
     return 1;
-  else {
-    if (arity < must_be) {
+  else
+  {
+    if (arity < must_be)
+    {
       gperror(GPE_MISSING_ARGU, NULL);
-    } else {
+    }
+    else
+    {
       gperror(GPE_TOO_MANY_ARGU, NULL);
     }
     return 0;
@@ -45,9 +49,12 @@ int enforce_arity(int arity, int must_be)
 
 int enforce_simple(struct pnode *p)
 {
-  if (p->tag == symbol) {
+  if (p->tag == symbol)
+  {
     return 1;
-  } else {
+  }
+  else
+  {
     gperror(GPE_ILLEGAL_ARGU, NULL);
     return 0;
   }
@@ -55,9 +62,12 @@ int enforce_simple(struct pnode *p)
 
 int list_length(struct pnode *L)
 {
-  if (L == NULL) {
+  if (L == NULL)
+  {
     return 0;
-  } else {
+  }
+  else
+  {
     return 1 + list_length(TAIL(L));
   }
 }
@@ -66,7 +76,8 @@ int can_evaluate_concatenation(struct pnode *p)
 {
   char buf[BUFSIZ];
 
-  switch (p->tag) {
+  switch (p->tag)
+  {
   case constant:
     return 1;
   case offset:
@@ -91,7 +102,8 @@ int can_evaluate_concatenation(struct pnode *p)
 
 char *evaluate_concatenation(struct pnode *p)
 {
-  switch (p->tag) {
+  switch (p->tag)
+  {
   case symbol:
     return p->value.symbol;
   case binop:
@@ -105,7 +117,8 @@ char *evaluate_concatenation(struct pnode *p)
       size0 = strlen(s0);
       size1 = strlen(s1);
       new = malloc(size0 + size1 + 1);
-      if (new) {
+      if (new)
+      {
         memcpy(new, s0, size0);
         memcpy(new + size0, s1, size1);
         new[size0 + size1] = '\0';
@@ -134,9 +147,12 @@ char *maybe_evaluate_concat(struct pnode *p)
   char *r = NULL;
 
   if (((p->tag == unop) && (p->value.unop.op != VAR)) ||
-      ((p->tag == binop) && (p->value.binop.op != CONCAT))) {
+      ((p->tag == binop) && (p->value.binop.op != CONCAT)))
+  {
     gperror(GPE_ILLEGAL_ARGU, NULL);
-  } else if (p && can_evaluate_concatenation(p)) {
+  }
+  else if (p && can_evaluate_concatenation(p))
+  {
     r = evaluate_concatenation(p);
   }
 
@@ -147,51 +163,61 @@ int can_evaluate(struct pnode *p)
 {
   char buf[BUFSIZ];
 
-  if ((p->tag == binop) && (p->value.binop.op == CONCAT)) {
+  if ((p->tag == binop) && (p->value.binop.op == CONCAT))
+  {
     return can_evaluate_concatenation(p);
   }
-  switch (p->tag) {
+  switch (p->tag)
+  {
   case constant:
     return 1;
   case offset:
-    if (state.extended_pic16e == false) {
+    if (state.extended_pic16e == false)
+    {
       gperror(GPE_BADCHAR, "Illegal character ([)");
     }
     return can_evaluate(p->value.offset);
   case symbol:
+  {
+    struct symbol *s;
+
+    /* '$' means current org, which we can always evaluate */
+    if (strcmp(p->value.symbol, "$") == 0)
     {
-      struct symbol *s;
+      return 1;
+    }
+    else
+    {
+      struct variable *var = NULL;
 
-      /* '$' means current org, which we can always evaluate */
-      if (strcmp(p->value.symbol, "$") == 0) {
-        return 1;
-      } else {
-        struct variable *var = NULL;
+      /* Otherwise look it up */
+      s = get_symbol(state.stTop, p->value.symbol);
 
-        /* Otherwise look it up */
-        s = get_symbol(state.stTop, p->value.symbol);
+      if (s == NULL)
+      {
+        snprintf(buf,
+                 sizeof(buf),
+                 "Symbol not previously defined (%s).",
+                 p->value.symbol);
+        gperror(GPE_NOSYM, buf);
+      }
+      else
+      {
+        var = get_symbol_annotation(s);
 
-        if (s == NULL) {
+        if (var == NULL)
+        {
           snprintf(buf,
                    sizeof(buf),
-                   "Symbol not previously defined (%s).",
+                   "Symbol not assigned a value (%s).",
                    p->value.symbol);
-          gperror(GPE_NOSYM, buf);
-        } else {
-          var = get_symbol_annotation(s);
-
-          if (var == NULL) {
-            snprintf(buf,
-                     sizeof(buf),
-                     "Symbol not assigned a value (%s).",
-                     p->value.symbol);
-            gpwarning(GPW_UNKNOWN, buf);
-          }
+          gpwarning(GPW_UNKNOWN, buf);
         }
-
-        return ((s != NULL) && (var != NULL));
       }
+
+      return ((s != NULL) && (var != NULL));
     }
+  }
   case unop:
     return can_evaluate(p->value.unop.p0);
   case binop:
@@ -213,49 +239,58 @@ gpasmVal evaluate(struct pnode *p)
   gpasmVal p0, p1;
 
   if (((p->tag == binop) && (p->value.binop.op == CONCAT)) ||
-      ((p->tag == unop) && (p->value.unop.op == VAR))) {
+      ((p->tag == unop) && (p->value.unop.op == VAR)))
+  {
     char *string = evaluate_concatenation(p);
     struct symbol *s;
 
     s = get_symbol(state.stTop, string);
-    if (s == NULL) {
+    if (s == NULL)
+    {
       char buf[BUFSIZ];
       snprintf(buf, sizeof(buf), "Symbol not previously defined (%s).", string);
       gperror(GPE_NOSYM, buf);
       return 0;
-    } else {
+    }
+    else
+    {
       var = get_symbol_annotation(s);
       assert(var != NULL);
       return var->value;
     }
   }
 
-  switch (p->tag) {
+  switch (p->tag)
+  {
   case constant:
     return p->value.constant;
   case offset:
     return evaluate(p->value.offset);
   case symbol:
-    {
-      struct symbol *s;
+  {
+    struct symbol *s;
 
-      if (strcmp(p->value.symbol, "$") == 0) {
-        if (IS_RAM_ORG)
-          return state.org;
-        return gp_processor_byte_to_org(state.device.class, state.org);
-      } else {
-        s = get_symbol(state.stTop, p->value.symbol);
-        var = get_symbol_annotation(s);
-        assert(var != NULL);
-        return var->value;
-      }
+    if (strcmp(p->value.symbol, "$") == 0)
+    {
+      if (IS_RAM_ORG)
+        return state.org;
+      return gp_processor_byte_to_org(state.device.class, state.org);
     }
+    else
+    {
+      s = get_symbol(state.stTop, p->value.symbol);
+      var = get_symbol_annotation(s);
+      assert(var != NULL);
+      return var->value;
+    }
+  }
   case unop:
-    switch (p->value.unop.op) {
+    switch (p->value.unop.op)
+    {
     case '!':
       return !evaluate(p->value.unop.p0);
     case '+':
-      return  evaluate(p->value.unop.p0);
+      return evaluate(p->value.unop.p0);
     case '-':
       return -evaluate(p->value.unop.p0);
     case '~':
@@ -276,37 +311,60 @@ gpasmVal evaluate(struct pnode *p)
   case binop:
     p0 = evaluate(p->value.binop.p0);
     p1 = evaluate(p->value.binop.p1);
-    switch (p->value.binop.op) {
-    case '+':      return p0 + p1;
-    case '-':      return p0 - p1;
-    case '*':      return p0 * p1;
+    switch (p->value.binop.op)
+    {
+    case '+':
+      return p0 + p1;
+    case '-':
+      return p0 - p1;
+    case '*':
+      return p0 * p1;
     case '/':
-      if (p1 == 0){
+      if (p1 == 0)
+      {
         gperror(GPE_DIVBY0, NULL);
         return 0;
-      } else {
+      }
+      else
+      {
         return p0 / p1;
       }
     case '%':
-      if (p1 == 0){
+      if (p1 == 0)
+      {
         gperror(GPE_DIVBY0, NULL);
         return 0;
-      } else {
+      }
+      else
+      {
         return p0 % p1;
       }
-    case '&':      return p0 & p1;
-    case '|':      return p0 | p1;
-    case '^':      return p0 ^ p1;
-    case LSH:      return p0 << p1;
-    case RSH:      return p0 >> p1;
-    case EQUAL:    return p0 == p1;
-    case '<':      return p0 < p1;
-    case '>':      return p0 > p1;
-    case NOT_EQUAL:          return p0 != p1;
-    case GREATER_EQUAL:      return p0 >= p1;
-    case LESS_EQUAL:         return p0 <= p1;
-    case LOGICAL_AND:        return p0 && p1;
-    case LOGICAL_OR:         return p0 || p1;
+    case '&':
+      return p0 & p1;
+    case '|':
+      return p0 | p1;
+    case '^':
+      return p0 ^ p1;
+    case LSH:
+      return p0 << p1;
+    case RSH:
+      return p0 >> p1;
+    case EQUAL:
+      return p0 == p1;
+    case '<':
+      return p0 < p1;
+    case '>':
+      return p0 > p1;
+    case NOT_EQUAL:
+      return p0 != p1;
+    case GREATER_EQUAL:
+      return p0 >= p1;
+    case LESS_EQUAL:
+      return p0 <= p1;
+    case LOGICAL_AND:
+      return p0 && p1;
+    case LOGICAL_OR:
+      return p0 || p1;
     case '=':
       gperror(GPE_BADCHAR, "Illegal character (=)");
       return 0;
@@ -326,9 +384,12 @@ gpasmVal maybe_evaluate(struct pnode *p)
 {
   gpasmVal r;
 
-  if (p && can_evaluate(p)) {
+  if (p && can_evaluate(p))
+  {
     r = evaluate(p);
-  } else {
+  }
+  else
+  {
     r = 0;
   }
 
@@ -346,13 +407,16 @@ int count_reloc(struct pnode *p)
   if (state.mode == absolute)
     return 0;
 
-  if ((p->tag == binop) && (p->value.binop.op == CONCAT)) {
+  if ((p->tag == binop) && (p->value.binop.op == CONCAT))
+  {
     string = evaluate_concatenation(p);
     s = get_symbol(state.stTop, string);
-    if (s != NULL) {
+    if (s != NULL)
+    {
       var = get_symbol_annotation(s);
       assert(var != NULL);
-      switch(var->type) {
+      switch (var->type)
+      {
       case gvt_extern:
       case gvt_global:
       case gvt_static:
@@ -364,20 +428,27 @@ int count_reloc(struct pnode *p)
     }
     return 0;
   }
-  switch (p->tag) {
+  switch (p->tag)
+  {
   case constant:
     return 0;
   case offset:
     return count_reloc(p->value.offset);
   case symbol:
-    if (strcmp(p->value.symbol, "$") == 0) {
+    if (strcmp(p->value.symbol, "$") == 0)
+    {
       return 1;
-    } else {
+    }
+    else
+    {
       s = get_symbol(state.stTop, p->value.symbol);
-      if (s != NULL) {
+      if (s != NULL)
+      {
         var = get_symbol_annotation(s);
-        if (var != NULL) {
-          switch(var->type) {
+        if (var != NULL)
+        {
+          switch (var->type)
+          {
           case gvt_extern:
           case gvt_global:
           case gvt_static:
@@ -411,13 +482,16 @@ add_reloc(struct pnode *p, short offset, unsigned short type)
   struct symbol *s = NULL;
   struct variable *var = NULL;
 
-  if ((p->tag == binop) && (p->value.binop.op == CONCAT)) {
+  if ((p->tag == binop) && (p->value.binop.op == CONCAT))
+  {
     string = evaluate_concatenation(p);
     s = get_symbol(state.stTop, string);
-    if (s != NULL) {
+    if (s != NULL)
+    {
       var = get_symbol_annotation(s);
       assert(var != NULL);
-      switch(var->type) {
+      switch (var->type)
+      {
       case gvt_extern:
       case gvt_global:
       case gvt_static:
@@ -430,9 +504,11 @@ add_reloc(struct pnode *p, short offset, unsigned short type)
     }
     return;
   }
-  switch (p->tag) {
+  switch (p->tag)
+  {
   case symbol:
-    if (strcmp(p->value.symbol, "$") == 0) {
+    if (strcmp(p->value.symbol, "$") == 0)
+    {
       char buffer[BUFSIZ];
       unsigned org;
       if (IS_RAM_ORG)
@@ -446,13 +522,18 @@ add_reloc(struct pnode *p, short offset, unsigned short type)
       if (type != RELOCT_ACCESS)
         set_global(buffer, org, PERMANENT, IS_RAM_ORG ? gvt_static : gvt_address);
       s = get_symbol(state.stTop, buffer);
-    } else {
+    }
+    else
+    {
       s = get_symbol(state.stTop, p->value.symbol);
     }
-    if (s != NULL) {
+    if (s != NULL)
+    {
       var = get_symbol_annotation(s);
-      if (var != NULL) {
-        switch(var->type) {
+      if (var != NULL)
+      {
+        switch (var->type)
+        {
         case gvt_extern:
         case gvt_global:
         case gvt_static:
@@ -466,7 +547,8 @@ add_reloc(struct pnode *p, short offset, unsigned short type)
     }
     return;
   case unop:
-    switch (p->value.unop.op) {
+    switch (p->value.unop.op)
+    {
     case UPPER:
       add_reloc(p->value.unop.p0, offset, RELOCT_UPPER);
       return;
@@ -488,20 +570,27 @@ add_reloc(struct pnode *p, short offset, unsigned short type)
       assert(0);
     }
   case binop:
-    switch (p->value.binop.op) {
+    switch (p->value.binop.op)
+    {
     case '+':
       /* The symbol can be in either position */
-      if (count_reloc(p->value.binop.p0) == 1) {
+      if (count_reloc(p->value.binop.p0) == 1)
+      {
         add_reloc(p->value.binop.p0, offset + maybe_evaluate(p->value.binop.p1), type);
-      } else {
+      }
+      else
+      {
         add_reloc(p->value.binop.p1, offset + maybe_evaluate(p->value.binop.p0), type);
       }
       return;
     case '-':
       /* The symbol has to be first */
-      if (count_reloc(p->value.binop.p0) == 1) {
+      if (count_reloc(p->value.binop.p0) == 1)
+      {
         add_reloc(p->value.binop.p0, offset - maybe_evaluate(p->value.binop.p1), type);
-      } else {
+      }
+      else
+      {
         gperror(GPE_UNRESOLVABLE, NULL);
       }
       return;
@@ -552,13 +641,14 @@ same_section(struct pnode *p)
   struct variable *var0;
   struct variable *var1;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return 0;
 
   if ((p->tag == unop) &&
       ((p->value.unop.op == UPPER) ||
        (p->value.unop.op == HIGH) ||
-       (p->value.unop.op == LOW))) {
+       (p->value.unop.op == LOW)))
+  {
     p = p->value.unop.p0;
   }
 
@@ -585,7 +675,6 @@ same_section(struct pnode *p)
     return 0;
 
   return 1;
-
 }
 
 gpasmVal reloc_evaluate(struct pnode *p, unsigned short type)
@@ -593,24 +682,35 @@ gpasmVal reloc_evaluate(struct pnode *p, unsigned short type)
   gpasmVal r = 0;
   int count = 0;
 
-  if (state.mode == absolute) {
+  if (state.mode == absolute)
+  {
     r = maybe_evaluate(p);
-  } else {
+  }
+  else
+  {
     count = count_reloc(p);
-    if (count == 0) {
+    if (count == 0)
+    {
       /* no relocatable addresses */
       r = maybe_evaluate(p);
-    } else if (count > 1) {
-      if ((count == 2) && (same_section(p))) {
+    }
+    else if (count > 1)
+    {
+      if ((count == 2) && (same_section(p)))
+      {
         /* It is valid to take the difference between two symbols in the same
            section.  Evaluate, but don't add a relocation. */
         r = maybe_evaluate(p);
-      } else {
+      }
+      else
+      {
         /* too many relocatable addresses */
         gperror(GPE_UNRESOLVABLE, NULL);
         r = 0;
       }
-    } else {
+    }
+    else
+    {
       /* add the coff relocation */
       add_reloc(p, 0, type);
       r = 0;

@@ -26,21 +26,27 @@ Boston, MA 02111-1307, USA.  */
 #include "gperror.h"
 #include "coff.h"
 
-void
-coff_init(void)
+void coff_init(void)
 {
-  if (state.objfile != named) {
+  if (state.objfile != named)
+  {
     snprintf(state.objfilename, sizeof(state.objfilename),
-       "%s.o", state.basefilename);
+             "%s.o", state.basefilename);
   }
 
-  if (state.objfile == suppress) {
+  if (state.objfile == suppress)
+  {
     state.obj.enabled = false;
     unlink(state.objfilename);
-  } else {
-    if (state.processor_chosen == 0) {
+  }
+  else
+  {
+    if (state.processor_chosen == 0)
+    {
       state.obj.enabled = false;
-    } else {
+    }
+    else
+    {
       state.obj.object = gp_coffgen_init();
       state.obj.object->filename = strdup(state.objfilename);
       state.obj.object->processor = state.processor;
@@ -57,14 +63,13 @@ _update_section_symbol(gp_section_type *section)
 
   /* write data to the auxiliary section symbol */
   section->symbol->aux_list->_aux_symbol._aux_scn.length =
-    section->size;
+      section->size;
 
   section->symbol->aux_list->_aux_symbol._aux_scn.nreloc =
-    section->num_reloc;
+      section->num_reloc;
 
   section->symbol->aux_list->_aux_symbol._aux_scn.nlineno =
-    section->num_lineno;
-
+      section->num_lineno;
 }
 
 static void
@@ -75,7 +80,7 @@ _update_section_size(void)
     return;
 
   state.obj.section->size =
-    (state.org - state.obj.section->address);
+      (state.org - state.obj.section->address);
 
   _update_section_symbol(state.obj.section);
 }
@@ -87,12 +92,16 @@ _update_reloc_ptr(void)
   gp_symbol_type *symbol;
   gp_reloc_type *reloc;
 
-  while (section != NULL) {
+  while (section != NULL)
+  {
     reloc = section->relocations;
-    while (reloc != NULL) {
+    while (reloc != NULL)
+    {
       symbol = state.obj.object->symbols;
-      while (symbol != NULL) {
-        if (reloc->symbol_number == symbol->number) {
+      while (symbol != NULL)
+      {
+        if (reloc->symbol_number == symbol->number)
+        {
           reloc->symbol = symbol;
           break;
         }
@@ -120,10 +129,11 @@ _copy_config(void)
   unsigned char byte;
   gp_boolean found_break;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
-  if (state.found_config) {
+  if (state.found_config)
+  {
     config_section = gp_coffgen_findsection(state.obj.object,
                                             state.obj.object->sections,
                                             ".config");
@@ -137,7 +147,8 @@ _copy_config(void)
       int first_used = stop, last_used = start;
 
       for (i = start; i < stop; ++i)
-        if (b_memory_get(state.c_memory, i, &byte)) {
+        if (b_memory_get(state.c_memory, i, &byte))
+        {
           if (first_used == stop)
             first_used = i;
           last_used = i;
@@ -148,10 +159,14 @@ _copy_config(void)
     }
     config_section->shadow_address = config_section->address = start;
     config_section->size = stop - start;
-    for (i = start; i < stop; i++) {
-      if (b_memory_get(state.c_memory, i, &byte)) {
+    for (i = start; i < stop; i++)
+    {
+      if (b_memory_get(state.c_memory, i, &byte))
+      {
         b_memory_put(config_section->data, i, byte);
-      } else {
+      }
+      else
+      {
         /* fill undefined configuration registers with core_size mask */
         b_memory_put(config_section->data, i, (i & 1) ? state.device.class->core_size >> 8 : state.device.class->core_size);
       }
@@ -159,7 +174,8 @@ _copy_config(void)
     _update_section_symbol(config_section);
   }
 
-  if (state.found_devid) {
+  if (state.found_devid)
+  {
     config_section = gp_coffgen_findsection(state.obj.object,
                                             state.obj.object->sections,
                                             ".devid");
@@ -181,37 +197,46 @@ _copy_config(void)
     _update_section_symbol(config_section);
   }
 
-  if (state.found_idlocs) {
+  if (state.found_idlocs)
+  {
     config_section = gp_coffgen_findsection(state.obj.object,
                                             state.obj.object->sections,
                                             ".idlocs");
 
     assert(config_section != NULL);
 
-    if (IS_16BIT_CORE) {
+    if (IS_16BIT_CORE)
+    {
       config_section->size = 0;
       start = config_section->address;
       stop = IDLOC7;
       found_break = false;
-      for (i = start; i <= stop; i++) {
+      for (i = start; i <= stop; i++)
+      {
         printf("address = %x\n", i);
-        if (b_memory_get(state.c_memory, i, &byte)) {
-          if (found_break) {
+        if (b_memory_get(state.c_memory, i, &byte))
+        {
+          if (found_break)
+          {
             gperror(GPE_CONTIG_IDLOC, NULL);
           }
           b_memory_put(config_section->data, i, byte);
           config_section->size += 1;
-        } else {
+        }
+        else
+        {
           found_break = true;
         }
       }
-
-    } else {
+    }
+    else
+    {
       start = gp_processor_id_location(state.processor);
       stop = start + 8;
-      for (i = start; i < stop; i++) {
+      for (i = start; i < stop; i++)
+      {
         b_memory_assert_get(state.c_memory, i, &byte);
-  b_memory_put(config_section->data, i, byte);
+        b_memory_put(config_section->data, i, byte);
       }
       config_section->size = 8;
     }
@@ -220,11 +245,10 @@ _copy_config(void)
   }
 }
 
-void
-coff_close_file(void)
+void coff_close_file(void)
 {
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
   /* store data from the last section */
@@ -244,8 +268,7 @@ coff_close_file(void)
   gp_coffgen_free(state.obj.object);
 }
 
-void
-coff_new_section(const char *name, int addr, int flags)
+void coff_new_section(const char *name, int addr, int flags)
 {
   gp_section_type *found = NULL;
   gp_symbol_type *new = NULL;
@@ -259,7 +282,8 @@ coff_new_section(const char *name, int addr, int flags)
   /* store the flags so they are available for pass 1 */
   state.obj.flags = flags;
 
-  if (!state.obj.enabled) {
+  if (!state.obj.enabled)
+  {
     state.org = addr;
     return;
   }
@@ -273,17 +297,22 @@ coff_new_section(const char *name, int addr, int flags)
                                  state.obj.object->sections,
                                  name);
 
-  if (found != NULL) {
+  if (found != NULL)
+  {
     if ((flags & STYP_OVERLAY) &&
-        (found->flags & STYP_OVERLAY)) {
+        (found->flags & STYP_OVERLAY))
+    {
       /* Overlayed sections can be duplicated.  This allows multiple code
          sections in the same source file to share the same data memory. */
       if ((flags != found->flags) ||
-          (addr != found->address)) {
+          (addr != found->address))
+      {
         gperror(GPE_CONTIG_SECTION, NULL);
         return;
       }
-    } else {
+    }
+    else
+    {
       gperror(GPE_CONTIG_SECTION, NULL);
       return;
     }
@@ -295,12 +324,12 @@ coff_new_section(const char *name, int addr, int flags)
 
   /* add a section symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(name);
-  new->value          = IS_RAM_ORG ? addr : gp_processor_byte_to_org(state.device.class, addr);
-  new->section_number = state.obj.section_num;  /* Modified later. */
-  new->section        = state.obj.section;
-  new->type           = T_NULL;
-  new->class          = C_SECTION;
+  new->name = strdup(name);
+  new->value = IS_RAM_ORG ? addr : gp_processor_byte_to_org(state.device.class, addr);
+  new->section_number = state.obj.section_num; /* Modified later. */
+  new->section = state.obj.section;
+  new->type = T_NULL;
+  new->class = C_SECTION;
 
   state.obj.section->symbol = new;
 
@@ -316,8 +345,7 @@ coff_new_section(const char *name, int addr, int flags)
    is stored in relocations instead of a pointer to the symbol.  Before
    the coff is written the symbol pointer is updated. */
 
-void
-coff_reloc(int symbol, short offset, unsigned short type)
+void coff_reloc(int symbol, short offset, unsigned short type)
 {
   gp_reloc_type *new = NULL;
   int origin;
@@ -328,14 +356,13 @@ coff_reloc(int symbol, short offset, unsigned short type)
   origin = state.org - state.obj.section->address;
 
   new = gp_coffgen_addreloc(state.obj.section);
-  new->address       = origin;
+  new->address = origin;
   new->symbol_number = symbol;
-  new->offset        = offset;
-  new->type          = type;
+  new->offset = offset;
+  new->type = type;
 }
 
-void
-coff_linenum(int emitted)
+void coff_linenum(int emitted)
 {
   gp_linenum_type *new = NULL;
   int i;
@@ -347,26 +374,33 @@ coff_linenum(int emitted)
 
   /* If the section is absolute, use the abolute address. */
   origin = state.lst.line.was_org;
-  if (!(state.obj.section->flags & STYP_ABS)) {
+  if (!(state.obj.section->flags & STYP_ABS))
+  {
     /* else use the relative address */
     origin -= state.obj.section->address;
   }
 
-  if (state.debug_info && (state.obj.debug_file == NULL)) {
-    if (show_bad_debug) {
+  if (state.debug_info && (state.obj.debug_file == NULL))
+  {
+    if (show_bad_debug)
+    {
       gperror(GPE_UNKNOWN, ".file directive required to generate debug info");
       show_bad_debug = false;
     }
     return;
   }
 
-  for (i = 0; i < emitted; i += 2) {
+  for (i = 0; i < emitted; i += 2)
+  {
 
     new = gp_coffgen_addlinenum(state.obj.section);
-    if (state.debug_info) {
+    if (state.debug_info)
+    {
       new->symbol = state.obj.debug_file;
       new->line_number = state.obj.debug_line;
-    } else {
+    }
+    else
+    {
       new->symbol = state.src->file_symbol;
       new->line_number = state.src->line_number;
     }
@@ -386,10 +420,11 @@ coff_add_sym(const char *name, int value, enum gpasmValTypes type)
   int section_number = 0;
   int class = C_EXT;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return NULL;
 
-  switch (type) {
+  switch (type)
+  {
   case gvt_extern:
     section_number = N_UNDEF;
     class = C_EXT;
@@ -421,9 +456,11 @@ coff_add_sym(const char *name, int value, enum gpasmValTypes type)
   new = gp_coffgen_findsymbol(state.obj.object, name);
 
   /* verify the duplicate extern has the same properties */
-  if ((new != NULL) && (type == gvt_extern))  {
+  if ((new != NULL) && (type == gvt_extern))
+  {
     if ((new->type != class) ||
-        (new->section_number != section_number)) {
+        (new->section_number != section_number))
+    {
       snprintf(message, sizeof(message),
                "Duplicate label or redefining symbol that cannot be redefined. (%s)",
                name);
@@ -431,19 +468,22 @@ coff_add_sym(const char *name, int value, enum gpasmValTypes type)
     }
   }
 
-  if ((new != NULL) && (type != gvt_extern) && (type != gvt_debug))  {
+  if ((new != NULL) && (type != gvt_extern) && (type != gvt_debug))
+  {
     snprintf(message, sizeof(message),
              "Duplicate label or redefining symbol that cannot be redefined. (%s)",
              name);
     gperror(GPE_DUPLAB, message);
-  } else {
+  }
+  else
+  {
     new = gp_coffgen_addsymbol(state.obj.object);
-    new->name           = strdup(name);
-    new->value          = value;
+    new->name = strdup(name);
+    new->value = value;
     new->section_number = section_number;
-    new->section        = state.obj.section;
-    new->type           = T_NULL;
-    new->class          = class;
+    new->section = state.obj.section;
+    new->type = T_NULL;
+    new->class = class;
   }
 
   return new;
@@ -459,17 +499,17 @@ coff_add_filesym(const char *name, int isinclude)
 
   state.obj.symbol_num += 2;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return NULL;
 
   /* add .file symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(".file");
-  new->value          = 0;
+  new->name = strdup(".file");
+  new->value = 0;
   new->section_number = N_DEBUG;
-  new->section        = NULL;
-  new->type           = T_NULL;
-  new->class          = C_FILE;
+  new->section = NULL;
+  new->type = T_NULL;
+  new->class = C_FILE;
 
   new_aux = gp_coffgen_addaux(state.obj.object, new);
   new_aux->type = AUX_FILE;
@@ -485,30 +525,28 @@ coff_add_filesym(const char *name, int isinclude)
 
 /* add an eof symbol to the coff symbol table */
 
-void
-coff_add_eofsym(void)
+void coff_add_eofsym(void)
 {
   gp_symbol_type *new;
 
   state.obj.symbol_num++;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
   /* add .eof symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(".eof");
-  new->value          = 0;
+  new->name = strdup(".eof");
+  new->value = 0;
   new->section_number = N_DEBUG;
-  new->section        = NULL;
-  new->type           = T_NULL;
-  new->class          = C_EOF;
+  new->section = NULL;
+  new->type = T_NULL;
+  new->class = C_EOF;
 }
 
 /* add an eof symbol to the coff symbol table */
 
-void
-coff_add_listsym(void)
+void coff_add_listsym(void)
 {
   gp_symbol_type *new;
 
@@ -517,21 +555,20 @@ coff_add_listsym(void)
 
   state.obj.symbol_num++;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
   /* add .eof symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(".list");
-  new->value          = state.src->line_number;
+  new->name = strdup(".list");
+  new->value = state.src->line_number;
   new->section_number = N_DEBUG;
-  new->section        = NULL;
-  new->type           = T_NULL;
-  new->class          = C_LIST;
+  new->section = NULL;
+  new->type = T_NULL;
+  new->class = C_LIST;
 }
 
-void
-coff_add_nolistsym(void)
+void coff_add_nolistsym(void)
 {
   gp_symbol_type *new;
 
@@ -540,40 +577,39 @@ coff_add_nolistsym(void)
 
   state.obj.symbol_num++;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
   /* add .nolist symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(".nolist");
-  new->value          = state.src->line_number;
+  new->name = strdup(".nolist");
+  new->value = state.src->line_number;
   new->section_number = N_DEBUG;
-  new->section        = NULL;
-  new->type           = T_NULL;
-  new->class          = C_LIST;
+  new->section = NULL;
+  new->type = T_NULL;
+  new->class = C_LIST;
 }
 
 /* add a direct symbol to the coff symbol table */
 
-void
-coff_add_directsym(unsigned char command, const char *string)
+void coff_add_directsym(unsigned char command, const char *string)
 {
   gp_symbol_type *new = NULL;
   gp_aux_type *new_aux;
 
   state.obj.symbol_num += 2;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
   /* add .cod symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(".direct");
-  new->value          = gp_processor_byte_to_org(state.device.class, state.org);
+  new->name = strdup(".direct");
+  new->value = gp_processor_byte_to_org(state.device.class, state.org);
   new->section_number = state.obj.section_num;
-  new->section        = state.obj.section;
-  new->type           = T_NULL;
-  new->class          = C_NULL;
+  new->section = state.obj.section;
+  new->type = T_NULL;
+  new->class = C_NULL;
 
   new_aux = gp_coffgen_addaux(state.obj.object, new);
   new_aux->type = AUX_DIRECT;
@@ -583,25 +619,24 @@ coff_add_directsym(unsigned char command, const char *string)
 
 /* add a cod symbol to the coff symbol table */
 
-void
-coff_add_identsym(const char *string)
+void coff_add_identsym(const char *string)
 {
   gp_symbol_type *new = NULL;
   gp_aux_type *new_aux;
 
   state.obj.symbol_num += 2;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return;
 
   /* add .cod symbol */
   new = gp_coffgen_addsymbol(state.obj.object);
-  new->name           = strdup(".ident");
-  new->value          = 0;
+  new->name = strdup(".ident");
+  new->value = 0;
   new->section_number = N_DEBUG;
-  new->section        = NULL;
-  new->type           = T_NULL;
-  new->class          = C_NULL;
+  new->section = NULL;
+  new->type = T_NULL;
+  new->class = C_NULL;
 
   new_aux = gp_coffgen_addaux(state.obj.object, new);
   new_aux->type = AUX_IDENT;
@@ -619,20 +654,24 @@ coff_local_name(const char *name)
   char buffer[BUFSIZ];
   int count = 1;
 
-  if(!state.obj.enabled)
+  if (!state.obj.enabled)
     return NULL;
 
   local = get_symbol(state.stGlobal, name);
-  if (local == NULL) {
+  if (local == NULL)
+  {
     /* It isn't in the stGlobal so it must be in stTop. It's local. */
-    while(1) {
+    while (1)
+    {
       snprintf(buffer, sizeof(buffer), "_%d%s", count, name);
       symbol = gp_coffgen_findsymbol(state.obj.object, buffer);
       if (symbol == NULL)
         break;
       count++;
     }
-  } else {
+  }
+  else
+  {
     strncpy(buffer, name, sizeof(buffer));
   }
 

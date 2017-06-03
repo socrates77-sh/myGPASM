@@ -12,14 +12,10 @@ is deprecated in favor of @code{memset}.
 
 */
 
-
-void
-bzero (to, count)
-  char *to;
-  int count;
+void bzero(char *to, int count)
 {
   while (count-- > 0)
-    {
-      *to++ = 0;
-    }
+  {
+    *to++ = 0;
+  }
 }

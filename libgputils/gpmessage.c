@@ -34,11 +34,10 @@ int gp_num_errors = 0;
 int gp_num_warnings = 0;
 int gp_num_messages = 0;
 
-void 
-gp_error(const char *format, ...)
+void gp_error(const char *format, ...)
 {
   va_list args;
-  char buffer[BUFSIZ]; 
+  char buffer[BUFSIZ];
 
   if (gp_message_disable)
     return;
@@ -57,11 +56,10 @@ gp_error(const char *format, ...)
   return;
 }
 
-void 
-gp_warning(const char *format, ...)
+void gp_warning(const char *format, ...)
 {
   va_list args;
-  char buffer[BUFSIZ]; 
+  char buffer[BUFSIZ];
 
   if (gp_message_disable)
     return;
@@ -80,11 +78,10 @@ gp_warning(const char *format, ...)
   return;
 }
 
-void 
-gp_message(const char *format, ...)
+void gp_message(const char *format, ...)
 {
   va_list args;
-  char buffer[BUFSIZ]; 
+  char buffer[BUFSIZ];
 
   if (gp_message_disable)
     return;
@@ -103,11 +100,10 @@ gp_message(const char *format, ...)
   return;
 }
 
-void 
-gp_debug(const char *format, ...)
+void gp_debug(const char *format, ...)
 {
   va_list args;
-  char buffer[BUFSIZ]; 
+  char buffer[BUFSIZ];
 
   if (gp_debug_disable)
     return;

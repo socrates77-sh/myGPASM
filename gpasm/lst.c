@@ -44,7 +44,8 @@ Boston, MA 02111-1307, USA.  */
 
 void lst_throw(void)
 {
-  if(state.lst.f) {
+  if (state.lst.f)
+  {
     state.lst.page++;
     fprintf(state.lst.f,
             "%s%-29s%-19s%-29sPAGE %2d\n%s\n%s\n",
@@ -67,9 +68,11 @@ static void lst_check_page_start(void)
 {
   if (state.lst.linesperpage != 0 &&
       (state.lst.lineofpage == 0 ||
-       state.lst.lineofpage > state.lst.linesperpage)) {
+       state.lst.lineofpage > state.lst.linesperpage))
+  {
     lst_throw();
-    switch (state.lst.lst_state) {
+    switch (state.lst.lst_state)
+    {
     case in_mem:
       lst_line("LOC  OBJECT CODE     LINE SOURCE TEXT");
       lst_line("  VALUE");
@@ -101,7 +104,8 @@ static int lst_spaces(int n)
 
 static void lst_eol(void)
 {
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     fputc('\n', state.lst.f);
     state.lst.line_number++;
     /*state.lst.lineofpage++;*/
@@ -111,7 +115,8 @@ static void lst_eol(void)
 
 void lst_line(const char *format, ...)
 {
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     va_list args;
     lst_check_page_start();
     va_start(args, format);
@@ -126,7 +131,8 @@ void lst_line(const char *format, ...)
 static int lst_printf(const char *format, ...)
 {
   int r = 0;
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     va_list args;
     lst_check_page_start();
     va_start(args, format);
@@ -149,7 +155,8 @@ void lst_init(void)
   /* Determine state.startdate */
   gp_date_string(state.lst.startdate, sizeof(state.lst.startdate));
 
-  if (!state.cmd_line.macro_expand){
+  if (!state.cmd_line.macro_expand)
+  {
     state.lst.expand = true;
   }
 
@@ -161,21 +168,26 @@ void lst_init(void)
   state.lst.config_address = 0;
   state.lst.title_name[0] = '\0';
   state.lst.subtitle_name[0] = '\0';
-  state.lst.tabstop = 8;        /* Default tabstop every 8 */
+  state.lst.tabstop = 8; /* Default tabstop every 8 */
 
-  if (state.lstfile != named) {
+  if (state.lstfile != named)
+  {
     snprintf(state.lstfilename, sizeof(state.lstfilename),
              "%s.lst", state.basefilename);
   }
 
-  if (state.lstfile == suppress) {
+  if (state.lstfile == suppress)
+  {
     state.lst.f = NULL;
     state.lst.enabled = false;
     unlink(state.lstfilename);
-  } else {
+  }
+  else
+  {
     state.lst.f = fopen(state.lstfilename, "wt");
 
-    if (state.lst.f == NULL) {
+    if (state.lst.f == NULL)
+    {
       perror(state.lstfilename);
       exit(1);
     }
@@ -183,12 +195,11 @@ void lst_init(void)
   }
 
   cod_lst_line(COD_FIRST_LST_LINE);
-
 }
 
 void lst_memory_map(MemBlock *m)
 {
-#define MEM_IS_USED(m, i)   (IS_16BIT_CORE ? ((m)->memory[i] & BYTE_USED_MASK) : (((m)->memory[2 * (i)] & BYTE_USED_MASK) || ((m)->memory[2 * (i) + 1] & BYTE_USED_MASK)))
+#define MEM_IS_USED(m, i) (IS_16BIT_CORE ? ((m)->memory[i] & BYTE_USED_MASK) : (((m)->memory[2 * (i)] & BYTE_USED_MASK) || ((m)->memory[2 * (i) + 1] & BYTE_USED_MASK)))
 
   int i, j, base, row_used, num_per_line, num_per_block;
   unsigned int used;
@@ -201,26 +212,33 @@ void lst_memory_map(MemBlock *m)
   num_per_line = 64;
   num_per_block = 16;
 
-  while (m) {
-    unsigned int max_mem = MAX_I_MEM  >> (!IS_16BIT_CORE);
+  while (m)
+  {
+    unsigned int max_mem = MAX_I_MEM >> (!IS_16BIT_CORE);
     assert(m->memory != NULL);
 
     base = (m->base << I_MEM_BITS) >> (!IS_16BIT_CORE);
 
-    for (i = 0; i < max_mem; i += num_per_line) {
+    for (i = 0; i < max_mem; i += num_per_line)
+    {
       row_used = 0;
 
-      for (j = 0; j < num_per_line; j++) {
-        if (MEM_IS_USED(m, i + j)) {
+      for (j = 0; j < num_per_line; j++)
+      {
+        if (MEM_IS_USED(m, i + j))
+        {
           row_used = 1;
           break;
         }
       }
 
-      if(row_used) {
+      if (row_used)
+      {
         lst_printf("%04X :", i + base);
-        for (j = 0; j < num_per_line; j++) {
-          if ((j % num_per_block) == 0) {
+        for (j = 0; j < num_per_line; j++)
+        {
+          if ((j % num_per_block) == 0)
+          {
             lst_printf(" ");
           }
           lst_printf(MEM_IS_USED(m, i + j) ? "X" : "-");
@@ -237,15 +255,12 @@ void lst_memory_map(MemBlock *m)
   lst_line("All other memory blocks unused.");
   lst_line("");
 
-  /* it seems that MPASM includes config bytes into program memory usage
+/* it seems that MPASM includes config bytes into program memory usage
    * count for 16 bit cores. See gpasm testsuite:
    * gpasm/testsuite/gpasm.mchip/listfiles/configX.lst */
-#define IS_PIC16  (state.device.class == PROC_CLASS_PIC16 || state.device.class == PROC_CLASS_PIC16E)
+#define IS_PIC16 (state.device.class == PROC_CLASS_PIC16 || state.device.class == PROC_CLASS_PIC16E)
 
-  used = gp_processor_byte_to_org(state.device.class, (!IS_PIC16 && state.processor) ?
-    b_range_memory_used(state.i_memory, 0,
-      gp_processor_org_to_byte(state.device.class, state.processor->config_addrs[0])) :
-    b_memory_used(state.i_memory));
+  used = gp_processor_byte_to_org(state.device.class, (!IS_PIC16 && state.processor) ? b_range_memory_used(state.i_memory, 0, gp_processor_org_to_byte(state.device.class, state.processor->config_addrs[0])) : b_memory_used(state.i_memory));
   lst_line("Program Memory %s Used: %5i", IS_16BIT_CORE ? "Bytes" : "Words", used);
   /* maxrom is not the program memory size.
   lst_line("Program Memory %s Free: %5d", IS_16BIT_CORE ? "Bytes" : "Words", state.maxrom - used);
@@ -258,7 +273,8 @@ void lst_close(void)
 
   state.lst.lst_state = in_none;
 
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     lst_line("");
     lst_line("Errors   : %5d", state.num.errors);
     lst_line("Warnings : %5d reported, %5d suppressed",
@@ -270,7 +286,7 @@ void lst_close(void)
     lst_line("");
     fputc('\f', state.lst.f);
 
-	printf("(FF) %s\n", state.lstfilename);
+    printf("(FF) %s\n", state.lstfilename);
 
     fclose(state.lst.f);
   }
@@ -282,8 +298,10 @@ unsigned int lst_data(unsigned int pos, unsigned int byte_org,
   int lst_bytes = 0;
 
   /* when in a idata or byte packed section, print byte by byte */
-  if (state.obj.new_sec_flags & (STYP_DATA | STYP_BPACK)) {
-    while (bytes_emitted > lst_bytes && pos + 3 <= LINENUM_POS) {
+  if (state.obj.new_sec_flags & (STYP_DATA | STYP_BPACK))
+  {
+    while (bytes_emitted > lst_bytes && pos + 3 <= LINENUM_POS)
+    {
       unsigned char emit_byte;
 
       b_memory_get(state.i_memory, byte_org, &emit_byte);
@@ -292,9 +310,11 @@ unsigned int lst_data(unsigned int pos, unsigned int byte_org,
       ++lst_bytes;
     }
   }
-  else {    /* non-code pack section */
+  else
+  { /* non-code pack section */
     /* list first byte on odd address */
-    if (bytes_emitted && (byte_org & 1) != 0) {
+    if (bytes_emitted && (byte_org & 1) != 0)
+    {
       unsigned char emit_byte;
 
       b_memory_get(state.i_memory, byte_org, &emit_byte);
@@ -303,7 +323,8 @@ unsigned int lst_data(unsigned int pos, unsigned int byte_org,
       ++lst_bytes;
     }
     /* list full words */
-    while (bytes_emitted - lst_bytes > 1 && pos + 5 <= LINENUM_POS) {
+    while (bytes_emitted - lst_bytes > 1 && pos + 5 <= LINENUM_POS)
+    {
       unsigned short emit_word;
 
       state.device.class->i_memory_get(state.i_memory, byte_org, &emit_word);
@@ -311,7 +332,8 @@ unsigned int lst_data(unsigned int pos, unsigned int byte_org,
       byte_org += 2;
       lst_bytes += 2;
     }
-    if (bytes_emitted - lst_bytes == 1 && pos + 3 <= LINENUM_POS) {
+    if (bytes_emitted - lst_bytes == 1 && pos + 3 <= LINENUM_POS)
+    {
       unsigned char emit_byte;
 
       b_memory_get(state.i_memory, byte_org, &emit_byte);
@@ -339,20 +361,23 @@ void lst_format_line(const char *src_line, int value)
 
   assert(src_line != NULL);
 
-  switch (state.lst.line.linetype) {
+  switch (state.lst.line.linetype)
+  {
   case insn:
     emitted = state.org - state.lst.line.was_org;
     break;
 
   case data:
-    if (SECTION_FLAGS & STYP_TEXT) {
+    if (SECTION_FLAGS & STYP_TEXT)
+    {
       /* generate line numbers for data directives in program memory */
       emitted = state.org - state.lst.line.was_org;
     }
     break;
 
   case res:
-    if (!IS_RAM_ORG) {
+    if (!IS_RAM_ORG)
+    {
       /* generate line numbers for res directives in program memory */
       emitted = state.org - state.lst.line.was_org;
     }
@@ -368,7 +393,8 @@ void lst_format_line(const char *src_line, int value)
   if (!state.lst.enabled)
     return;
 
-  switch (state.lst.line.linetype) {
+  switch (state.lst.line.linetype)
+  {
   case equ:
   case set:
     pos += lst_printf("  %08X", value);
@@ -385,7 +411,7 @@ void lst_format_line(const char *src_line, int value)
     {
       unsigned short id[2];
       state.device.class->i_memory_get(state.i_memory, state.device.id_location, id);
-      state.device.class->i_memory_get(state.i_memory, state.device.id_location+2, id+1);
+      state.device.class->i_memory_get(state.i_memory, state.device.id_location + 2, id + 1);
       pos += lst_printf(addr_fmt, gp_processor_byte_to_org(state.device.class, gp_processor_id_location(state.processor)));
       pos += lst_printf("%04X %04X", id[0], id[1]);
       lst_spaces(LINENUM_POS - pos);
@@ -395,21 +421,23 @@ void lst_format_line(const char *src_line, int value)
   case insn:
   case data:
   case res:
-    {
-      byte_org = state.lst.line.was_org;
-      bytes_emitted = emitted;
-      pos += lst_printf(addr_fmt, gp_processor_byte_to_org(state.device.class, state.lst.line.was_org));
-      lst_bytes = lst_data(pos, byte_org, bytes_emitted);
-      byte_org += lst_bytes;
-      bytes_emitted -= lst_bytes;
-    }
-    break;
+  {
+    byte_org = state.lst.line.was_org;
+    bytes_emitted = emitted;
+    pos += lst_printf(addr_fmt, gp_processor_byte_to_org(state.device.class, state.lst.line.was_org));
+    lst_bytes = lst_data(pos, byte_org, bytes_emitted);
+    byte_org += lst_bytes;
+    bytes_emitted -= lst_bytes;
+  }
+  break;
 
   case config:
-    if (IS_16BIT_CORE) {
+    if (IS_16BIT_CORE)
+    {
       /* config data is byte addressable, but we only want to print
          words in the list file. */
-      if (state.lst.config_address == CONFIG4L) {
+      if (state.lst.config_address == CONFIG4L)
+      {
         /* Special case */
         unsigned short word;
         state.device.class->i_memory_get(state.i_memory,
@@ -417,10 +445,14 @@ void lst_format_line(const char *src_line, int value)
         pos += lst_printf(addr_fmt, state.lst.config_address);
         pos += lst_printf("%04X", word);
         lst_spaces(LINENUM_POS - pos);
-      } else if((state.lst.config_address & 0x1) == 0) {
+      }
+      else if ((state.lst.config_address & 0x1) == 0)
+      {
         /* if it is an even address don't print anything */
         lst_spaces(LINENUM_POS);
-      } else {
+      }
+      else
+      {
         unsigned short word;
         state.device.class->i_memory_get(state.i_memory,
                                          state.lst.config_address - 1, &word);
@@ -428,7 +460,9 @@ void lst_format_line(const char *src_line, int value)
         pos += lst_printf("%04X", word);
         lst_spaces(LINENUM_POS - pos);
       }
-    } else {
+    }
+    else
+    {
       unsigned short word;
       state.device.class->i_memory_get(state.i_memory,
                                        state.lst.config_address, &word);
@@ -448,9 +482,12 @@ void lst_format_line(const char *src_line, int value)
     break;
   }
 
-  if (state.stGlobal == state.stTop) {
+  if (state.stGlobal == state.stTop)
+  {
     lst_printf("%05d ", state.src->line_number);
-  } else {
+  }
+  else
+  {
     lst_printf("    M ");
   }
 
@@ -459,15 +496,19 @@ void lst_format_line(const char *src_line, int value)
     int column = 0;
     const char *old = src_line;
 
-    while (*old) {
-      if (*old == '\t') {
+    while (*old)
+    {
+      if (*old == '\t')
+      {
         int len = state.lst.tabstop - column % state.lst.tabstop;
 
         column += len;
 
         while (len--)
           lst_printf(" ");
-      } else {
+      }
+      else
+      {
         ++column;
 
         lst_printf("%c", *old);
@@ -481,18 +522,21 @@ void lst_format_line(const char *src_line, int value)
 
   lst_eol();
 
-  if (state.lst.line.linetype == idlocs) {
+  if (state.lst.line.linetype == idlocs)
+  {
     unsigned short id[2];
     state.device.class->i_memory_get(state.i_memory,
                                      state.device.id_location + 4, id);
     state.device.class->i_memory_get(state.i_memory,
-                                     state.device.id_location + 6, id+1);
+                                     state.device.id_location + 6, id + 1);
     lst_spaces(ADDR_LEN);
     lst_line("%04X %04X ", id[0], id[1]);
   }
 
-  if (bytes_emitted > 0) {
-    while (bytes_emitted > 0) {
+  if (bytes_emitted > 0)
+  {
+    while (bytes_emitted > 0)
+    {
       /* data left to print on separate lines */
 
       pos = lst_spaces(ADDR_LEN);
@@ -529,7 +573,8 @@ void lst_symbol_table(struct symbol_table *table)
 
   qsort(lst, table->count, sizeof(lst[0]), symbol_compare);
 
-  for (i = 0; i < table->count; i++) {
+  for (i = 0; i < table->count; i++)
+  {
     struct variable *var;
 
     var = get_symbol_annotation(lst[i]);
@@ -537,7 +582,7 @@ void lst_symbol_table(struct symbol_table *table)
              get_symbol_name(lst[i]),
              var ? var->value : 0);
   }
-  cod_write_symbols(lst,table->count);
+  cod_write_symbols(lst, table->count);
 }
 
 void lst_defines_table(struct symbol_table *table)
@@ -556,7 +601,8 @@ void lst_defines_table(struct symbol_table *table)
 
   qsort(lst, table->count, sizeof(lst[0]), symbol_compare);
 
-  for (i = 0; i < table->count; i++) {
+  for (i = 0; i < table->count; i++)
+  {
     char *defined_as;
 
     defined_as = get_symbol_annotation(lst[i]);

@@ -32,7 +32,6 @@ Boston, MA 02111-1307, USA.  */
 #include "processor.h"
 #include "coff.h"
 
-
 struct gpasm_state state;
 
 static gp_boolean cmd_processor = false;
@@ -44,35 +43,33 @@ extern int yydebug;
 #define GET_OPTIONS "?D:I:a:cCde:ghilLmMno:p:qr:uvw:y"
 
 static struct option longopts[] =
-{
-  { "define",      1, 0, 'D' },
-  { "include",     1, 0, 'I' },
-  { "hex-format",  1, 0, 'a' },
-  { "object",      0, 0, 'c' },
-  { "new-coff",    0, 0, 'C' },
-  { "debug",       0, 0, 'd' },
-  { "expand",      1, 0, 'e' },
-  { "debug-info",  0, 0, 'g' },
-  { "help",        0, 0, 'h' },
-  { "ignore-case", 0, 0, 'i' },
-  { "list-chips",  0, 0, 'l' },
-  { "force-list",  0, 0, 'L' },
-  { "dump",        0, 0, 'm' },
-  { "deps",        0, 0, 'M' },
-  { "dos",         0, 0, 'n' },
-  { "output",      1, 0, 'o' },
-  { "processor",   1, 0, 'p' },
-  { "quiet",       0, 0, 'q' },
-  { "radix",       1, 0, 'r' },
-  { "absolute",    0, 0, 'u' },
-  { "version",     0, 0, 'v' },
-  { "warning",     1, 0, 'w' },
-  { "extended",    0, 0, 'y' },
-  { 0, 0, 0, 0 }
-};
+    {
+        {"define", 1, 0, 'D'},
+        {"include", 1, 0, 'I'},
+        {"hex-format", 1, 0, 'a'},
+        {"object", 0, 0, 'c'},
+        {"new-coff", 0, 0, 'C'},
+        {"debug", 0, 0, 'd'},
+        {"expand", 1, 0, 'e'},
+        {"debug-info", 0, 0, 'g'},
+        {"help", 0, 0, 'h'},
+        {"ignore-case", 0, 0, 'i'},
+        {"list-chips", 0, 0, 'l'},
+        {"force-list", 0, 0, 'L'},
+        {"dump", 0, 0, 'm'},
+        {"deps", 0, 0, 'M'},
+        {"dos", 0, 0, 'n'},
+        {"output", 1, 0, 'o'},
+        {"processor", 1, 0, 'p'},
+        {"quiet", 0, 0, 'q'},
+        {"radix", 1, 0, 'r'},
+        {"absolute", 0, 0, 'u'},
+        {"version", 0, 0, 'v'},
+        {"warning", 1, 0, 'w'},
+        {"extended", 0, 0, 'y'},
+        {0, 0, 0, 0}};
 
-void
-init(void)
+void init(void)
 {
 
   gp_init();
@@ -114,9 +111,9 @@ init(void)
   state.lstfile = normal;
   state.objfile = suppress;
 
-  state.num.errors    = 0;
-  state.num.warnings  = 0;
-  state.num.messages  = 0;
+  state.num.errors = 0;
+  state.num.warnings = 0;
+  state.num.messages = 0;
   state.num.warnings_suppressed = 0;
   state.num.messages_suppressed = 0;
 
@@ -127,7 +124,7 @@ init(void)
   state.dep.enabled = false;
   state.lst.enabled = false;
   state.obj.enabled = false;
-  state.obj.newcoff = 1;  /* use new Microchip COFF format by default */
+  state.obj.newcoff = 1; /* use new Microchip COFF format by default */
 
   state.obj.object = NULL;
   state.obj.section = NULL;
@@ -141,12 +138,14 @@ init(void)
   return;
 }
 
-void
-add_path(const char *path)
+void add_path(const char *path)
 {
-  if(state.path_num < MAX_PATHS) {
+  if (state.path_num < MAX_PATHS)
+  {
     state.paths[state.path_num++] = strdup(path);
-  } else {
+  }
+  else
+  {
     fprintf(stderr, "too many -I paths\n");
     exit(1);
   }
@@ -182,7 +181,7 @@ show_usage(void)
   printf("  -p PROC, --processor PROC      Select processor.\n");
   printf("  -q, --quiet                    Quiet.\n");
   printf("  -r RADIX, --radix RADIX        Select radix. [dec]\n");
-/*  printf("  -u, --absolute                 Use absolute pathes. \n");*/
+  /*  printf("  -u, --absolute                 Use absolute pathes. \n");*/
   printf("  -v, --version                  Show version.\n");
   printf("  -w [0|1|2], --warning [0|1|2]  Set message level. [0]\n");
   /*
@@ -190,9 +189,12 @@ show_usage(void)
   */
   printf("\n");
 #ifdef USE_DEFAULT_PATHS
-  if (gp_header_path) {
+  if (gp_header_path)
+  {
     printf("Default header file path %s\n", gp_header_path);
-  } else {
+  }
+  else
+  {
     printf("Default header file path NOT SET\n");
   }
   printf("\n");
@@ -201,8 +203,7 @@ show_usage(void)
   //printf("%s\n", PACKAGE_BUGREPORT);
 }
 
-void
-process_args( int argc, char *argv[])
+void process_args(int argc, char *argv[])
 {
   extern char *optarg;
   extern int optind;
@@ -213,8 +214,10 @@ process_args( int argc, char *argv[])
 
   /* Scan through the options for the -i flag.  It must be set before the
      defines are read */
-  while ((c = getopt_long(argc, argv, GET_OPTIONS, longopts, 0)) != EOF) {
-    switch (c) {
+  while ((c = getopt_long(argc, argv, GET_OPTIONS, longopts, 0)) != EOF)
+  {
+    switch (c)
+    {
     case 'i':
       state.case_insensitive = true;
       break;
@@ -227,27 +230,29 @@ process_args( int argc, char *argv[])
   /* initalize the defines table for command line arguments */
   state.stDefines = push_symbol_table(NULL, state.case_insensitive);
 
-  while ((c = getopt_long(argc, argv, GET_OPTIONS, longopts, 0)) != EOF) {
-    switch (c) {
+  while ((c = getopt_long(argc, argv, GET_OPTIONS, longopts, 0)) != EOF)
+  {
+    switch (c)
+    {
     case '?':
       usage_code = 1;
     case 'h':
       usage = true;
       break;
-	  /*
+    /*
     case 'a':
       select_hexformat(optarg);
       state.cmd_line.hex_format = true;
       break;
 	  */
     case 'c':
-      state.mode    = relocatable;
+      state.mode = relocatable;
       state.codfile = suppress;
       state.hexfile = suppress;
       state.lstfile = normal;
       state.objfile = normal;
       break;
-	  /*
+    /*
     case 'C':
       state.obj.newcoff = 0;
       break;
@@ -256,15 +261,17 @@ process_args( int argc, char *argv[])
       gp_debug_disable = false;
       break;
     case 'D':
-      if ((optarg != NULL) && (strlen(optarg) > 0)) {
+      if ((optarg != NULL) && (strlen(optarg) > 0))
+      {
         struct symbol *sym;
         char *lhs, *rhs;
 
         lhs = strdup(optarg);
         rhs = strchr(lhs, '=');
-        if (rhs != NULL) {
-          *rhs = '\0';  /* Terminate the left-hand side */
-          rhs++;        /* right-hand side begins after the '=' */
+        if (rhs != NULL)
+        {
+          *rhs = '\0'; /* Terminate the left-hand side */
+          rhs++;       /* right-hand side begins after the '=' */
         }
 
         sym = get_symbol(state.stDefines, lhs);
@@ -301,9 +308,9 @@ process_args( int argc, char *argv[])
       state.memory_dump = true;
       break;
     case 'n':
-      #ifndef HAVE_DOS_BASED_FILE_SYSTEM
-        state.dos_newlines = true;
-      #endif
+#ifndef HAVE_DOS_BASED_FILE_SYSTEM
+      state.dos_newlines = true;
+#endif
       break;
     case 'o':
       strncpy(state.objfilename, optarg, sizeof(state.objfilename));
@@ -323,14 +330,14 @@ process_args( int argc, char *argv[])
       select_radix(optarg);
       state.cmd_line.radix = true;
       break;
-/*    case 'u':
+    /*    case 'u':
       state.use_absolute_path = true;
       break;*/
     case 'w':
       select_errorlevel(atoi(optarg));
       state.cmd_line.error_level = true;
       break;
-	  /*
+    /*
     case 'y':
       state.extended_pic16e = true;
       break;
@@ -338,7 +345,6 @@ process_args( int argc, char *argv[])
     case 'v':
       fprintf(stderr, "%s\n", GPASM_VERSION_STRING);
       exit(0);
-
     }
     if (usage)
       break;
@@ -349,25 +355,26 @@ process_args( int argc, char *argv[])
   else
     usage = true;
 
-  if (usage) {
+  if (usage)
+  {
     show_usage();
     exit(usage_code);
   }
 
   /* Add the header path to the include paths list last, so that the user
      specified directories are searched first */
-  if (gp_header_path) {
+  if (gp_header_path)
+  {
     add_path(gp_header_path);
   }
 
-  if (state.use_absolute_path) {
+  if (state.use_absolute_path)
+  {
     state.srcfilename = gp_absolute_path(state.srcfilename);
   }
-
 }
 
-int
-assemble(void)
+int assemble(void)
 {
   char *pc;
   struct symbol_table *cmd_defines;
@@ -376,7 +383,8 @@ assemble(void)
   cmd_defines = state.stDefines;
   state.c_memory = state.i_memory = i_memory_create();
 
-  if(state.basefilename[0] == '\0') {
+  if (state.basefilename[0] == '\0')
+  {
     strncpy(state.basefilename, state.srcfilename, sizeof(state.basefilename));
     pc = strrchr(state.basefilename, '.');
     if (pc)
@@ -388,14 +396,15 @@ assemble(void)
   state.stDirective = state.stBuiltin;
   state.stMacros = push_symbol_table(NULL, state.case_insensitive);
   state.stTop =
-    state.stGlobal = push_symbol_table(NULL, state.case_insensitive);
+      state.stGlobal = push_symbol_table(NULL, state.case_insensitive);
   state.stTopDefines =
-    state.stDefines = push_symbol_table(cmd_defines, state.case_insensitive);
+      state.stDefines = push_symbol_table(cmd_defines, state.case_insensitive);
 
   opcode_init(0);
 
   /* the tables are built, select the processor if -p was used */
-  if (cmd_processor) {
+  if (cmd_processor)
+  {
     select_processor(processor_name);
     state.cmd_line.processor = true;
   }
@@ -412,7 +421,7 @@ assemble(void)
   state.cblock_defined = 0;
   /* clean out defines for second pass */
   state.stTopDefines =
-    state.stDefines = push_symbol_table(cmd_defines, state.case_insensitive);
+      state.stDefines = push_symbol_table(cmd_defines, state.case_insensitive);
   purge_temp_symbols(state.stTop);
   if (!state.cmd_line.radix)
     state.radix = 10;
@@ -420,7 +429,8 @@ assemble(void)
   state.obj.section_num = 0;
 
   /* Initial section for absolute mode */
-  if (state.mode == absolute) {
+  if (state.mode == absolute)
+  {
     state.obj.new_sec_flags = STYP_TEXT;
   }
 
@@ -438,9 +448,12 @@ assemble(void)
     state.obj.object->flags |= F_EXTENDED18;
 
   open_src(state.srcfilename, 0);
-  if (!gp_debug_disable) {
+  if (!gp_debug_disable)
+  {
     yydebug = 1;
-  } else {
+  }
+  else
+  {
     yydebug = 0;
   }
   yyparse();
@@ -449,21 +462,23 @@ assemble(void)
 
   pop_symbol_table(state.stBuiltin);
 
-	printf("\n");
+  printf("\n");
   hex_init();
 
-  if(state.memory_dump)
+  if (state.memory_dump)
     print_i_memory(state.i_memory, state.device.class);
 
   /* Maybe produce a symbol table */
-  if (state.lst.symboltable) {
+  if (state.lst.symboltable)
+  {
     lst_throw(); /* Start symbol table on a fresh page */
     lst_symbol_table(state.stGlobal);
     lst_defines_table(state.stDefines);
   }
 
   /* Maybe produce a memory map */
-  if ((state.mode == absolute) && (state.lst.memorymap)) {
+  if ((state.mode == absolute) && (state.lst.memorymap))
+  {
     lst_memory_map(state.i_memory);
   }
 
@@ -471,7 +486,7 @@ assemble(void)
   coff_close_file();
   deps_close();
   lst_close();
-  
+
   if (state.processor)
     cod_close_file();
 
@@ -487,13 +502,13 @@ assemble(void)
 
   if ((state.num.errors > 0) ||
       (gp_num_errors > 0))
-	{
-		printf("      ===== (GPASM) Unsuccessful =====\n\n");
-		return EXIT_FAILURE;
-	}
+  {
+    printf("      ===== (GPASM) Unsuccessful =====\n\n");
+    return EXIT_FAILURE;
+  }
   else
-	{
-		printf("       ===== (GPASM) Successful =====\n\n");
-		return EXIT_SUCCESS;
-	}
+  {
+    printf("       ===== (GPASM) Successful =====\n\n");
+    return EXIT_SUCCESS;
+  }
 }

@@ -49,17 +49,18 @@ this function is used.
 #define size_t unsigned long
 #endif
 
-int vsnprintf PARAMS ((char *, size_t, const char *, va_list));
+int vsnprintf PARAMS((char *, size_t, const char *, va_list));
 
 int
-snprintf VPARAMS ((char *s, size_t n, const char *format, ...))
+    snprintf
+    VPARAMS((char *s, size_t n, const char *format, ...))
 {
   int result;
-  VA_OPEN (ap, format);
-  VA_FIXEDARG (ap, char *, s);
-  VA_FIXEDARG (ap, size_t, n);
-  VA_FIXEDARG (ap, const char *, format);
-  result = vsnprintf (s, n, format, ap);
-  VA_CLOSE (ap);
+  VA_OPEN(ap, format);
+  VA_FIXEDARG(ap, char *, s);
+  VA_FIXEDARG(ap, size_t, n);
+  VA_FIXEDARG(ap, const char *, format);
+  result = vsnprintf(s, n, format, ap);
+  VA_CLOSE(ap);
   return result;
 }

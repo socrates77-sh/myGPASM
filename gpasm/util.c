@@ -29,20 +29,18 @@ Boston, MA 02111-1307, USA.  */
 
 static struct file_context *last = NULL;
 
-int
-stringtolong(const char *string, int radix)
+int stringtolong(const char *string, int radix)
 {
   char *endptr;
   int value;
-  
-  value = strtoul(string, &endptr, radix);                           
-  if ((endptr == NULL) || (*endptr != '\0')) {
+
+  value = strtoul(string, &endptr, radix);
+  if ((endptr == NULL) || (*endptr != '\0'))
+  {
     char complaint[80];
 
     snprintf(complaint, sizeof(complaint),
-             isprint(*endptr) ?
-             "Illegal character '%c' in numeric constant " :
-             "Illegal character %#x in numeric constant" ,
+             isprint(*endptr) ? "Illegal character '%c' in numeric constant " : "Illegal character %#x in numeric constant",
              *endptr);
     gperror(GPE_UNKNOWN, complaint);
   }
@@ -52,8 +50,10 @@ stringtolong(const char *string, int radix)
 
 int gpasm_magic(const char *c)
 {
-  if (c[0] == '\\') {
-    switch (c[1]) {
+  if (c[0] == '\\')
+  {
+    switch (c[1])
+    {
     case 'a':
       return '\a';
     case 'b':
@@ -93,35 +93,40 @@ int gpasm_magic(const char *c)
 char *
 convert_escaped_char(char *str, char c)
 {
-  char *src  = str;
+  char *src = str;
   char *dest = str;
 
   if (!str)
     return str;
 
-  while (*src) {
-    if (*src =='\\' && src[1] == c)
+  while (*src)
+  {
+    if (*src == '\\' && src[1] == c)
       src++;
     *dest++ = *src++;
   }
-  *dest=0;
+  *dest = 0;
 
   return str;
 }
 
 /* Determine the value of the escape char pointed to by ps.  Return a pointer
-to the next character. */ 
+to the next character. */
 
 const char *
 convert_escape_chars(const char *ps, int *value)
 {
   int count;
-  
-  if (*ps != '\\') {
+
+  if (*ps != '\\')
+  {
     *value = *ps++;
-  } else {
-    /* escape char, convert its value and write to the new string */    
-    switch (ps[1]) {
+  }
+  else
+  {
+    /* escape char, convert its value and write to the new string */
+    switch (ps[1])
+    {
     case '0':
     case '1':
     case '2':
@@ -135,24 +140,28 @@ convert_escape_chars(const char *ps, int *value)
       *value = 0;
       ps++;
 
-      while (count < 3) {
+      while (count < 3)
+      {
         if (*ps < '0' || *ps > '7')
           break;
         *value = (*value << 3) + *ps - '0';
         ps++;
         count++;
-      }        
+      }
       break;
     case 'x':
       /* hex number */
-      if ((ps[2] == '\0') || (ps[3] == '\0')) {
+      if ((ps[2] == '\0') || (ps[3] == '\0'))
+      {
         gperror(GPE_UNKNOWN, "missing hex value in \\x escape character");
         *value = 0;
         /* return a NULL character */
         ps += 2;
-	if (*ps)
-	  ++ps;
-      } else {
+        if (*ps)
+          ++ps;
+      }
+      else
+      {
         char buffer[3];
 
         buffer[0] = ps[2];
@@ -163,20 +172,22 @@ convert_escape_chars(const char *ps, int *value)
       }
       break;
     default:
-      if (ps[1] == '\0') {
+      if (ps[1] == '\0')
+      {
         gperror(GPE_UNKNOWN, "missing value in \\ escape character");
         *value = 0;
         /* return a NULL character */
         ps++;
-      } else {
+      }
+      else
+      {
         *value = gpasm_magic(ps);
         ps += 2;
       }
     }
   }
-  
-  return ps;
 
+  return ps;
 }
 
 /* In some contexts, such as in the operand to a literal instruction, a
@@ -185,10 +196,12 @@ convert_escape_chars(const char *ps, int *value)
  * constant-type pnode in-place. */
 void coerce_str1(struct pnode *exp)
 {
-  if ((exp != NULL) && (exp->tag == string)) {
+  if ((exp != NULL) && (exp->tag == string))
+  {
     int value;
     const char *pc = convert_escape_chars(exp->value.string, &value);
-    if (*pc == '\0') {
+    if (*pc == '\0')
+    {
       /* castable string, make the conversion */
       exp->tag = constant;
       exp->value.constant = value;
@@ -211,7 +224,8 @@ void set_global(const char *name,
   if (sym == NULL)
     sym = add_symbol(state.stGlobal, name);
   var = get_symbol_annotation(sym);
-  if (var == NULL) {
+  if (var == NULL)
+  {
     /* new symbol */
     var = malloc(sizeof(*var));
     annotate_symbol(sym, var);
@@ -219,11 +233,12 @@ void set_global(const char *name,
     var->coff_num = state.obj.symbol_num;
     var->coff_section_num = state.obj.section_num;
     var->type = type;
-    var->previous_type = type;  /* coff symbols can be changed to global */
+    var->previous_type = type; /* coff symbols can be changed to global */
     var->lifetime = lifetime;
 
     /* increment the index into the coff symbol table for the relocations */
-    switch(type) {
+    switch (type)
+    {
     case gvt_extern:
     case gvt_global:
     case gvt_static:
@@ -235,8 +250,9 @@ void set_global(const char *name,
     default:
       break;
     }
-
-  } else if (lifetime == TEMPORARY) {
+  }
+  else if (lifetime == TEMPORARY)
+  {
     /*
      * TSD - the following embarrassing piece of code is a hack
      *       to fix a problem when global variables are changed
@@ -248,18 +264,20 @@ void set_global(const char *name,
      *       makes sure that the value is assigned on the second
      *       pass only in the macro. Jeez this really sucks....
      */
-     var->value = value;
-
-  } else if (state.pass == 2) {
+    var->value = value;
+  }
+  else if (state.pass == 2)
+  {
     char *coff_name;
 
-    if (var->value != value) {
+    if (var->value != value)
+    {
       char message[BUFSIZ];
 
       snprintf(message, sizeof(message),
                "Value of symbol \"%s\" differs on second pass\n pass 1=%d,  pass 2=%d",
-               name,var->value,value);
-      gperror(GPE_DIFFLAB, message);      
+               name, var->value, value);
+      gperror(GPE_DIFFLAB, message);
     }
 
     coff_name = coff_local_name(name);
@@ -268,21 +286,27 @@ void set_global(const char *name,
     if (coff_name != NULL)
       free(coff_name);
   }
-
 }
 
-void purge_temp_symbols(struct symbol_table *table) {
+void purge_temp_symbols(struct symbol_table *table)
+{
   int i;
-  if (table != NULL) {
-    for (i = 0; i < HASH_SIZE; ++i) {
+  if (table != NULL)
+  {
+    for (i = 0; i < HASH_SIZE; ++i)
+    {
       struct symbol *cur_symbol;
       struct symbol *last_symbol = NULL;
       cur_symbol = table->hash_table[i];
-      while (cur_symbol != NULL) {
-        if (cur_symbol != NULL) {
+      while (cur_symbol != NULL)
+      {
+        if (cur_symbol != NULL)
+        {
           struct variable *var = (struct variable *)get_symbol_annotation(cur_symbol);
-          if (var != NULL) {
-            if (var->lifetime == TEMPORARY) {
+          if (var != NULL)
+          {
+            if (var->lifetime == TEMPORARY)
+            {
               struct symbol *next_symbol = cur_symbol->next;
               free(cur_symbol);
               table->count--;
@@ -306,21 +330,34 @@ void purge_temp_symbols(struct symbol_table *table) {
 
 void select_errorlevel(int level)
 {
-  if (state.cmd_line.error_level) {
+  if (state.cmd_line.error_level)
+  {
     gpmessage(GPM_SUPVAL, NULL);
-  } else {
-    if (level == 0) {
+  }
+  else
+  {
+    if (level == 0)
+    {
       state.error_level = 0;
-    } else if (level == 1) {
+    }
+    else if (level == 1)
+    {
       state.error_level = 1;
-    } else if (level == 2) {
+    }
+    else if (level == 2)
+    {
       state.error_level = 2;
-    } else {
-      if (state.pass == 0) {
-	fprintf(stderr,
-		"Error: invalid warning level \"%i\"\n",
-		level);
-      } else {
+    }
+    else
+    {
+      if (state.pass == 0)
+      {
+        fprintf(stderr,
+                "Error: invalid warning level \"%i\"\n",
+                level);
+      }
+      else
+      {
         gperror(GPE_ILLEGAL_ARGU, "Expected w= 0, 1, 2");
       }
     }
@@ -329,20 +366,31 @@ void select_errorlevel(int level)
 
 void select_expand(const char *expand)
 {
-  if (state.cmd_line.macro_expand) {
+  if (state.cmd_line.macro_expand)
+  {
     gpmessage(GPM_SUPLIN, NULL);
-  } else {
-    if (strcasecmp(expand, "ON") == 0) {
+  }
+  else
+  {
+    if (strcasecmp(expand, "ON") == 0)
+    {
       state.lst.expand = true;
-    } else if (strcasecmp(expand, "OFF") == 0) {
+    }
+    else if (strcasecmp(expand, "OFF") == 0)
+    {
       state.lst.expand = false;
-    } else {
+    }
+    else
+    {
       state.lst.expand = true;
-      if (state.pass == 0) {
-	fprintf(stderr,
-		"Error: invalid option \"%s\"\n",
-		expand);
-      } else {
+      if (state.pass == 0)
+      {
+        fprintf(stderr,
+                "Error: invalid option \"%s\"\n",
+                expand);
+      }
+      else
+      {
         gpwarning(GPE_ILLEGAL_ARGU, "Expected ON or OFF");
       }
     }
@@ -351,24 +399,39 @@ void select_expand(const char *expand)
 
 void select_hexformat(const char *format_name)
 {
-  if (state.cmd_line.hex_format) {
+  if (state.cmd_line.hex_format)
+  {
     gpwarning(GPW_CMDLINE_HEXFMT, NULL);
-  } else {
-    if (strcasecmp(format_name, "inhx8m") == 0) {
+  }
+  else
+  {
+    if (strcasecmp(format_name, "inhx8m") == 0)
+    {
       state.hex_format = inhx8m;
-    } else if (strcasecmp(format_name, "inhx8s") == 0) {
+    }
+    else if (strcasecmp(format_name, "inhx8s") == 0)
+    {
       state.hex_format = inhx8s;
-    } else if (strcasecmp(format_name, "inhx16") == 0) {
+    }
+    else if (strcasecmp(format_name, "inhx16") == 0)
+    {
       state.hex_format = inhx16;
-    } else if (strcasecmp(format_name, "inhx32") == 0) {
+    }
+    else if (strcasecmp(format_name, "inhx32") == 0)
+    {
       state.hex_format = inhx32;
-    } else {
+    }
+    else
+    {
       state.hex_format = inhx8m;
-      if (state.pass == 0) {
-	fprintf(stderr,
-		"Error: invalid format \"%s\"\n",
-		format_name);
-      } else {
+      if (state.pass == 0)
+      {
+        fprintf(stderr,
+                "Error: invalid format \"%s\"\n",
+                format_name);
+      }
+      else
+      {
         gperror(GPE_ILLEGAL_ARGU, "Expected inhx8m, inhx8s, inhx16, or inhx32");
       }
     }
@@ -377,28 +440,41 @@ void select_hexformat(const char *format_name)
 
 void select_radix(const char *radix_name)
 {
-  if (state.cmd_line.radix) {
+  if (state.cmd_line.radix)
+  {
     gpwarning(GPW_CMDLINE_RADIX, NULL);
-  } else {
+  }
+  else
+  {
     if (strcasecmp(radix_name, "h") == 0 ||
-	strcasecmp(radix_name, "hex") == 0 ||
-	strcasecmp(radix_name, "hexadecimal") == 0) {
+        strcasecmp(radix_name, "hex") == 0 ||
+        strcasecmp(radix_name, "hexadecimal") == 0)
+    {
       state.radix = 16;
-    } else if (strcasecmp(radix_name, "d") == 0 ||
-	       strcasecmp(radix_name, "dec") == 0 ||
-	       strcasecmp(radix_name, "decimal") == 0) {
+    }
+    else if (strcasecmp(radix_name, "d") == 0 ||
+             strcasecmp(radix_name, "dec") == 0 ||
+             strcasecmp(radix_name, "decimal") == 0)
+    {
       state.radix = 10;
-    } else if (strcasecmp(radix_name, "o") == 0 ||
-	       strcasecmp(radix_name, "oct") == 0 ||
-	       strcasecmp(radix_name, "octal") == 0) {
+    }
+    else if (strcasecmp(radix_name, "o") == 0 ||
+             strcasecmp(radix_name, "oct") == 0 ||
+             strcasecmp(radix_name, "octal") == 0)
+    {
       state.radix = 8;
-    } else {
+    }
+    else
+    {
       state.radix = 10;
-      if (state.pass == 0) {
-	fprintf(stderr,
-		"invalid radix \"%s\", will use decimal.\n",
-		radix_name);
-      } else {
+      if (state.pass == 0)
+      {
+        fprintf(stderr,
+                "invalid radix \"%s\", will use decimal.\n",
+                radix_name);
+      }
+      else
+      {
         gpwarning(GPW_RADIX, NULL);
       }
     }
@@ -414,10 +490,10 @@ void macro_append(void)
 
   body->src_line = NULL;
 
-  *state.mac_prev = body;	/* append this to the chain */
-  state.mac_prev = &body->next;	/* this is the new end of the chain */
+  *state.mac_prev = body;       /* append this to the chain */
+  state.mac_prev = &body->next; /* this is the new end of the chain */
   state.mac_body = body;
-  body->next = NULL;		/* make sure it's terminated */
+  body->next = NULL; /* make sure it's terminated */
 }
 
 gpasmVal do_or_append_insn(char *op, struct pnode *parms)
@@ -426,9 +502,12 @@ gpasmVal do_or_append_insn(char *op, struct pnode *parms)
 
   if (!state.mac_prev ||
       (strcasecmp(op, "endm") == 0) ||
-      (state.while_head && (strcasecmp(op, "endw") == 0))) {
+      (state.while_head && (strcasecmp(op, "endw") == 0)))
+  {
     r = do_insn(op, parms);
-  } else {
+  }
+  else
+  {
     macro_append();
     r = 0;
   }
@@ -438,42 +517,43 @@ gpasmVal do_or_append_insn(char *op, struct pnode *parms)
 
 void print_pnode(struct pnode *p)
 {
-  if(!p) {
+  if (!p)
+  {
     printf("Null\n");
     return;
   }
 
-  switch(p->tag) {
+  switch (p->tag)
+  {
   case constant:
-    printf("  constant: %d\n",p->value.constant);
+    printf("  constant: %d\n", p->value.constant);
     break;
   case symbol:
-    printf("  symbol: %s\n",p->value.symbol);
+    printf("  symbol: %s\n", p->value.symbol);
     break;
   case unop:
-    printf("  unop: %d\n",p->value.unop.op);
+    printf("  unop: %d\n", p->value.unop.op);
     break;
 
   case binop:
-    printf("  binop: %d\n",p->value.binop.op);
+    printf("  binop: %d\n", p->value.binop.op);
     break;
   case string:
-    printf("  string: %s\n",p->value.string);
+    printf("  string: %s\n", p->value.string);
     break;
   case list:
     printf("  list:\n");
     break;
-   
+
   default:
     printf("unknown type\n");
-
   }
 }
 
 void print_macro_node(struct macro_body *mac)
 {
-  if(mac->src_line)
-    printf(" src_line = %s\n",mac->src_line);
+  if (mac->src_line)
+    printf(" src_line = %s\n", mac->src_line);
 }
 
 void print_macro_body(struct macro_body *mac)
@@ -481,33 +561,35 @@ void print_macro_body(struct macro_body *mac)
   struct macro_body *mb = mac;
 
   printf("{\n");
-  while(mb) {
+  while (mb)
+  {
     print_macro_node(mb);
     mb = mb->next;
   }
   printf("}\n");
 }
 
-
 /************************************************************************/
 
 /* add_file: add a file of type 'type' to the file_context stack.
  */
 
-struct file_context * add_file(unsigned int type, const char *name)
+struct file_context *add_file(unsigned int type, const char *name)
 {
   static unsigned int file_id = 0;
   struct file_context *new;
 
   /* First check to make sure this file is not already in the list */
 
-  if(last) {
+  if (last)
+  {
     new = last;
-    do {
-      if(strcmp(new->name, name) == 0)
-	return(new);
+    do
+    {
+      if (strcmp(new->name, name) == 0)
+        return (new);
       new = new->prev;
-    } while(new != NULL);
+    } while (new != NULL);
   }
 
   new = malloc(sizeof(*new));
@@ -517,12 +599,12 @@ struct file_context * add_file(unsigned int type, const char *name)
   new->prev = last;
   new->id = file_id++;
   new->next = NULL;
-  if(last)
+  if (last)
     last->next = new;
 
   last = new;
   state.files = new;
-  return(new);
+  return (new);
 }
 
 /* free_files: free memory allocated to the file_context stack
@@ -532,50 +614,57 @@ void free_files(void)
 {
   struct file_context *old;
 
-  while(last != NULL) {
+  while (last != NULL)
+  {
     old = last;
     last = old->prev;
     free(old->name);
     free(old);
-  } 
-
+  }
 }
 
 void hex_init(void)
 {
 
-  if (state.hexfile == suppress) {
+  if (state.hexfile == suppress)
+  {
     /* Must delete hex file when suppressed. */
-    writehex(state.basefilename, 
-             state.i_memory, 
-             state.hex_format, 
+    writehex(state.basefilename,
+             state.i_memory,
+             state.hex_format,
              1,
              state.dos_newlines,
-	     1,
-		 state.processor);
+             1,
+             state.processor);
     return;
   }
 
-  if (check_writehex(state.i_memory, state.hex_format)) {
-    gperror(GPE_IHEX,NULL); 
+  if (check_writehex(state.i_memory, state.hex_format))
+  {
+    gperror(GPE_IHEX, NULL);
     writehex(state.basefilename, state.i_memory,
-	     state.hex_format, 1,
-	     state.dos_newlines, 1, state.processor);
-  } else if (state.device.class != NULL) {
-    if (writehex(state.basefilename, state.i_memory, 
+             state.hex_format, 1,
+             state.dos_newlines, 1, state.processor);
+  }
+  else if (state.device.class != NULL)
+  {
+    if (writehex(state.basefilename, state.i_memory,
                  state.hex_format, state.num.errors,
                  state.dos_newlines,
-		 state.device.class->core_size, state.processor)) {
-		 /*state.device.class->core_size)) {*/
-      gperror(GPE_UNKNOWN,"Error generating hex file");
+                 state.device.class->core_size, state.processor))
+    {
+      /*state.device.class->core_size)) {*/
+      gperror(GPE_UNKNOWN, "Error generating hex file");
     }
-  } else {
+  }
+  else
+  {
     /* Won't have anything to write, just remove any old files */
     writehex(state.basefilename, state.i_memory,
-	     state.hex_format, 1,
-	     state.dos_newlines, 1,
-		 state.processor);
+             state.hex_format, 1,
+             state.dos_newlines, 1,
+             state.processor);
   }
-  
+
   return;
 }

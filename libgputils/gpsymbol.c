@@ -37,14 +37,16 @@ static int hashfunc(struct symbol_table *t, const char *s)
 
   len = strlen(s);
   change.b[0] = s[0];
-  if (len > 1) {
+  if (len > 1)
+  {
     change.b[1] = s[1];
     change.b[3] = s[len - 1];
     if (len > 2)
       change.b[2] = s[2];
   }
 
-  if (t->case_insensitive) {
+  if (t->case_insensitive)
+  {
     change.ul &= 0x1f1f1f1f;
   }
   change.ul += (len << 3);
@@ -52,8 +54,8 @@ static int hashfunc(struct symbol_table *t, const char *s)
   return (change.ul % HASH_SIZE);
 }
 
-struct symbol_table *push_symbol_table(struct symbol_table * table,
-				       gp_boolean case_insensitive)
+struct symbol_table *push_symbol_table(struct symbol_table *table,
+                                       gp_boolean case_insensitive)
 {
   struct symbol_table *new = calloc(sizeof(*new), 1);
 
@@ -89,7 +91,8 @@ struct symbol *add_symbol(struct symbol_table *table, const char *name)
   while (r && ((*table->compare)(name, r->name) != 0))
     r = r->next;
 
-  if (!r) {     /* No match */
+  if (!r)
+  { /* No match */
     r = malloc(sizeof(*r));
     r->name = strdup(name);
     r->next = table->hash_table[index];
@@ -97,7 +100,7 @@ struct symbol *add_symbol(struct symbol_table *table, const char *name)
     table->hash_table[index] = r;
     table->count++;
   }
-  
+
   return r;
 }
 
@@ -106,7 +109,7 @@ Maybe this is ok, but it seems wrong. */
 
 int remove_symbol(struct symbol_table *table, const char *name)
 {
-  struct symbol *r = NULL; 
+  struct symbol *r = NULL;
   struct symbol *last = NULL;
   int index;
   int found_symbol = 0;
@@ -117,19 +120,25 @@ int remove_symbol(struct symbol_table *table, const char *name)
   index = hashfunc(table, name);
 
   /* Search for the symbol */
-  if (table != NULL) {
+  if (table != NULL)
+  {
     r = table->hash_table[index];
-    while (r && ((*table->compare)(name, r->name) != 0)) {
+    while (r && ((*table->compare)(name, r->name) != 0))
+    {
       last = r;
       r = r->next;
     }
   }
 
-  if (r != NULL) {
+  if (r != NULL)
+  {
     /* remove the symbol */
-    if (last) {
+    if (last)
+    {
       last->next = r->next;
-    } else {
+    }
+    else
+    {
       /* r was first in the list */
       table->hash_table[index] = r->next;
     }
@@ -147,7 +156,8 @@ struct symbol *get_symbol(struct symbol_table *table, const char *name)
 
   assert(name != NULL);
 
-  if (table != NULL) {
+  if (table != NULL)
+  {
     int index = hashfunc(table, name);
 
     r = table->hash_table[index];
@@ -180,41 +190,39 @@ void *get_symbol_annotation(const struct symbol *s)
 int symbol_compare(const void *p0, const void *p1)
 {
   struct symbol
-    *s0 = *(struct symbol **)p0,
-    *s1 = *(struct symbol **)p1;
+      *s0 = *(struct symbol **)p0,
+      *s1 = *(struct symbol **)p1;
   return strcmp(s0->name, s1->name);
 }
-
 
 //zwr: for debug
 int print_all_symbol(const struct symbol_table *t)
 {
-	int i;
-	struct symbol *s = NULL;
-	for(i=0; i<HASH_SIZE; i++)
-	{
-		s = t->hash_table[i];
-		if(s!=NULL)
-			printf("%03d: %s\n", i, s->name);
-		else
-			printf("%03d: \n", i);
-	}
-	return 1;
+  int i;
+  struct symbol *s = NULL;
+  for (i = 0; i < HASH_SIZE; i++)
+  {
+    s = t->hash_table[i];
+    if (s != NULL)
+      printf("%03d: %s\n", i, s->name);
+    else
+      printf("%03d: \n", i);
+  }
+  return 1;
 }
 
 int print_all_symbol_table(const struct symbol_table *t)
 {
-	struct symbol_table *tprev = NULL;
-	int n;
-	n = 0;
-	while (t != NULL)
-	{
-		tprev = t->prev;
-		printf("=============symbol_table #%d\n", n);
-		print_all_symbol(t);
-		t = tprev;
-		n++;
-	} 
-	return 1;
+  struct symbol_table *tprev = NULL;
+  int n;
+  n = 0;
+  while (t != NULL)
+  {
+    tprev = t->prev;
+    printf("=============symbol_table #%d\n", n);
+    print_all_symbol(t);
+    t = tprev;
+    n++;
+  }
+  return 1;
 }
-		

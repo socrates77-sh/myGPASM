@@ -31,14 +31,13 @@ Boston, MA 02111-1307, USA.  */
 
 #define SECTION_UNKNOWN 0
 #define SECTION_ROMDATA 1
-#define SECTION_CODE    2
-#define SECTION_IDATA   3
-#define SECTION_UDATA   4
+#define SECTION_CODE 2
+#define SECTION_IDATA 3
+#define SECTION_UDATA 4
 
 /* FIXME: Sort symbols by name and size. */
 
-void
-map_line(const char *format, ...)
+void map_line(const char *format, ...)
 {
   va_list args;
   char buffer[BUFSIZ];
@@ -61,16 +60,25 @@ _section_value(gp_section_type *section)
   int value = 0;
 
   if ((section->flags & STYP_TEXT) ||
-      (section->flags & STYP_DATA_ROM))  {
+      (section->flags & STYP_DATA_ROM))
+  {
     value = SECTION_CODE;
-  } else if (section->flags & STYP_DATA) {
+  }
+  else if (section->flags & STYP_DATA)
+  {
     value = SECTION_IDATA;
-  } else if ((section->flags & STYP_BSS) ||
-             (section->flags & STYP_OVERLAY)) {
+  }
+  else if ((section->flags & STYP_BSS) ||
+           (section->flags & STYP_OVERLAY))
+  {
     value = SECTION_UDATA;
-  } else if (section->flags & STYP_DATA_ROM) {
+  }
+  else if (section->flags & STYP_DATA_ROM)
+  {
     value = SECTION_ROMDATA;
-  } else {
+  }
+  else
+  {
     value = SECTION_UNKNOWN;
   }
 
@@ -111,14 +119,16 @@ _write_sections(void)
 
   /* Some malloc implementations return NULL for malloc(0) */
   section_list = malloc(sizeof(gp_section_type *) * state.object->num_sections);
-  if (!section_list && state.object->num_sections > 0) {
+  if (!section_list && state.object->num_sections > 0)
+  {
     fprintf(stderr, "error: out of memory\n");
-	unlink(state.mapfilename);
+    unlink(state.mapfilename);
     exit(1);
   }
 
   section = state.object->sections;
-  for (i = 0; i < state.object->num_sections; i++) {
+  for (i = 0; i < state.object->num_sections; i++)
+  {
     assert(section != NULL);
     section_list[i] = section;
     section = section->next;
@@ -133,10 +143,12 @@ _write_sections(void)
   map_line("                  Section       Type    Address   Location Size(Bytes)");
   map_line("                ---------  ---------  ---------  ---------  ---------");
 
-  for (i = 0; i < state.object->num_sections; i++) {
+  for (i = 0; i < state.object->num_sections; i++)
+  {
     int org_to_byte_shift = state.class->org_to_byte_shift;
     section = section_list[i];
-    switch (_section_value(section)) {
+    switch (_section_value(section))
+    {
     case SECTION_ROMDATA:
       type = "romdata";
       break;
@@ -155,16 +167,20 @@ _write_sections(void)
     }
 
     if ((section->flags & STYP_TEXT) ||
-        (section->flags & STYP_DATA_ROM))  {
+        (section->flags & STYP_DATA_ROM))
+    {
       location = "program";
-    } else {
+    }
+    else
+    {
       location = "data";
       org_to_byte_shift = 0;
     }
 
     assert(section->name != NULL);
 
-    if (section->size != 0) {
+    if (section->size != 0)
+    {
       map_line("%25s %10s   %#08x %10s   %#08x",
                section->name,
                type,
@@ -189,9 +205,12 @@ _write_program_memory(void)
   map_line("                           ---------   ---------");
   section = state.object->sections;
 
-  while (section != NULL) {
+  while (section != NULL)
+  {
     if (((section->flags & STYP_TEXT) ||
-         (section->flags & STYP_DATA_ROM)) && (section->size != 0)) {
+         (section->flags & STYP_DATA_ROM)) &&
+        (section->size != 0))
+    {
       map_line("                            %#08x    %#08x",
                gp_processor_byte_to_org(state.class, section->address),
                gp_processor_byte_to_org(state.class, section->address + section->size - 1));
@@ -205,7 +224,8 @@ _write_program_memory(void)
   map_line(" ");
 }
 
-struct file_stack {
+struct file_stack
+{
   gp_symbol_type *symbol;
   struct file_stack *previous;
 };
@@ -229,7 +249,8 @@ pop_file(struct file_stack *stack)
 {
   struct file_stack *old;
 
-  if (stack) {
+  if (stack)
+  {
     old = stack;
     stack = stack->previous;
     free(old);
@@ -254,17 +275,26 @@ _write_symbols(void)
 
   symbol = state.object->symbols;
 
-  while (symbol != NULL) {
-    if (symbol->class == C_FILE) {
+  while (symbol != NULL)
+  {
+    if (symbol->class == C_FILE)
+    {
       stack = push_file(stack, symbol);
-    } else if (symbol->class == C_EOF) {
+    }
+    else if (symbol->class == C_EOF)
+    {
       stack = pop_file(stack);
-    } else if ((symbol->section_number > 0) &&
-               (symbol->class != C_SECTION)) {
-      if (stack == NULL) {
+    }
+    else if ((symbol->section_number > 0) &&
+             (symbol->class != C_SECTION))
+    {
+      if (stack == NULL)
+      {
         /* the symbol is not between a .file/.eof pair */
         file_name = " ";
-      } else {
+      }
+      else
+      {
         file = stack->symbol;
         assert(file != NULL);
         assert(file->aux_list != NULL);
@@ -275,15 +305,21 @@ _write_symbols(void)
       assert(symbol->name != NULL);
 
       if ((symbol->section->flags & STYP_TEXT) ||
-          (symbol->section->flags & STYP_DATA_ROM)) {
+          (symbol->section->flags & STYP_DATA_ROM))
+      {
         location = "program";
-      } else {
+      }
+      else
+      {
         location = "data";
       }
 
-      if (symbol->class == C_EXT) {
+      if (symbol->class == C_EXT)
+      {
         storage = "extern";
-      } else {
+      }
+      else
+      {
         storage = "static";
       }
 
@@ -293,24 +329,23 @@ _write_symbols(void)
                location,
                storage,
                file_name);
-
     }
     symbol = symbol->next;
   }
   map_line(" ");
 }
 
-
-void
-make_map(void)
+void make_map(void)
 {
-  if ((gp_num_errors) || (state.mapfile == suppress)) {
+  if ((gp_num_errors) || (state.mapfile == suppress))
+  {
     unlink(state.mapfilename);
     return;
   }
 
   state.map.f = fopen(state.mapfilename, "wt");
-  if (state.map.f == NULL) {
+  if (state.map.f == NULL)
+  {
     perror(state.mapfilename);
     exit(1);
   }

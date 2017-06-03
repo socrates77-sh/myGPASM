@@ -23,8 +23,7 @@ Boston, MA 02111-1307, USA.  */
 
 #include "libgpasm.h"
 
-int 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   init();
   process_args(argc, argv);

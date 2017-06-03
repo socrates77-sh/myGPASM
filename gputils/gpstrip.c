@@ -27,23 +27,22 @@ Boston, MA 02111-1307, USA.  */
 struct gpstrip_state state;
 gp_boolean verbose;
 
-void
-conditional_remove(gp_symbol_type *symbol)
+void conditional_remove(gp_symbol_type *symbol)
 {
   struct symbol *sym;
 
   sym = get_symbol(state.symbol_keep, symbol->name);
-  if (sym == NULL) {
-    if (verbose) {
+  if (sym == NULL)
+  {
+    if (verbose)
+    {
       gp_message("removing symbol \"%s\"", symbol->name);
     }
     gp_coffgen_delsymbol(state.object, symbol);
   }
-
 }
 
-void
-remove_sections(void)
+void remove_sections(void)
 {
   int i;
   struct symbol *sym;
@@ -52,13 +51,17 @@ remove_sections(void)
   /* FIXME:  Check for relocations from other sections.  Error out if
      they exist */
 
-  for (i = 0; i < HASH_SIZE; i++) {
-    for (sym = state.section_remove->hash_table[i]; sym; sym = sym->next) {
-      section = gp_coffgen_findsection(state.object, 
+  for (i = 0; i < HASH_SIZE; i++)
+  {
+    for (sym = state.section_remove->hash_table[i]; sym; sym = sym->next)
+    {
+      section = gp_coffgen_findsection(state.object,
                                        state.object->sections,
                                        sym->name);
-      if (section) {
-        if (verbose) {
+      if (section)
+      {
+        if (verbose)
+        {
           gp_message("removing section \"%s\"", sym->name);
         }
 
@@ -70,36 +73,38 @@ remove_sections(void)
       }
     }
   }
-
 }
 
-void
-remove_symbols(void)
+void remove_symbols(void)
 {
   int i;
   struct symbol *sym;
   gp_symbol_type *symbol = NULL;
 
-  for (i = 0; i < HASH_SIZE; i++) {
-    for (sym = state.symbol_remove->hash_table[i]; sym; sym = sym->next) {
+  for (i = 0; i < HASH_SIZE; i++)
+  {
+    for (sym = state.symbol_remove->hash_table[i]; sym; sym = sym->next)
+    {
       symbol = gp_coffgen_findsymbol(state.object, sym->name);
-      if (symbol) {
-        if (!gp_coffgen_has_reloc(state.object, symbol)) {
+      if (symbol)
+      {
+        if (!gp_coffgen_has_reloc(state.object, symbol))
+        {
           conditional_remove(symbol);
         }
       }
     }
   }
-
 }
 
-void
-strip_all(void)
+void strip_all(void)
 {
   gp_section_type *section = state.object->sections;
 
-  if (state.object->flags & F_EXEC) {
-    while (section != NULL) {
+  if (state.object->flags & F_EXEC)
+  {
+    while (section != NULL)
+    {
       /* remove the line numbers, have too because the symbols will be
          removed */
       section->num_lineno = 0;
@@ -110,95 +115,95 @@ strip_all(void)
       section->num_reloc = 0;
       section->relocations = NULL;
       section->relocations_tail = NULL;
-    
+
       section = section->next;
-    }  
+    }
 
     /* remove all symbols */
     state.object->num_symbols = 0;
     state.object->symbols = NULL;
     state.object->symbols_tail = NULL;
-
-  } else {
+  }
+  else
+  {
     gp_error("can not strip all symbols because the object file is not executable");
   }
-
 }
 
-void
-strip_debug(void)
+void strip_debug(void)
 {
   gp_section_type *section = state.object->sections;
   gp_symbol_type *list = NULL;
   gp_symbol_type *symbol = NULL;
 
-  while (section != NULL) {
+  while (section != NULL)
+  {
     /* remove the line numbers */
     section->num_lineno = 0;
     section->line_numbers = NULL;
     section->line_numbers_tail = NULL;
-    
+
     section = section->next;
   }
 
   list = state.object->symbols;
-  while (list != NULL) {
+  while (list != NULL)
+  {
     /* remove any debug symbols */
     symbol = list;
     list = list->next;
-    if (symbol->section_number == N_DEBUG) {
+    if (symbol->section_number == N_DEBUG)
+    {
       conditional_remove(symbol);
     }
   }
-
 }
 
-void
-strip_unneeded(void)
+void strip_unneeded(void)
 {
   gp_symbol_type *list = NULL;
   gp_symbol_type *symbol = NULL;
 
   list = state.object->symbols;
-  while (list != NULL) {
+  while (list != NULL)
+  {
     symbol = list;
     list = list->next;
-    
+
     /* if the symbol has a relocation or is global it can't be removed */
-    if (!gp_coffgen_has_reloc(state.object, symbol) && 
-        !gp_coffgen_is_global(symbol)) {
+    if (!gp_coffgen_has_reloc(state.object, symbol) &&
+        !gp_coffgen_is_global(symbol))
+    {
       conditional_remove(symbol);
     }
   }
-
 }
 
-void
-discard_all(void)
+void discard_all(void)
 {
   gp_symbol_type *list = NULL;
   gp_symbol_type *symbol = NULL;
 
   list = state.object->symbols;
-  while (list != NULL) {
+  while (list != NULL)
+  {
     symbol = list;
     list = list->next;
-    
-    if (!gp_coffgen_is_global(symbol)) {
+
+    if (!gp_coffgen_is_global(symbol))
+    {
       conditional_remove(symbol);
     }
   }
 }
 
-void 
-add_name(struct symbol_table *table, char *name)
+void add_name(struct symbol_table *table, char *name)
 {
   struct symbol *sym;
 
   sym = get_symbol(table, name);
   if (sym == NULL)
     sym = add_symbol(table, name);
-
 }
 
 void show_usage(void)
@@ -225,22 +230,21 @@ void show_usage(void)
 
 #define GET_OPTIONS "?ghk:n:o:pr:suvVx"
 
-  static struct option longopts[] =
-  {
-    { "strip-debug",    0, 0, 'g' },
-    { "help",           0, 0, 'h' },
-    { "keep-symbol",    1, 0, 'k' },
-    { "strip-symbol",   1, 0, 'n' },
-    { "output",         1, 0, 'o' },
-    { "preserve-dates", 0, 0, 'p' },
-    { "remove-section", 1, 0, 'r' },
-    { "strip-all",      0, 0, 's' },
-    { "strip-unneeded", 0, 0, 'u' },
-    { "version",        0, 0, 'v' },
-    { "verbose",        0, 0, 'V' },
-    { "discard-all",    0, 0, 'x' },
-    { 0, 0, 0, 0 }
-  };
+static struct option longopts[] =
+    {
+        {"strip-debug", 0, 0, 'g'},
+        {"help", 0, 0, 'h'},
+        {"keep-symbol", 1, 0, 'k'},
+        {"strip-symbol", 1, 0, 'n'},
+        {"output", 1, 0, 'o'},
+        {"preserve-dates", 0, 0, 'p'},
+        {"remove-section", 1, 0, 'r'},
+        {"strip-all", 0, 0, 's'},
+        {"strip-unneeded", 0, 0, 'u'},
+        {"version", 0, 0, 'v'},
+        {"verbose", 0, 0, 'V'},
+        {"discard-all", 0, 0, 'x'},
+        {0, 0, 0, 0}};
 
 #define GETOPT_FUNC getopt_long(argc, argv, GET_OPTIONS, longopts, 0)
 
@@ -264,8 +268,10 @@ int main(int argc, char *argv[])
   state.symbol_remove = push_symbol_table(NULL, false);
   state.section_remove = push_symbol_table(NULL, false);
 
-  while ((c = GETOPT_FUNC) != EOF) {
-    switch (c) {
+  while ((c = GETOPT_FUNC) != EOF)
+  {
+    switch (c)
+    {
     case '?':
     case 'h':
       usage = 1;
@@ -308,67 +314,89 @@ int main(int argc, char *argv[])
       break;
   }
 
-  if ((optind == argc) || (usage)) {
+  if ((optind == argc) || (usage))
+  {
     show_usage();
   }
 
-  for ( ; optind < argc; optind++) {
+  for (; optind < argc; optind++)
+  {
     state.input_file = argv[optind];
 
-    if (gp_identify_coff_file(state.input_file) != object_file_v2 && 
-        gp_identify_coff_file(state.input_file) != object_file) {
+    if (gp_identify_coff_file(state.input_file) != object_file_v2 &&
+        gp_identify_coff_file(state.input_file) != object_file)
+    {
       gp_error("\"%s\" is not a valid object file", state.input_file);
       exit(1);
     }
 
     state.object = gp_read_coff(state.input_file);
 
-    if (state.object) {
+    if (state.object)
+    {
       remove_sections();
       remove_symbols();
-    
-      if (state.strip_all) {
+
+      if (state.strip_all)
+      {
         strip_all();
       }
 
-      if (state.strip_debug) {
-        if (state.strip_all) {
+      if (state.strip_debug)
+      {
+        if (state.strip_all)
+        {
           gp_message("strip debug ignored");
-        } else {
+        }
+        else
+        {
           strip_debug();
         }
       }
 
-      if (state.strip_unneeded) {
-        if (state.strip_all) {
+      if (state.strip_unneeded)
+      {
+        if (state.strip_all)
+        {
           gp_message("strip unneeded ignored");
-        } else {
+        }
+        else
+        {
           strip_unneeded();
         }
       }
 
-      if (state.discard_all) {
-        if (state.strip_all) {
+      if (state.discard_all)
+      {
+        if (state.strip_all)
+        {
           gp_message("discard all ignored");
-        } else {
+        }
+        else
+        {
           discard_all();
         }
       }
 
-      if (state.output_file) {
+      if (state.output_file)
+      {
         state.object->filename = state.output_file;
       }
 
-      if (!state.preserve_dates) {
+      if (!state.preserve_dates)
+      {
         /* FIXME: need to update the output file dates */
         state.object->time = (long)time(NULL);
       }
-    
-      if (gp_num_errors == 0) {
+
+      if (gp_num_errors == 0)
+      {
         /* no errors have occured so write the file */
         if (gp_write_coff(state.object, 0))
           gp_error("system error while writing object file");
-      } else if (state.output_file) {
+      }
+      else if (state.output_file)
+      {
         /* a new file is being written, but errors have occurred, delete
            the file if it exists */
         unlink(state.output_file);
@@ -377,7 +405,6 @@ int main(int argc, char *argv[])
       /* FIXME: free state.output_file */
     }
   }
-
 
   if (gp_num_errors)
     return EXIT_FAILURE;

@@ -21,27 +21,29 @@ Boston, MA 02111-1307, USA.  */
 
 #include "stdhdr.h"
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   FILE *f;
-  
-  if (argc != 2) {
+
+  if (argc != 2)
+  {
     printf("usage: header_check filename\n");
     return 1;
   }
-  
+
   f = fopen(argv[1], "r");
-  if (f == NULL) {
+  if (f == NULL)
+  {
     perror(argv[1]);
     return 1;
   }
 
   fseek(f, -1, SEEK_END);
-  if (fgetc(f) != '\n') {
+  if (fgetc(f) != '\n')
+  {
     printf("Missing newline before EOF in file \"%s\"\n", argv[1]);
     return 1;
   }
-  
+
   return 0;
 }

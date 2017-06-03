@@ -64,14 +64,17 @@ _gp_coffgen_addname(const char *name, FILE *fp, unsigned char *table)
 
   length = strlen(name);
 
-  if (length < 9) {
+  if (length < 9)
+  {
     static const unsigned char zero[8];
     /* The string will fit in the structure. */
     if (length > 0)
       gp_fputvar(name, length, fp);
     if (length < 8)
       gp_fputvar(zero, 8 - length, fp);
-  } else {
+  }
+  else
+  {
     offset = _gp_coffgen_addstring(name, table);
 
     /* write zeros and offset */
@@ -89,7 +92,7 @@ _gp_coffgen_write_filehdr(gp_object_type *object, FILE *fp)
   gp_fputl32(object->time, fp);
   gp_fputl32(object->symbol_ptr, fp);
   gp_fputl32(object->num_symbols, fp);
-  gp_fputl16((object->isnew ? OPT_HDR_SIZ_v2: OPT_HDR_SIZ_v1), fp);
+  gp_fputl16((object->isnew ? OPT_HDR_SIZ_v2 : OPT_HDR_SIZ_v1), fp);
   gp_fputl16(object->flags, fp);
 }
 
@@ -118,8 +121,8 @@ static void
 _gp_coffgen_write_scnhdr(gp_section_type *section, int org_to_byte_shift,
                          unsigned char *table, FILE *fp)
 {
-  if (!(section->flags & (STYP_TEXT|STYP_DATA_ROM)))
-      org_to_byte_shift = 0;
+  if (!(section->flags & (STYP_TEXT | STYP_DATA_ROM)))
+    org_to_byte_shift = 0;
 
   _gp_coffgen_addname(section->name, fp, table);
   gp_fputl32(gp_byte_to_org(org_to_byte_shift, section->address), fp);
@@ -131,7 +134,7 @@ _gp_coffgen_write_scnhdr(gp_section_type *section, int org_to_byte_shift,
   gp_fputl16(section->num_reloc, fp);
   gp_fputl16(section->num_lineno, fp);
   /* Don't write internal section flags */
-  gp_fputl32(section->flags & ~(STYP_RELOC|STYP_BPACK), fp);
+  gp_fputl32(section->flags & ~(STYP_RELOC | STYP_BPACK), fp);
 }
 
 /* write the section data */
@@ -151,7 +154,8 @@ _gp_coffgen_write_data(proc_class_t class,
   print_i_memory(section->data, class);
 #endif
 
-  for ( ; org < last; org++) {
+  for (; org < last; org++)
+  {
     unsigned char b;
     b_memory_assert_get(section->data, org, &b);
     fputc(b, fp);
@@ -164,7 +168,8 @@ _gp_coffgen_write_reloc(gp_section_type *section, FILE *fp)
 {
   gp_reloc_type *current = section->relocations;
 
-  while (current != NULL) {
+  while (current != NULL)
+  {
 
     gp_fputl32(current->address, fp);
     gp_fputl32(current->symbol->number, fp);
@@ -181,10 +186,11 @@ _gp_coffgen_write_linenum(gp_section_type *section, int org_to_byte_shift, FILE 
 {
   gp_linenum_type *current = section->line_numbers;
 
-  if (!(section->flags & (STYP_TEXT|STYP_DATA_ROM)))
-      org_to_byte_shift = 0;
+  if (!(section->flags & (STYP_TEXT | STYP_DATA_ROM)))
+    org_to_byte_shift = 0;
 
-  while (current != NULL) {
+  while (current != NULL)
+  {
 
     gp_fputl32(current->symbol->number, fp);
     gp_fputl16(current->line_number, fp);
@@ -203,8 +209,10 @@ _gp_coffgen_write_auxsymbols(gp_aux_type *aux, unsigned char *table, FILE *fp,
 {
   unsigned int offset;
 
-  while(aux != NULL) {
-    switch (aux->type) {
+  while (aux != NULL)
+  {
+    switch (aux->type)
+    {
     case AUX_DIRECT:
       /* add the direct string to the string table */
       offset = _gp_coffgen_addstring(aux->_aux_symbol._aux_direct.string,
@@ -213,7 +221,10 @@ _gp_coffgen_write_auxsymbols(gp_aux_type *aux, unsigned char *table, FILE *fp,
       gp_fputl32(offset, fp);
       gp_fputl32(0, fp);
       gp_fputl32(0, fp);
-      if (isnew) gp_fputl32(0, fp); else gp_fputl16(0, fp);
+      if (isnew)
+        gp_fputl32(0, fp);
+      else
+        gp_fputl16(0, fp);
       break;
 
     case AUX_FILE:
@@ -224,7 +235,10 @@ _gp_coffgen_write_auxsymbols(gp_aux_type *aux, unsigned char *table, FILE *fp,
       gp_fputl32(aux->_aux_symbol._aux_file.line_number, fp);
       fputc(aux->_aux_symbol._aux_file.flags, fp);
       gp_fputvar("\0\0\0\0\0\0", 7, fp);
-      if (isnew) gp_fputl32(0, fp); else gp_fputl16(0, fp);
+      if (isnew)
+        gp_fputl32(0, fp);
+      else
+        gp_fputl16(0, fp);
       break;
 
     case AUX_IDENT:
@@ -235,7 +249,10 @@ _gp_coffgen_write_auxsymbols(gp_aux_type *aux, unsigned char *table, FILE *fp,
       gp_fputl32(0, fp);
       gp_fputl32(0, fp);
       gp_fputl32(0, fp);
-      if (isnew) gp_fputl32(0, fp); else gp_fputl16(0, fp);
+      if (isnew)
+        gp_fputl32(0, fp);
+      else
+        gp_fputl16(0, fp);
       break;
 
     case AUX_SCN:
@@ -245,7 +262,10 @@ _gp_coffgen_write_auxsymbols(gp_aux_type *aux, unsigned char *table, FILE *fp,
       gp_fputl16(aux->_aux_symbol._aux_scn.nlineno, fp);
       gp_fputl32(0, fp);
       gp_fputl32(0, fp);
-      if (isnew) gp_fputl32(0, fp); else gp_fputl16(0, fp);
+      if (isnew)
+        gp_fputl32(0, fp);
+      else
+        gp_fputl16(0, fp);
       break;
 
     default:
@@ -265,19 +285,25 @@ _gp_coffgen_write_symbols(gp_object_type *object, unsigned char *table, FILE *fp
 
   current = object->symbols;
 
-  while(current != NULL) {
+  while (current != NULL)
+  {
 
     _gp_coffgen_addname(current->name, fp, table);
     gp_fputl32(current->value, fp);
-    if (current->section_number < 1) {
+    if (current->section_number < 1)
+    {
       gp_fputl16(current->section_number, fp);
-    } else {
+    }
+    else
+    {
       gp_fputl16(current->section->number, fp);
     }
-    if (object->isnew) {
+    if (object->isnew)
+    {
       gp_fputl32(current->type | current->derived_type << 5, fp);
     }
-    else {
+    else
+    {
       gp_fputl16(current->type | current->derived_type << 4, fp);
     }
     fputc(current->class, fp);
@@ -290,8 +316,7 @@ _gp_coffgen_write_symbols(gp_object_type *object, unsigned char *table, FILE *fp
   }
 }
 
-int
-_has_data(gp_section_type *section)
+int _has_data(gp_section_type *section)
 {
 
   if (section->size == 0)
@@ -319,17 +344,17 @@ _gp_updateptr(gp_object_type *object)
   int section_number = 1;
   int symbol_number = 0;
 
-  loc = (object->isnew ?
-    (FILE_HDR_SIZ_v2 + OPT_HDR_SIZ_v2 + (SEC_HDR_SIZ_v2 * object->num_sections)) :
-    (FILE_HDR_SIZ_v1 + OPT_HDR_SIZ_v1 + (SEC_HDR_SIZ_v1 * object->num_sections)));
+  loc = (object->isnew ? (FILE_HDR_SIZ_v2 + OPT_HDR_SIZ_v2 + (SEC_HDR_SIZ_v2 * object->num_sections)) : (FILE_HDR_SIZ_v1 + OPT_HDR_SIZ_v1 + (SEC_HDR_SIZ_v1 * object->num_sections)));
 
   /* update the data pointers in the section headers */
   section = object->sections;
-  while (section != NULL) {
+  while (section != NULL)
+  {
     section->number = section_number;
     section_number++;
     section->data_ptr = 0;
-    if (_has_data(section)) {
+    if (_has_data(section))
+    {
       section->data_ptr = loc;
       loc += section->size;
     }
@@ -338,9 +363,11 @@ _gp_updateptr(gp_object_type *object)
 
   /* update the relocation pointers in the section headers */
   section = object->sections;
-  while (section != NULL) {
-    section->reloc_ptr  = 0;
-    if (section->num_reloc != 0) {
+  while (section != NULL)
+  {
+    section->reloc_ptr = 0;
+    if (section->num_reloc != 0)
+    {
       section->reloc_ptr = loc;
       loc += (section->num_reloc * RELOC_SIZ);
     }
@@ -349,9 +376,11 @@ _gp_updateptr(gp_object_type *object)
 
   /* update the line number pointers in the section headers */
   section = object->sections;
-  while (section != NULL) {
+  while (section != NULL)
+  {
     section->lineno_ptr = 0;
-    if (section->num_lineno != 0) {
+    if (section->num_lineno != 0)
+    {
       section->lineno_ptr = loc;
       loc += (section->num_lineno * LINENO_SIZ);
     }
@@ -363,7 +392,8 @@ _gp_updateptr(gp_object_type *object)
 
   /* update the symbol numbers */
   symbol = object->symbols;
-  while (symbol != NULL) {
+  while (symbol != NULL)
+  {
     symbol->number = symbol_number;
     symbol_number += 1 + symbol->num_auxsym;
     symbol = symbol->next;
@@ -373,20 +403,21 @@ _gp_updateptr(gp_object_type *object)
 }
 
 /* write the coff file */
-int
-gp_write_coff(gp_object_type *object, int numerrors)
+int gp_write_coff(gp_object_type *object, int numerrors)
 {
   FILE *coff;
   gp_section_type *section = NULL;
   unsigned char table[MAX_STRING_TABLE]; /* string table */
 
-  if (numerrors) {
+  if (numerrors)
+  {
     unlink(object->filename);
     return 0;
   }
 
   coff = fopen(object->filename, "wb");
-  if (coff == NULL) {
+  if (coff == NULL)
+  {
     perror(object->filename);
     exit(1);
   }
@@ -404,7 +435,8 @@ gp_write_coff(gp_object_type *object, int numerrors)
   section = object->sections;
 
   /* write section headers */
-  while (section != NULL) {
+  while (section != NULL)
+  {
     _gp_coffgen_write_scnhdr(section, object->class->org_to_byte_shift,
                              &table[0], coff);
     section = section->next;
@@ -412,8 +444,10 @@ gp_write_coff(gp_object_type *object, int numerrors)
 
   /* write section data */
   section = object->sections;
-  while (section != NULL) {
-    if (_has_data(section)) {
+  while (section != NULL)
+  {
+    if (_has_data(section))
+    {
       _gp_coffgen_write_data(object->class, section, coff);
     }
     section = section->next;
@@ -421,8 +455,10 @@ gp_write_coff(gp_object_type *object, int numerrors)
 
   /* write section relocations */
   section = object->sections;
-  while (section != NULL) {
-    if (section->num_reloc != 0) {
+  while (section != NULL)
+  {
+    if (section->num_reloc != 0)
+    {
       _gp_coffgen_write_reloc(section, coff);
     }
     section = section->next;
@@ -430,15 +466,18 @@ gp_write_coff(gp_object_type *object, int numerrors)
 
   /* write section line numbers */
   section = object->sections;
-  while (section != NULL) {
-    if (section->num_lineno != 0) {
+  while (section != NULL)
+  {
+    if (section->num_lineno != 0)
+    {
       _gp_coffgen_write_linenum(section, object->class->org_to_byte_shift, coff);
     }
     section = section->next;
   }
 
   /* write symbols */
-  if (object->num_symbols != 0) {
+  if (object->num_symbols != 0)
+  {
     _gp_coffgen_write_symbols(object, &table[0], coff);
   }
 

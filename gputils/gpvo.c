@@ -28,57 +28,66 @@ struct gpvo_state state;
 
 void print_header(gp_object_type *object)
 {
-#define NELEM(x)  (sizeof(x) / sizeof(*(x)))
+#define NELEM(x) (sizeof(x) / sizeof(*(x)))
 
-  static struct magic_s {
+  static struct magic_s
+  {
     unsigned short magic_num;
     const char *magic_name;
   } magic[] = {
-    { 0x1234, "SINOMCU_MAGIC_v1" },
-    { 0x1240, "SINOMCU_MAGIC_v2" }
-  };
+      {0x1234, "SINOMCU_MAGIC_v1"},
+      {0x1240, "SINOMCU_MAGIC_v2"}};
 
   char *time = ctime(&object->time);
   const char *processor_name = gp_processor_name(object->processor, 2);
   int i;
 
   /* strip the newline from time */
-  time[strlen(time)-1] = '\0';
+  time[strlen(time) - 1] = '\0';
 
   printf("COFF File and Optional Headers\n");
 
-  for (i = 0; i < NELEM(magic); ++i) {
-    if (magic[i].magic_num == object->version) {
+  for (i = 0; i < NELEM(magic); ++i)
+  {
+    if (magic[i].magic_num == object->version)
+    {
       break;
     }
   }
   printf("COFF version         %#x: %s\n", object->version,
          (i < NELEM(magic)) ? magic[i].magic_name : "unknown");
-  printf("Processor Type       %s\n",   processor_name);
-  printf("Time Stamp           %s\n",   time);
-  printf("Number of Sections   %li\n",  object->num_sections);
-  printf("Number of Symbols    %li\n",  object->num_symbols);
-  printf("Characteristics      %#x\n",  object->flags);
+  printf("Processor Type       %s\n", processor_name);
+  printf("Time Stamp           %s\n", time);
+  printf("Number of Sections   %li\n", object->num_sections);
+  printf("Number of Symbols    %li\n", object->num_symbols);
+  printf("Characteristics      %#x\n", object->flags);
 
-  if (object->flags & F_RELFLG) {
+  if (object->flags & F_RELFLG)
+  {
     printf("  Relocation info has been stripped.\n");
   }
-  if (object->flags & F_EXEC) {
+  if (object->flags & F_EXEC)
+  {
     printf("  File is executable.\n");
   }
-  if (object->flags & F_LNNO) {
+  if (object->flags & F_LNNO)
+  {
     printf("  Line numbers have been stripped.\n");
   }
-  if (object->flags & F_ABSOLUTE) {
+  if (object->flags & F_ABSOLUTE)
+  {
     printf("  The MPASM assembler object file is from absolute assembly code.\n");
   }
-  if (object->flags & L_SYMS) {
+  if (object->flags & L_SYMS)
+  {
     printf("  Local symbols have been stripped.\n");
   }
-  if (object->flags & F_EXTENDED18) {
+  if (object->flags & F_EXTENDED18)
+  {
     printf("  The COFF file produced utilizing the Extended mode.\n");
   }
-  if (object->flags & F_GENERIC) {
+  if (object->flags & F_GENERIC)
+  {
     printf("  Processor independent file for a core.\n");
   }
 
@@ -92,7 +101,8 @@ void print_reloc_list(proc_class_t class, gp_reloc_type *relocation)
   printf("Relocations Table\n");
   printf("Address    Offset     Type   Symbol\n");
 
-  while (relocation != NULL) {
+  while (relocation != NULL)
+  {
     printf("%#-10lx %#-10x %#-6x %-s\n",
            relocation->address >> word_addr,
            relocation->offset,
@@ -112,10 +122,14 @@ void print_linenum_list(proc_class_t class, gp_linenum_type *linenumber)
   printf("Line Number Table\n");
   printf("Line     Address  Symbol\n");
 
-  while (linenumber != NULL) {
-    if (state.suppress_names) {
+  while (linenumber != NULL)
+  {
+    if (state.suppress_names)
+    {
       filename = linenumber->symbol->name;
-    } else {
+    }
+    else
+    {
       filename = linenumber->symbol->aux_list->_aux_symbol._aux_file.filename;
     }
 
@@ -141,8 +155,10 @@ void print_data(proc_class_t class, gp_section_type *section)
   buffer[0] = '\0';
 
   printf("Data\n");
-  while (1) {
-    if ((section->flags & STYP_TEXT) && class->find_insn != NULL) {
+  while (1)
+  {
+    if ((section->flags & STYP_TEXT) && class->find_insn != NULL)
+    {
       unsigned short memory;
       if (!class->i_memory_get(section->data, address, &memory))
         break;
@@ -152,18 +168,23 @@ void print_data(proc_class_t class, gp_section_type *section)
                                  buffer,
                                  sizeof(buffer));
       printf("%06x:  %04x  %s\n", gp_processor_byte_to_org(class, address), memory, buffer);
-      if (num_words != 1) {
+      if (num_words != 1)
+      {
         class->i_memory_get(section->data, address + 2, &memory);
         printf("%06x:  %04x\n", gp_processor_byte_to_org(class, address + 2), memory);
       }
       address += 2 * num_words;
-    } else if (section->flags & STYP_DATA_ROM || class == PROC_CLASS_EEPROM16) {
+    }
+    else if (section->flags & STYP_DATA_ROM || class == PROC_CLASS_EEPROM16)
+    {
       unsigned short memory;
       if (!class->i_memory_get(section->data, address, &memory))
         break;
       printf("%06x:  %04x\n", gp_processor_byte_to_org(class, address), memory);
       address += 2;
-    } else {
+    }
+    else
+    {
       /* STYP_DATA or STYP_ACTREC, or EEPROM8 */
       unsigned char b;
       if (!b_memory_get(section->data, address, &b))
@@ -179,44 +200,53 @@ void print_sec_header(proc_class_t class, gp_section_type *section)
 {
   int org_to_byte_shift;
 
-  if (section->flags & (STYP_TEXT|STYP_DATA_ROM))
+  if (section->flags & (STYP_TEXT | STYP_DATA_ROM))
     org_to_byte_shift = class->org_to_byte_shift;
   else
     org_to_byte_shift = 0;
 
   printf("Section Header\n");
-  printf("Name                    %s\n",   section->name);
-  printf("Physical address        %#x\n",  gp_byte_to_org(org_to_byte_shift, section->address));
-  printf("Virtual address         %#x\n",  gp_byte_to_org(org_to_byte_shift, section->virtual_address));
-  printf("Size of Section         %li\n",  section->size);
-  printf("Number of Relocations   %i\n",   section->num_reloc);
-  printf("Number of Line Numbers  %i\n",   section->num_lineno);
+  printf("Name                    %s\n", section->name);
+  printf("Physical address        %#x\n", gp_byte_to_org(org_to_byte_shift, section->address));
+  printf("Virtual address         %#x\n", gp_byte_to_org(org_to_byte_shift, section->virtual_address));
+  printf("Size of Section         %li\n", section->size);
+  printf("Number of Relocations   %i\n", section->num_reloc);
+  printf("Number of Line Numbers  %i\n", section->num_lineno);
   printf("Flags                   %#lx\n", section->flags);
-  if (section->flags & STYP_TEXT) {
+  if (section->flags & STYP_TEXT)
+  {
     printf("  Executable code.\n");
   }
-  if (section->flags & STYP_DATA) {
+  if (section->flags & STYP_DATA)
+  {
     printf("  Initialized data.\n");
   }
-  if (section->flags & STYP_BSS) {
+  if (section->flags & STYP_BSS)
+  {
     printf("  Uninitialized data.\n");
   }
-  if (section->flags & STYP_DATA_ROM) {
+  if (section->flags & STYP_DATA_ROM)
+  {
     printf("  Initialized data for ROM.\n");
   }
-  if (section->flags & STYP_ABS) {
+  if (section->flags & STYP_ABS)
+  {
     printf("  Absolute.\n");
   }
-  if (section->flags & STYP_SHARED) {
+  if (section->flags & STYP_SHARED)
+  {
     printf("  Shared across banks.\n");
   }
-  if (section->flags & STYP_OVERLAY) {
+  if (section->flags & STYP_OVERLAY)
+  {
     printf("  Overlaid with other sections from different objects modules.\n");
   }
-  if (section->flags & STYP_ACCESS) {
+  if (section->flags & STYP_ACCESS)
+  {
     printf("  Available using access bit.\n");
   }
-  if (section->flags & STYP_ACTREC) {
+  if (section->flags & STYP_ACTREC)
+  {
     printf("  Contains the activation record for a function.\n");
   }
 
@@ -227,16 +257,20 @@ void print_sec_list(gp_object_type *object)
 {
   gp_section_type *section = object->sections;
 
-  while (section != NULL) {
+  while (section != NULL)
+  {
     print_sec_header(object->class, section);
 
-    if (section->size && section->data_ptr) {
+    if (section->size && section->data_ptr)
+    {
       print_data(object->class, section);
     }
-    if (section->num_reloc) {
+    if (section->num_reloc)
+    {
       print_reloc_list(object->class, section->relocations);
     }
-    if (section->num_lineno) {
+    if (section->num_lineno)
+    {
       print_linenum_list(object->class, section->line_numbers);
     }
 
@@ -246,7 +280,8 @@ void print_sec_list(gp_object_type *object)
 
 void coff_type(int type, char *buffer, size_t sizeof_buffer)
 {
-  switch (type) {
+  switch (type)
+  {
   case T_NULL:
     /* null */
     snprintf(buffer, sizeof_buffer, "NULL");
@@ -331,28 +366,27 @@ void coff_type(int type, char *buffer, size_t sizeof_buffer)
 
 static const char *format_sym_type(int type, char *buffer, size_t sizeof_buffer)
 {
-  static const char * const type_str[] = {
-    "T_NULL",
-    "T_VOID",
-    "T_CHAR",
-    "T_SHORT",
-    "T_INT",
-    "T_LONG",
-    "T_FLOAT",
-    "T_DOUBLE",
-    "T_STRUCT",
-    "T_UNION",
-    "T_ENUM",
-    "T_MOE",
-    "T_UCHAR",
-    "T_USHORT",
-    "T_UINT",
-    "T_ULONG",
-    "T_LNGDBL",
-    "T_SLONG",
-    "T_USLONG"
-  };
-  if (type < sizeof(type_str)/sizeof(type_str[0]))
+  static const char *const type_str[] = {
+      "T_NULL",
+      "T_VOID",
+      "T_CHAR",
+      "T_SHORT",
+      "T_INT",
+      "T_LONG",
+      "T_FLOAT",
+      "T_DOUBLE",
+      "T_STRUCT",
+      "T_UNION",
+      "T_ENUM",
+      "T_MOE",
+      "T_UCHAR",
+      "T_USHORT",
+      "T_UINT",
+      "T_ULONG",
+      "T_LNGDBL",
+      "T_SLONG",
+      "T_USLONG"};
+  if (type < sizeof(type_str) / sizeof(type_str[0]))
     return type_str[type];
   snprintf(buffer, sizeof_buffer, "%d", type);
   return buffer;
@@ -360,15 +394,15 @@ static const char *format_sym_type(int type, char *buffer, size_t sizeof_buffer)
 
 static const char *format_sym_derived_type(int type, char *buffer, size_t sizeof_buffer)
 {
-  static const char * const type_str[] = {
-    "DT_NON",
-    "DT_PTR",
-    "DT_FCN",
-    "DT_ARY",
-    "DT_ROMPTR",
-    "DT_FARROMPTR",
+  static const char *const type_str[] = {
+      "DT_NON",
+      "DT_PTR",
+      "DT_FCN",
+      "DT_ARY",
+      "DT_ROMPTR",
+      "DT_FARROMPTR",
   };
-  if (type < sizeof(type_str)/sizeof(type_str[0]))
+  if (type < sizeof(type_str) / sizeof(type_str[0]))
     return type_str[type];
   snprintf(buffer, sizeof_buffer, "%d", type);
   return buffer;
@@ -376,46 +410,79 @@ static const char *format_sym_derived_type(int type, char *buffer, size_t sizeof
 
 static const char *format_sym_class(int cls, char *buffer, size_t sizeof_buffer)
 {
-  switch(cls) {
-  case C_EFCN: return "C_EFCN";
-  case C_NULL: return "C_NULL";
-  case C_AUTO: return "C_AUTO";
-  case C_EXT: return "C_EXT";
-  case C_STAT: return "C_STAT";
-  case C_REG: return "C_REG";
-  case C_EXTDEF: return "C_EXTDEF";
-  case C_LABEL: return "C_LABEL";
-  case C_ULABEL: return "C_ULABEL";
-  case C_MOS: return "C_MOS";
-  case C_ARG: return "C_ARG";
-  case C_STRTAG: return "C_STRTAG";
-  case C_MOU: return "C_MOU";
-  case C_UNTAG: return "C_UNTAG";
-  case C_TPDEF: return "C_TPDEF";
-  case C_USTATIC: return "C_USTATIC";
-  case C_ENTAG: return "C_ENTAG";
-  case C_MOE: return "C_MOE";
-  case C_REGPARM: return "C_REGPARM";
-  case C_FIELD: return "C_FIELD";
-  case C_AUTOARG: return "C_AUTOARG";
-  case C_LASTENT: return "C_LASTENT";
-  case C_BLOCK: return "C_BLOCK";
-  case C_FCN: return "C_FCN";
-  case C_EOS: return "C_EOS";
-  case C_FILE: return "C_FILE";
-  case C_LINE: return "C_LINE";
-  case C_ALIAS: return "C_ALIAS";
-  case C_HIDDEN: return "C_HIDDEN";
-  case C_EOF: return "C_EOF";
-  case C_LIST: return "C_LIST";
-  case C_SECTION: return "C_SECTION";
+  switch (cls)
+  {
+  case C_EFCN:
+    return "C_EFCN";
+  case C_NULL:
+    return "C_NULL";
+  case C_AUTO:
+    return "C_AUTO";
+  case C_EXT:
+    return "C_EXT";
+  case C_STAT:
+    return "C_STAT";
+  case C_REG:
+    return "C_REG";
+  case C_EXTDEF:
+    return "C_EXTDEF";
+  case C_LABEL:
+    return "C_LABEL";
+  case C_ULABEL:
+    return "C_ULABEL";
+  case C_MOS:
+    return "C_MOS";
+  case C_ARG:
+    return "C_ARG";
+  case C_STRTAG:
+    return "C_STRTAG";
+  case C_MOU:
+    return "C_MOU";
+  case C_UNTAG:
+    return "C_UNTAG";
+  case C_TPDEF:
+    return "C_TPDEF";
+  case C_USTATIC:
+    return "C_USTATIC";
+  case C_ENTAG:
+    return "C_ENTAG";
+  case C_MOE:
+    return "C_MOE";
+  case C_REGPARM:
+    return "C_REGPARM";
+  case C_FIELD:
+    return "C_FIELD";
+  case C_AUTOARG:
+    return "C_AUTOARG";
+  case C_LASTENT:
+    return "C_LASTENT";
+  case C_BLOCK:
+    return "C_BLOCK";
+  case C_FCN:
+    return "C_FCN";
+  case C_EOS:
+    return "C_EOS";
+  case C_FILE:
+    return "C_FILE";
+  case C_LINE:
+    return "C_LINE";
+  case C_ALIAS:
+    return "C_ALIAS";
+  case C_HIDDEN:
+    return "C_HIDDEN";
+  case C_EOF:
+    return "C_EOF";
+  case C_LIST:
+    return "C_LIST";
+  case C_SECTION:
+    return "C_SECTION";
   default:
     snprintf(buffer, sizeof_buffer, "%d", cls);
     return buffer;
   }
 }
 
-void print_sym_table (gp_object_type *object)
+void print_sym_table(gp_object_type *object)
 {
   gp_symbol_type *symbol;
   gp_aux_type *aux;
@@ -429,14 +496,22 @@ void print_sym_table (gp_object_type *object)
   printf("Symbol Table\n");
   printf("Idx  Name                     Section          Value      Type     DT           Class     NumAux \n");
 
-  while (symbol != NULL) {
-    if (symbol->section_number == N_DEBUG) {
+  while (symbol != NULL)
+  {
+    if (symbol->section_number == N_DEBUG)
+    {
       section = "DEBUG";
-    } else if (symbol->section_number == N_ABS) {
+    }
+    else if (symbol->section_number == N_ABS)
+    {
       section = "ABSOLUTE";
-    } else if (symbol->section_number == N_UNDEF) {
+    }
+    else if (symbol->section_number == N_UNDEF)
+    {
       section = "UNDEFINED";
-    } else {
+    }
+    else
+    {
       assert(symbol->section != NULL);
       section = symbol->section->name;
     }
@@ -452,11 +527,13 @@ void print_sym_table (gp_object_type *object)
            symbol->num_auxsym);
 
     aux = symbol->aux_list;
-    while (aux != NULL) {
+    while (aux != NULL)
+    {
 
 #define AUX_INDENT "      "
 
-      switch (aux->type) {
+      switch (aux->type)
+      {
       case AUX_DIRECT:
         printf(AUX_INDENT "command = \"%c\"\n",
                aux->_aux_symbol._aux_direct.command);
@@ -464,7 +541,8 @@ void print_sym_table (gp_object_type *object)
                aux->_aux_symbol._aux_direct.string);
         break;
       case AUX_FILE:
-        if (!state.suppress_names) {
+        if (!state.suppress_names)
+        {
           printf(AUX_INDENT "file = %s\n",
                  aux->_aux_symbol._aux_file.filename);
         }
@@ -485,7 +563,8 @@ void print_sym_table (gp_object_type *object)
         printf(AUX_INDENT "number of line numbers = %i\n",
                aux->_aux_symbol._aux_scn.nlineno);
         break;
-      case AUX_FCN_CALLS: {
+      case AUX_FCN_CALLS:
+      {
         struct gp_symbol_type *callee = aux->_aux_symbol._aux_fcn_calls.callee;
         printf(AUX_INDENT "callee = %s\n",
                callee != NULL ? callee->name : "higher order");
@@ -495,15 +574,18 @@ void print_sym_table (gp_object_type *object)
       }
       default:
         printf("%ld  ", aux->type);
-        for (i = 0; i < object->symbol_size; i++) {
+        for (i = 0; i < object->symbol_size; i++)
+        {
           printf("%02x", aux->_aux_symbol.data[i] & 0xFF);
-          if (i & 1) {
+          if (i & 1)
+          {
             printf(" ");
           }
         }
-        for (i = 0; i < object->symbol_size; i++) {
+        for (i = 0; i < object->symbol_size; i++)
+        {
           int c = aux->_aux_symbol.data[i] & 0xFF;
-          putchar( (isprint(c)) ? c : '.');
+          putchar((isprint(c)) ? c : '.');
         }
         putchar('\n');
       }
@@ -525,11 +607,13 @@ void export_sym_table(gp_object_type *object)
 
   symbol = object->symbols;
 
-  while (symbol != NULL) {
+  while (symbol != NULL)
+  {
 
     if ((state.export.enabled) &&
         (symbol->class == C_EXT) &&
-        (symbol->section_number > 0)) {
+        (symbol->section_number > 0))
+    {
 
       coff_type(symbol->type, buffer, sizeof(buffer));
       fprintf(state.export.f, "  extern %s ; %s\n",
@@ -551,30 +635,36 @@ void print_binary(unsigned char *data, long int file_size)
   printf("\nObject file size = %li bytes\n", file_size);
 
   printf("\nBinary object file contents:");
-  for (i = 0; i < file_size; i += 16) {
+  for (i = 0; i < file_size; i += 16)
+  {
     printf("\n%06lx", i);
 
-    for(j = 0; j < 16; j += 2) {
-      memory = (data[i + j] << 8) | data[i+j+1];
-      if ((i+j) >= file_size) {
+    for (j = 0; j < 16; j += 2)
+    {
+      memory = (data[i + j] << 8) | data[i + j + 1];
+      if ((i + j) >= file_size)
+      {
         printf("     ");
-      } else {
+      }
+      else
+      {
         printf(" %04x", memory);
       }
     }
 
     printf(" ");
 
-    for(j = 0; j < 16; j += 2) {
-      if ((i+j) < file_size) {
+    for (j = 0; j < 16; j += 2)
+    {
+      if ((i + j) < file_size)
+      {
         c = data[i + j];
-        putchar( (isprint(c)) ? c : '.');
+        putchar((isprint(c)) ? c : '.');
 
         c = data[i + j + 1];
-        putchar( (isprint(c)) ? c : '.');
+        putchar((isprint(c)) ? c : '.');
       }
     }
-
   }
 
   printf("\n\n");
@@ -602,21 +692,20 @@ void show_usage(void)
 
 #define GET_OPTIONS "?bcfhnstvx:y"
 
-  /* Used: himpsv */
-  static struct option longopts[] =
-  {
-    { "binary",      0, 0, 'b' },
-    { "mnemonics",   0, 0, 'c' },
-    { "file",        0, 0, 'f' },
-    { "help",        0, 0, 'h' },
-    { "no-names",    0, 0, 'n' },
-    { "section",     0, 0, 's' },
-    { "symbol",      0, 0, 't' },
-    { "version",     0, 0, 'v' },
-    { "export",      1, 0, 'x' },
-    { "extended",    0, 0, 'y' },
-    { 0, 0, 0, 0 }
-  };
+/* Used: himpsv */
+static struct option longopts[] =
+    {
+        {"binary", 0, 0, 'b'},
+        {"mnemonics", 0, 0, 'c'},
+        {"file", 0, 0, 'f'},
+        {"help", 0, 0, 'h'},
+        {"no-names", 0, 0, 'n'},
+        {"section", 0, 0, 's'},
+        {"symbol", 0, 0, 't'},
+        {"version", 0, 0, 'v'},
+        {"export", 1, 0, 'x'},
+        {"extended", 0, 0, 'y'},
+        {0, 0, 0, 0}};
 
 #define GETOPT_FUNC getopt_long(argc, argv, GET_OPTIONS, longopts, 0)
 
@@ -634,8 +723,10 @@ int main(int argc, char *argv[])
   state.suppress_names = false;
   state.export.enabled = false;
 
-  while ((c = GETOPT_FUNC) != EOF) {
-    switch (c) {
+  while ((c = GETOPT_FUNC) != EOF)
+  {
+    switch (c)
+    {
     case '?':
     case 'h':
       usage = 1;
@@ -673,23 +764,29 @@ int main(int argc, char *argv[])
       break;
   }
 
-  if ((optind + 1) == argc) {
+  if ((optind + 1) == argc)
+  {
     state.filename = argv[optind];
-  } else {
+  }
+  else
+  {
     usage = 1;
   }
 
-  if (usage) {
+  if (usage)
+  {
     show_usage();
   }
 
-  if (!state.dump_flags) {
+  if (!state.dump_flags)
+  {
     /* no command line flags were set so print everything */
     state.dump_flags = PRINT_HEADER | PRINT_SECTIONS | PRINT_SYMTBL;
   }
 
   if (gp_identify_coff_file(state.filename) != object_file_v2 &&
-      gp_identify_coff_file(state.filename) != object_file) {
+      gp_identify_coff_file(state.filename) != object_file)
+  {
     gp_error("\"%s\" is not a valid object file", state.filename);
     exit(1);
   }
@@ -697,9 +794,11 @@ int main(int argc, char *argv[])
   state.object = gp_read_coff(state.filename);
   state.file = gp_read_file(state.filename);
 
-  if (state.export.enabled) {
+  if (state.export.enabled)
+  {
     state.export.f = fopen(state.export.filename, "w");
-    if (state.export.f == NULL) {
+    if (state.export.f == NULL)
+    {
       perror(state.export.filename);
       exit(1);
     }
@@ -721,19 +820,23 @@ int main(int argc, char *argv[])
     state.dump_flags = 0;
   }
 
-  if (state.dump_flags & PRINT_HEADER) {
+  if (state.dump_flags & PRINT_HEADER)
+  {
     print_header(state.object);
   }
 
-  if (state.dump_flags & PRINT_SECTIONS) {
+  if (state.dump_flags & PRINT_SECTIONS)
+  {
     print_sec_list(state.object);
   }
 
-  if (state.dump_flags & PRINT_SYMTBL) {
+  if (state.dump_flags & PRINT_SYMTBL)
+  {
     print_sym_table(state.object);
   }
 
-  if (state.dump_flags & PRINT_BINARY) {
+  if (state.dump_flags & PRINT_BINARY)
+  {
     print_binary(state.file->file, state.file->size);
   }
 

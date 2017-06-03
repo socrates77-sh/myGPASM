@@ -26,7 +26,8 @@ Boston, MA 02111-1307, USA.  */
 #include "gperror.h"
 #include "lst.h"
 
-struct error_list {
+struct error_list
+{
   int value;
   struct error_list *next;
 };
@@ -38,22 +39,29 @@ void add_code(int code)
   struct error_list *new;
   struct error_list *list;
 
-  if ((code <= -100) && (code >= -199)) {
+  if ((code <= -100) && (code >= -199))
+  {
     gpwarning(GPW_DISABLE_ERROR, NULL);
-  } else {
+  }
+  else
+  {
     new = (struct error_list *)malloc(sizeof(*new));
     new->value = code;
-    new->next  = NULL;
+    new->next = NULL;
 
-    if (errorcodes_list) {
+    if (errorcodes_list)
+    {
       /* the list has been started, scan the list for the end */
       list = errorcodes_list;
-      while(list->next) {
+      while (list->next)
+      {
         list = list->next;
       }
-      list->next = new;  /* append the new value to the end of list */
-    } else {
-      errorcodes_list = new;  /* new list */
+      list->next = new; /* append the new value to the end of list */
+    }
+    else
+    {
+      errorcodes_list = new; /* new list */
     }
   }
 }
@@ -65,12 +73,16 @@ static int check_code(int code)
 
   p = errorcodes_list;
 
-  while(p) {
+  while (p)
+  {
 
-    if (p->value == code){
-        print = 1;
-    } else if (p->value == -(code)) {
-  print = 0;
+    if (p->value == code)
+    {
+      print = 1;
+    }
+    else if (p->value == -(code))
+    {
+      print = 0;
     }
 
     p = p->next;
@@ -82,7 +94,8 @@ static int check_code(int code)
 char *gp_geterror(unsigned int code)
 {
 
-  switch(code) {
+  switch (code)
+  {
   case GPE_BADCHAR:
     return "Illegal character.";
   case GPE_OPENPAR:
@@ -174,25 +187,27 @@ char *gp_geterror(unsigned int code)
 }
 
 void gperror(unsigned int code,
-       char *message)
+             char *message)
 {
-  if (state.pass == 2) {
-    if(message == NULL)
+  if (state.pass == 2)
+  {
+    if (message == NULL)
       message = gp_geterror(code);
 
 #ifndef GP_USER_ERROR
     /* standard output */
-    if (!state.quiet) {
+    if (!state.quiet)
+    {
       if (state.src)
         printf("%s:%d:Error[%03d]   %s\n",
-         state.src->name,
-         state.src->line_number,
-         code,
-         message);
+               state.src->name,
+               state.src->line_number,
+               code,
+               message);
       else
         printf("Error[%03d]   %s\n",
-         code,
-         message);
+               code,
+               message);
     }
 #else
     user_error(code, message);
@@ -200,8 +215,8 @@ void gperror(unsigned int code,
 
     /* list file output */
     lst_line("Error[%03d]  : %s",
-       code,
-       message);
+             code,
+             message);
 
     state.num.errors++;
   }
@@ -209,7 +224,8 @@ void gperror(unsigned int code,
 
 char *gp_getwarning(unsigned int code)
 {
-  switch(code) {
+  switch (code)
+  {
   case GPW_NOT_DEFINED:
     return "Symbol not previously defined.";
   case GPW_RANGE:
@@ -238,8 +254,8 @@ char *gp_getwarning(unsigned int code)
     return "Expected dec, oct, hex. Will use hex.";
   case GPW_INVALID_RAM:
     return "Invalid RAM location specified.";
- // case GPW_EXCEED_ROM:
-   // return "Address exceeds maximum range for this processor.";
+  // case GPW_EXCEED_ROM:
+  // return "Address exceeds maximum range for this processor.";
   case GPW_DISABLE_ERROR:
     return "Error messages cannot be disabled.";
   case GPW_REDEFINING_PROC:
@@ -256,27 +272,30 @@ char *gp_getwarning(unsigned int code)
 }
 
 void gpwarning(unsigned int code,
-         char *message)
+               char *message)
 {
-  if (state.pass ==2) {
+  if (state.pass == 2)
+  {
 
-    if ((state.error_level <= 1) && check_code(code)) {
-      if(message == NULL)
+    if ((state.error_level <= 1) && check_code(code))
+    {
+      if (message == NULL)
         message = gp_getwarning(code);
 
 #ifndef GP_USER_WARNING
       /* standard output */
-      if (!state.quiet) {
+      if (!state.quiet)
+      {
         if (state.src)
           printf("%s:%d:Warning[%03d] %s\n",
-     state.src->name,
-     state.src->line_number,
-     code,
-     message);
+                 state.src->name,
+                 state.src->line_number,
+                 code,
+                 message);
         else
           printf("Warning[%03d] %s\n",
-     code,
-     message);
+                 code,
+                 message);
       }
 #else
       user_warning(code, message);
@@ -284,11 +303,13 @@ void gpwarning(unsigned int code,
 
       /* list file output */
       lst_line("Warning[%03d]: %s",
-         code,
-         message);
+               code,
+               message);
 
       state.num.warnings++;
-    } else {
+    }
+    else
+    {
       state.num.warnings_suppressed++;
     }
   }
@@ -296,7 +317,8 @@ void gpwarning(unsigned int code,
 
 char *gp_getmessage(unsigned int code)
 {
-  switch(code) {
+  switch (code)
+  {
   case GPM_USER:
     return "MESSAGE:";
   case GPM_BANK:
@@ -332,27 +354,30 @@ char *gp_getmessage(unsigned int code)
 }
 
 void gpmessage(unsigned int code,
-         char *message)
+               char *message)
 {
-  if (state.pass==2) {
+  if (state.pass == 2)
+  {
 
-    if ((state.error_level == 0) && check_code(code)){
-      if(message == NULL)
+    if ((state.error_level == 0) && check_code(code))
+    {
+      if (message == NULL)
         message = gp_getmessage(code);
 
 #ifndef GP_USER_MESSAGE
       /* standard output */
-      if (!state.quiet) {
+      if (!state.quiet)
+      {
         if (state.src)
           printf("%s:%d:Message[%03d] %s\n",
-     state.src->name,
-     state.src->line_number,
-     code,
-     message);
+                 state.src->name,
+                 state.src->line_number,
+                 code,
+                 message);
         else
           printf("Message[%03d] %s\n",
-     code,
-     message);
+                 code,
+                 message);
       }
 #else
       user_message(code, message);
@@ -364,7 +389,9 @@ void gpmessage(unsigned int code,
                message);
 
       state.num.messages++;
-    } else {
+    }
+    else
+    {
       state.num.messages_suppressed++;
     }
   }

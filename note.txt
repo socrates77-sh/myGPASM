@@ -1,0 +1,7 @@
+step:
+(1) make clean
+(2) configure
+(3) make
+
+NOTE:
+make sure all the files' format be "UNIX"

@@ -32,38 +32,36 @@ Boston, MA 02111-1307, USA.  */
 static gp_boolean list_enabled;
 static gp_section_type *line_section;
 
-
 static void lst_eol(void)
 {
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     fputc('\n', state.lst.f);
     /*state.lst.line_number++;*/
     /*cod_lst_line(COD_NORMAL_LST_LINE);*/
   }
 }
 
-
-
 static void
 lst_line(const char *format, ...)
 {
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     va_list args;
     va_start(args, format);
     vfprintf(state.lst.f, format, args);
     va_end(args);
-	fputc('\n', state.lst.f);
-   }
+    fputc('\n', state.lst.f);
+  }
 }
-
-
 
 /* Print part of a line. Output must not contain newline. Needs call
    to lst_eol at end of line. */
 static int lst_printf(const char *format, ...)
 {
   int r = 0;
-  if (state.lst.f) {
+  if (state.lst.f)
+  {
     va_list args;
     /*lst_check_page_start();*/
     va_start(args, format);
@@ -75,7 +73,7 @@ static int lst_printf(const char *format, ...)
 
 void lst_memory_map(MemBlock *m)
 {
-#define MEM_IS_USED(m, i)  ((m)->memory[i] & BYTE_USED_MASK)
+#define MEM_IS_USED(m, i) ((m)->memory[i] & BYTE_USED_MASK)
 
   int i, j, base, row_used, num_per_line, num_per_block;
   unsigned int used;
@@ -88,26 +86,33 @@ void lst_memory_map(MemBlock *m)
   num_per_line = 64;
   num_per_block = 16;
 
-  while (m) {
+  while (m)
+  {
     unsigned int max_mem = MAX_I_MEM;
     assert(m->memory != NULL);
 
     base = (m->base << I_MEM_BITS);
 
-    for (i = 0; i < max_mem; i += num_per_line) {
+    for (i = 0; i < max_mem; i += num_per_line)
+    {
       row_used = 0;
 
-      for (j = 0; j < num_per_line; j++) {
-        if (MEM_IS_USED(m, i + j)) {
+      for (j = 0; j < num_per_line; j++)
+      {
+        if (MEM_IS_USED(m, i + j))
+        {
           row_used = 1;
           break;
         }
       }
 
-      if(row_used) {
+      if (row_used)
+      {
         lst_printf("%04X :", i + base);
-        for (j = 0; j < num_per_line; j++) {
-          if ((j % num_per_block) == 0) {
+        for (j = 0; j < num_per_line; j++)
+        {
+          if ((j % num_per_block) == 0)
+          {
             lst_printf(" ");
           }
           lst_printf(MEM_IS_USED(m, i + j) ? "X" : "-");
@@ -124,22 +129,18 @@ void lst_memory_map(MemBlock *m)
   lst_line("All other memory blocks unused.");
   lst_line("");
 
-  /* it seems that MPASM includes config bytes into program memory usage
+/* it seems that MPASM includes config bytes into program memory usage
    * count for 16 bit cores. See gpasm testsuite:
    * gpasm/testsuite/gpasm.mchip/listfiles/configX.lst */
-#define IS_PIC16  (state.class == PROC_CLASS_PIC16 || state.class == PROC_CLASS_PIC16E)
+#define IS_PIC16 (state.class == PROC_CLASS_PIC16 || state.class == PROC_CLASS_PIC16E)
 
-  used = gp_processor_byte_to_org(state.class, (!IS_PIC16 && state.processor) ?
-    b_range_memory_used(state.i_memory, 0,
-      gp_processor_org_to_byte(state.class, state.processor->config_addrs[0])) :
-    b_memory_used(state.i_memory));
+  used = gp_processor_byte_to_org(state.class, (!IS_PIC16 && state.processor) ? b_range_memory_used(state.i_memory, 0, gp_processor_org_to_byte(state.class, state.processor->config_addrs[0])) : b_memory_used(state.i_memory));
   lst_line("Program Memory %s Used: %5i", "Words", used);
   printf("Program Memory Words Used: %5i\n", used);
   /* maxrom is not the program memory size.
   lst_line("Program Memory %s Free: %5d", IS_16BIT_CORE ? "Bytes" : "Words", state.maxrom - used);
   */
-	lst_eol();
-
+  lst_eol();
 }
 
 static void
@@ -150,10 +151,13 @@ open_src(const char *name, gp_symbol_type *symbol)
   assert(name != NULL);
 
   new->f = fopen(name, "rt");
-  if(new->f) {
+  if (new->f)
+  {
     new->name = strdup(name);
     new->missing_source = false;
-  } else {
+  }
+  else
+  {
     new->missing_source = true;
   }
 
@@ -162,7 +166,6 @@ open_src(const char *name, gp_symbol_type *symbol)
   new->prev = state.lst.src;
 
   state.lst.src = new;
-
 }
 
 static void
@@ -175,7 +178,6 @@ close_src(void)
   old = state.lst.src;
   state.lst.src = state.lst.src->prev;
   free(old);
-
 }
 
 gp_linenum_type *
@@ -187,12 +189,16 @@ find_line_number(gp_symbol_type *symbol, int line_number)
   section = state.object->sections;
 
   /* FIXME: This too slow. */
-  while (section != NULL) {
+  while (section != NULL)
+  {
     line = section->line_numbers;
-    while (line != NULL) {
+    while (line != NULL)
+    {
       if ((line->symbol == symbol) &&
-          (line->line_number == line_number)) {
-        if (section != line_section) {
+          (line->line_number == line_number))
+      {
+        if (section != line_section)
+        {
           /* switching sections, so update was_org with the new
              address */
           state.lst.was_org = line->address;
@@ -214,8 +220,10 @@ expand(const char *buf)
   int is, id;
   static char dest[520], c;
 
-  for (is = 0, id = 0; (c = buf[is]) != '\0' && id < sizeof(dest) - 2; ++is) {
-    if (c == '\t') {
+  for (is = 0, id = 0; (c = buf[is]) != '\0' && id < sizeof(dest) - 2; ++is)
+  {
+    if (c == '\t')
+    {
       unsigned int n = 8 - (id % 8);
       while (n-- && id < sizeof(dest) - 2)
         dest[id++] = ' ';
@@ -230,7 +238,7 @@ expand(const char *buf)
 static void
 write_src(int last_line)
 {
-  #define LINESIZ 520
+#define LINESIZ 520
   char linebuf[LINESIZ];
   char dasmbuf[LINESIZ];
   char *pc;
@@ -242,7 +250,8 @@ write_src(int last_line)
   if (state.lst.src->missing_source)
     return;
 
-  while (1) {
+  while (1)
+  {
 
     /* when last_line is 0 print all lines, else print to last_line */
     if ((last_line) && (state.lst.src->line_number > last_line))
@@ -253,7 +262,8 @@ write_src(int last_line)
 
     state.lst.was_org = org;
 
-    if (list_enabled) {
+    if (list_enabled)
+    {
 
       /* Eat the trailing newline */
       pc = strrchr(linebuf, '\n');
@@ -264,7 +274,8 @@ write_src(int last_line)
 
       line = find_line_number(state.lst.src->symbol,
                               state.lst.src->line_number);
-      while (line) {
+      while (line)
+      {
         unsigned int len;
 
         /* print all instructions generated by this line of the source */
@@ -272,28 +283,33 @@ write_src(int last_line)
         if (line->line_number != state.lst.src->line_number)
           break;
 
-        if (first_time == false) {
+        if (first_time == false)
+        {
           /* only print the source line the first time */
           linebuf[0] = '\0';
         }
         state.cod.emitting = 1;
         org = line->address;
         len = b_memory_get_unlisted_size(line_section->data, org);
-        if (0 == len) {
+        if (0 == len)
+        {
           lst_line("%42s %s", "", linebuf);
           cod_lst_line(COD_NORMAL_LST_LINE);
         }
-        else {
-          if (org & 1 || len < 2) {
+        else
+        {
+          if (org & 1 || len < 2)
+          {
             /* even address or less then two byts to disassemble: disassemble one byte */
-            if (0 != len) {
+            if (0 != len)
+            {
               unsigned char byte;
 
               b_memory_assert_get(line_section->data, org, &byte);
               gp_disassemble_byte(line_section->data,
                                   org,
-                                  state.class, 
-                                  dasmbuf, 
+                                  state.class,
+                                  dasmbuf,
                                   sizeof(dasmbuf));
               lst_line("%06lx   %02x       %-24s %s",
                        gp_processor_byte_to_org(state.class, org),
@@ -306,16 +322,17 @@ write_src(int last_line)
               ++org;
             }
           }
-          else {
+          else
+          {
             unsigned short word;
             int num_bytes;
-			//print_all_section(state.object->sections, state.class);
+            //print_all_section(state.object->sections, state.class);
             state.class->i_memory_get(line_section->data, org, &word);
             num_bytes = gp_disassemble_size(line_section->data,
-                                       org,
-                                       state.class,
-                                       dasmbuf,
-                                       sizeof(dasmbuf), len);
+                                            org,
+                                            state.class,
+                                            dasmbuf,
+                                            sizeof(dasmbuf), len);
             lst_line("%06lx   %04x     %-24s %s",
                      gp_processor_byte_to_org(state.class, org),
                      word,
@@ -325,13 +342,15 @@ write_src(int last_line)
             state.lst.was_org = org;
             cod_lst_line(COD_NORMAL_LST_LINE);
             org += 2;
-            if (num_bytes > 2) {
+            if (num_bytes > 2)
+            {
               state.lst.was_org = org;
               state.class->i_memory_get(line_section->data, org, &word);
               lst_line("%06lx   %04x", gp_processor_byte_to_org(state.class, org), word);
               cod_lst_line(COD_NORMAL_LST_LINE);
               org += 2;
-              if (line->next) {
+              if (line->next)
+              {
                 /* skip the line number for the other half of this instruction */
                 line = line->next;
               }
@@ -342,7 +361,8 @@ write_src(int last_line)
         line = line->next;
       }
 
-      if (first_time) {
+      if (first_time)
+      {
         lst_line("%42s %s", "", linebuf);
         state.cod.emitting = 0;
         cod_lst_line(COD_NORMAL_LST_LINE);
@@ -351,7 +371,6 @@ write_src(int last_line)
 
     state.lst.src->line_number++;
   }
-
 }
 
 /*
@@ -362,43 +381,46 @@ static void
 lst_init(void)
 {
 
-  if (state.lstfile != named) {
+  if (state.lstfile != named)
+  {
     snprintf(state.lstfilename, sizeof(state.lstfilename),
              "%s.lst", state.basefilename);
   }
 
-  if ((gp_num_errors) || (state.lstfile == suppress)) {
+  if ((gp_num_errors) || (state.lstfile == suppress))
+  {
     state.lst.f = NULL;
     state.lst.enabled = false;
     unlink(state.lstfilename);
-  } else {
+  }
+  else
+  {
     state.lst.f = fopen(state.lstfilename, "wt");
     //state.lst.f = stdout;
-    if (state.lst.f == NULL) {
+    if (state.lst.f == NULL)
+    {
       perror(state.lstfilename);
       exit(1);
     }
     state.lst.enabled = true;
   }
 
-  if(!state.lst.enabled)
+  if (!state.lst.enabled)
     return;
 
   state.lst.was_org = 0;
   state.cod.emitting = 0;
 
   lst_line("%s", GPLINK_VERSION_STRING);
-  /*lst_line("%s", GPUTILS_COPYRIGHT_STRING);*/
+  //lst_line("%s", GPUTILS_COPYRIGHT_STRING);
   lst_line("Listing File Generated: %s", state.startdate);
   lst_line(" ");
   lst_line(" ");
   lst_line("Address  Value    Disassembly              Source");
   lst_line("-------  -----    -----------              ------");
-
 }
 
-void
-write_lst(void)
+void write_lst(void)
 {
   gp_symbol_type *symbol = state.object->symbols;
   gp_aux_type *aux;
@@ -406,29 +428,35 @@ write_lst(void)
 
   lst_init();
 
-  if(!state.lst.enabled)
+  if (!state.lst.enabled)
     return;
 
   list_enabled = true;
   state.lst.src = NULL;
 
   /* scan through the file symbols */
-  while (symbol != NULL) {
-    if (symbol->class == C_FILE) {
+  while (symbol != NULL)
+  {
+    if (symbol->class == C_FILE)
+    {
       /* open a new file */
       aux = symbol->aux_list;
       assert(aux != NULL);
-      if (aux->_aux_symbol._aux_file.line_number) {
+      if (aux->_aux_symbol._aux_file.line_number)
+      {
         /* it is an include file, so print the current file
            until the line number is reached */
         assert(state.lst.src != NULL);
         write_src(aux->_aux_symbol._aux_file.line_number);
-      } else {
+      }
+      else
+      {
         /* it is not an include, so enable listing */
         list_enabled = true;
       }
       open_src(aux->_aux_symbol._aux_file.filename, symbol);
-      if (first_time) {
+      if (first_time)
+      {
         /* write the line numbers for the lst file header */
         cod_lst_line(COD_FIRST_LST_LINE);
         cod_lst_line(COD_NORMAL_LST_LINE);
@@ -439,18 +467,27 @@ write_lst(void)
         cod_lst_line(COD_NORMAL_LST_LINE);
         first_time = false;
       }
-    } else if (symbol->class == C_EOF) {
+    }
+    else if (symbol->class == C_EOF)
+    {
       /* print the rest of the current file then, close it */
       write_src(0);
       close_src();
-    } else if (symbol->class == C_LIST) {
-      if (strcasecmp(symbol->name, ".list") == 0) {
+    }
+    else if (symbol->class == C_LIST)
+    {
+      if (strcasecmp(symbol->name, ".list") == 0)
+      {
         write_src(symbol->value);
         list_enabled = true;
-      } else if (strcasecmp(symbol->name, ".nolist") == 0) {
+      }
+      else if (strcasecmp(symbol->name, ".nolist") == 0)
+      {
         write_src(symbol->value);
         list_enabled = false;
-      } else {
+      }
+      else
+      {
         assert(0);
       }
     }
@@ -461,5 +498,4 @@ write_lst(void)
 
   fclose(state.lst.f);
   printf("(FF) %s\n", state.lstfilename);
-
 }
