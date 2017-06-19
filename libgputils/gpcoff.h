@@ -480,6 +480,9 @@ typedef struct gp_linenum_type
   /* byte address for this line number */
   unsigned int address;
 
+  /* zwr: check macro duplicate lineno */
+  unsigned int used;
+
   struct gp_linenum_type *next;
 } gp_linenum_type;
 

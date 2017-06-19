@@ -204,6 +204,7 @@ find_line_number(gp_symbol_type *symbol, int line_number)
           state.lst.was_org = line->address;
           line_section = section;
         }
+        line->used = 1; // zwr: check macro duplicate lineno
         return line;
       }
       line = line->next;
@@ -212,6 +213,139 @@ find_line_number(gp_symbol_type *symbol, int line_number)
   }
 
   return NULL;
+}
+
+// zwr: check macro duplicate lineno and add to cod file
+void write_macro_dup_line()
+{
+  gp_symbol_type *symbol;
+  gp_section_type *section;
+  gp_linenum_type *line = NULL;
+  int org = 0;
+  unsigned int len;
+
+#define LINESIZ 520
+  char dasmbuf[LINESIZ];
+
+  symbol = state.lst.src->symbol;
+  section = state.object->sections;
+
+  /* FIXME: This too slow. */
+  while (section != NULL)
+  {
+    line = section->line_numbers;
+    while (line != NULL)
+    {
+      if ((line->symbol == symbol) && (line->used == 0))
+      {
+        state.lst.src->line_number = line->line_number;
+        state.cod.emitting = 1;
+        org = line->address;
+        len = b_memory_get_unlisted_size(line_section->data, org);
+        if (0 == len)
+        {
+          //lst_line("%42s %s", "", linebuf);
+          cod_lst_line(COD_NORMAL_LST_LINE);
+        }
+        else
+        {
+          if (org & 1 || len < 2)
+          {
+            /* even address or less then two byts to disassemble: disassemble one byte */
+            if (0 != len)
+            {
+              unsigned char byte;
+
+              b_memory_assert_get(line_section->data, org, &byte);
+              gp_disassemble_byte(line_section->data,
+                                  org,
+                                  state.class,
+                                  dasmbuf,
+                                  sizeof(dasmbuf));
+              // lst_line("%06lx   %02x       %-24s %s",
+              //          gp_processor_byte_to_org(state.class, org),
+              //          (unsigned short)byte,
+              //          expand(dasmbuf),
+              //          linebuf);
+              b_memory_set_listed(line_section->data, org, 1);
+              state.lst.was_org = org;
+              cod_lst_line(COD_NORMAL_LST_LINE);
+              ++org;
+            }
+          }
+          else
+          {
+            unsigned short word;
+            int num_bytes;
+
+            state.class->i_memory_get(line_section->data, org, &word);
+            num_bytes = gp_disassemble_size(line_section->data,
+                                            org,
+                                            state.class,
+                                            dasmbuf,
+                                            sizeof(dasmbuf), len);
+            // lst_line("%06lx   %04x     %-24s %s",
+            //          gp_processor_byte_to_org(state.class, org),
+            //          word,
+            //          expand(dasmbuf),
+            //          linebuf);
+            b_memory_set_listed(line_section->data, org, num_bytes);
+            state.lst.was_org = org;
+            cod_lst_line(COD_NORMAL_LST_LINE);
+            org += 2;
+            if (num_bytes > 2)
+            {
+              state.lst.was_org = org;
+              state.class->i_memory_get(line_section->data, org, &word);
+              // lst_line("%06lx   %04x", gp_processor_byte_to_org(state.class, org), word);
+              cod_lst_line(COD_NORMAL_LST_LINE);
+              org += 2;
+              if (line->next)
+              {
+                /* skip the line number for the other half of this instruction */
+                line = line->next;
+              }
+            }
+          }
+
+          // printf("%02x %02x %04x %04x %01d\n", symbol->number,
+          //        0, line->line_number, gp_processor_byte_to_org(state.class, line->address), line->used);
+        }
+      }
+      line = line->next;
+    }
+    section = section->next;
+  }
+
+  return;
+}
+
+// zwr: for debug
+void print_all_lineno(gp_symbol_type *symbol)
+{
+  gp_section_type *section;
+  gp_linenum_type *line = NULL;
+
+  section = state.object->sections;
+
+  /* FIXME: This too slow. */
+  while (section != NULL)
+  {
+    line = section->line_numbers;
+    while (line != NULL)
+    {
+      if ((line->symbol == symbol))
+      {
+
+        printf("%02x %02x %04x %04x %01d\n", symbol->number,
+               0, line->line_number, gp_processor_byte_to_org(state.class, line->address), line->used);
+      }
+      line = line->next;
+    }
+    section = section->next;
+  }
+
+  return;
 }
 
 static char *
@@ -326,7 +460,7 @@ write_src(int last_line)
           {
             unsigned short word;
             int num_bytes;
-            //print_all_section(state.object->sections, state.class);
+
             state.class->i_memory_get(line_section->data, org, &word);
             num_bytes = gp_disassemble_size(line_section->data,
                                             org,
@@ -437,6 +571,7 @@ void write_lst(void)
   /* scan through the file symbols */
   while (symbol != NULL)
   {
+    //print_all_lineno(symbol);
     if (symbol->class == C_FILE)
     {
       /* open a new file */
@@ -472,6 +607,8 @@ void write_lst(void)
     {
       /* print the rest of the current file then, close it */
       write_src(0);
+      write_macro_dup_line(); // zwr: check macro duplicate lineno and add to cod file
+      // print_all_lineno(state.lst.src->symbol);
       close_src();
     }
     else if (symbol->class == C_LIST)
@@ -491,6 +628,7 @@ void write_lst(void)
         assert(0);
       }
     }
+
     symbol = symbol->next;
   }
 

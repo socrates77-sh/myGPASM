@@ -75,13 +75,13 @@
 #define PACKAGE_NAME "gputils"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "gputils 1.9.8"
+#define PACKAGE_STRING "gputils 2.0.0_beta"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "gputils"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.9.8"
+#define PACKAGE_VERSION "2.0.0_beta"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -93,7 +93,7 @@
 #define USE_DEFAULT_PATHS 1
 
 /* Version number of package */
-#define VERSION "1.9.8"
+#define VERSION "2.0.0_beta"
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */

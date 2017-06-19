@@ -1,10 +1,10 @@
 Name: gputils
-Version: 1.9.8
+Version: 2.0.0_beta
 Release: 1
 Summary: Development utilities for Microchip (TM) PIC (TM) microcontrollers
 License: GPL
 Group: Development/Languages
-Source: http://prdownloads.sourceforge.net/gputils/gputils-1.9.8.tar.gz
+Source: http://prdownloads.sourceforge.net/gputils/gputils-2.0.0_beta.tar.gz
 Packager: Craig Franklin <craigfranklin@users.sourceforge.net>
 Vendor: Craig Franklin <craigfranklin@users.sourceforge.net>
 Distribution: Red Hat Linux

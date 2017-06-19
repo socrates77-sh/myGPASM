@@ -298,9 +298,9 @@ void cod_lst_line(int line_type)
     gp_putl16(&lb.block[offset + COD_LS_SLOC],
               gp_processor_byte_to_org(state.class, state.lst.was_org));
 
-    // for debug
-    printf("%d:\t%02x %02x %04x %04x\n", cod_lst_line_number-1, state.lst.src->symbol->number,
-              smod_flag, state.lst.src->line_number, gp_processor_byte_to_org(state.class, state.lst.was_org));
+    // zwr: for debug
+    // printf("%d:\t%02x %02x %04x %04x\n", cod_lst_line_number-1, state.lst.src->symbol->number,
+    //           smod_flag, state.lst.src->line_number, gp_processor_byte_to_org(state.class, state.lst.was_org));
     break;
   case COD_LAST_LST_LINE:
     if (lb.block)

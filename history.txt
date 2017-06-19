@@ -48,3 +48,4 @@ Rev:		Date:		Reason:
 		add processor 9903 9904 for A380		17/05/15	
 1.9.8		
 		add processor 7030 for MC32P7030		17/05/25
+2.0.0_beta1 17/6/19	modify cod file for macro
