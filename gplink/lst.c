@@ -216,9 +216,9 @@ find_line_number(gp_symbol_type *symbol, int line_number)
 }
 
 // zwr: check macro duplicate lineno and add to cod file
-void write_macro_dup_line()
+void write_macro_dup_line(gp_symbol_type *symbol)
 {
-  gp_symbol_type *symbol;
+  // gp_symbol_type *symbol;
   gp_section_type *section;
   gp_linenum_type *line = NULL;
   int org = 0;
@@ -227,7 +227,7 @@ void write_macro_dup_line()
 #define LINESIZ 520
   char dasmbuf[LINESIZ];
 
-  symbol = state.lst.src->symbol;
+  // symbol = state.lst.src->symbol;
   section = state.object->sections;
 
   /* FIXME: This too slow. */
@@ -241,7 +241,7 @@ void write_macro_dup_line()
         state.lst.src->line_number = line->line_number;
         state.cod.emitting = 1;
         org = line->address;
-        len = b_memory_get_unlisted_size(line_section->data, org);
+        len = b_memory_get_unlisted_size(section->data, org);
         if (0 == len)
         {
           //lst_line("%42s %s", "", linebuf);
@@ -256,8 +256,8 @@ void write_macro_dup_line()
             {
               unsigned char byte;
 
-              b_memory_assert_get(line_section->data, org, &byte);
-              gp_disassemble_byte(line_section->data,
+              b_memory_assert_get(section->data, org, &byte);
+              gp_disassemble_byte(section->data,
                                   org,
                                   state.class,
                                   dasmbuf,
@@ -267,7 +267,7 @@ void write_macro_dup_line()
               //          (unsigned short)byte,
               //          expand(dasmbuf),
               //          linebuf);
-              b_memory_set_listed(line_section->data, org, 1);
+              b_memory_set_listed(section->data, org, 1);
               state.lst.was_org = org;
               cod_lst_line(COD_NORMAL_LST_LINE);
               ++org;
@@ -278,8 +278,8 @@ void write_macro_dup_line()
             unsigned short word;
             int num_bytes;
 
-            state.class->i_memory_get(line_section->data, org, &word);
-            num_bytes = gp_disassemble_size(line_section->data,
+            state.class->i_memory_get(section->data, org, &word);
+            num_bytes = gp_disassemble_size(section->data,
                                             org,
                                             state.class,
                                             dasmbuf,
@@ -289,14 +289,14 @@ void write_macro_dup_line()
             //          word,
             //          expand(dasmbuf),
             //          linebuf);
-            b_memory_set_listed(line_section->data, org, num_bytes);
+            b_memory_set_listed(section->data, org, num_bytes);
             state.lst.was_org = org;
             cod_lst_line(COD_NORMAL_LST_LINE);
             org += 2;
             if (num_bytes > 2)
             {
               state.lst.was_org = org;
-              state.class->i_memory_get(line_section->data, org, &word);
+              state.class->i_memory_get(section->data, org, &word);
               // lst_line("%06lx   %04x", gp_processor_byte_to_org(state.class, org), word);
               cod_lst_line(COD_NORMAL_LST_LINE);
               org += 2;
@@ -337,8 +337,9 @@ void print_all_lineno(gp_symbol_type *symbol)
       if ((line->symbol == symbol))
       {
 
-        printf("%02x %02x %04x %04x %01d\n", symbol->number,
-               0, line->line_number, gp_processor_byte_to_org(state.class, line->address), line->used);
+        printf("%02x %02x %04x %04x %01d %s %s\n", symbol->number,
+               0, line->line_number, gp_processor_byte_to_org(state.class, line->address), line->used,
+               line->symbol->name, symbol->name);
       }
       line = line->next;
     }
@@ -607,8 +608,8 @@ void write_lst(void)
     {
       /* print the rest of the current file then, close it */
       write_src(0);
-      write_macro_dup_line(); // zwr: check macro duplicate lineno and add to cod file
-      // print_all_lineno(state.lst.src->symbol);
+      write_macro_dup_line(state.lst.src->symbol); // zwr: check macro duplicate lineno and add to cod file
+      print_all_lineno(state.lst.src->symbol);
       close_src();
     }
     else if (symbol->class == C_LIST)

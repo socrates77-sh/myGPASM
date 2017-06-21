@@ -31,6 +31,8 @@ PATH: .
 PATH: /usr/local/bin
 PATH: /mingw/bin
 PATH: /bin
+PATH: /e/Python3/Scripts/
+PATH: /e/Python3/
 PATH: /c/Windows/system32
 PATH: /c/Windows
 PATH: /c/Windows/System32/Wbem
@@ -142,11 +144,11 @@ configure:3980: checking lex output file root
 configure:3994: result: lex.yy
 configure:3999: checking lex library
 configure:4013: gcc -o conftest.exe -g   conftest.c   >&5
-C:\Users\SINOMC~1\AppData\Local\Temp\cc2xHjLO.o: In function `yylex':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccd1x6xc.o: In function `yylex':
 e:\tools\snutils/lex.yy.c:881: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\cc2xHjLO.o: In function `input':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccd1x6xc.o: In function `input':
 e:\tools\snutils/lex.yy.c:1182: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\cc2xHjLO.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccd1x6xc.o: In function `main':
 e:\tools\snutils/conftest.l:17: undefined reference to `yywrap'
 collect2.exe: error: ld returned 1 exit status
 configure:4013: $? = 1
@@ -5549,11 +5551,11 @@ configure: failed program was:
 configure:4023: result: none needed
 configure:4029: checking whether yytext is a pointer
 configure:4045: gcc -o conftest.exe -g   conftest.c   >&5
-C:\Users\SINOMC~1\AppData\Local\Temp\ccQug3RJ.o: In function `yylex':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccADOgE1.o: In function `yylex':
 e:\tools\snutils/lex.yy.c:881: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\ccQug3RJ.o: In function `input':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccADOgE1.o: In function `input':
 e:\tools\snutils/lex.yy.c:1182: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\ccQug3RJ.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccADOgE1.o: In function `main':
 e:\tools\snutils/conftest.l:17: undefined reference to `yywrap'
 collect2.exe: error: ld returned 1 exit status
 configure:4045: $? = 1
@@ -7853,7 +7855,7 @@ configure:4856: gcc -o conftest.exe -g   conftest.c  >&5
 conftest.c:57:6: warning: conflicting types for built-in function 'bzero'
  char bzero ();
       ^
-C:\Users\SINOMC~1\AppData\Local\Temp\ccUJZCFY.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\cc4XHn4j.o: In function `main':
 e:\tools\snutils/conftest.c:68: undefined reference to `bzero'
 collect2.exe: error: ld returned 1 exit status
 configure:4856: $? = 1
@@ -7990,6 +7992,7 @@ config.status:925: creating man/fr/gpvc.1
 config.status:925: creating man/fr/gpvo.1
 config.status:925: creating gputils.spec
 config.status:925: creating config.h
+config.status:1105: config.h is unchanged
 config.status:1153: executing depfiles commands
 configure:6435: result:
 
