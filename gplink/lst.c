@@ -337,9 +337,8 @@ void print_all_lineno(gp_symbol_type *symbol)
       if ((line->symbol == symbol))
       {
 
-        printf("%02x %02x %04x %04x %01d %s %s\n", symbol->number,
-               0, line->line_number, gp_processor_byte_to_org(state.class, line->address), line->used,
-               line->symbol->name, symbol->name);
+        printf("%02x %02x %04x %04x %01d\n", symbol->number,
+               0, line->line_number, gp_processor_byte_to_org(state.class, line->address), line->used);
       }
       line = line->next;
     }
@@ -609,7 +608,7 @@ void write_lst(void)
       /* print the rest of the current file then, close it */
       write_src(0);
       write_macro_dup_line(state.lst.src->symbol); // zwr: check macro duplicate lineno and add to cod file
-      print_all_lineno(state.lst.src->symbol);
+      // print_all_lineno(state.lst.src->symbol);
       close_src();
     }
     else if (symbol->class == C_LIST)

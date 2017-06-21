@@ -144,11 +144,11 @@ configure:3980: checking lex output file root
 configure:3994: result: lex.yy
 configure:3999: checking lex library
 configure:4013: gcc -o conftest.exe -g   conftest.c   >&5
-C:\Users\SINOMC~1\AppData\Local\Temp\ccd1x6xc.o: In function `yylex':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccWsVuSq.o: In function `yylex':
 e:\tools\snutils/lex.yy.c:881: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\ccd1x6xc.o: In function `input':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccWsVuSq.o: In function `input':
 e:\tools\snutils/lex.yy.c:1182: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\ccd1x6xc.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccWsVuSq.o: In function `main':
 e:\tools\snutils/conftest.l:17: undefined reference to `yywrap'
 collect2.exe: error: ld returned 1 exit status
 configure:4013: $? = 1
@@ -156,12 +156,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | /* end confdefs.h.  */
 | 
 | #line 3 "lex.yy.c"
@@ -1956,12 +1956,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | /* end confdefs.h.  */
 | 
 | #line 3 "lex.yy.c"
@@ -3756,12 +3756,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | /* end confdefs.h.  */
 | 
 | #line 3 "lex.yy.c"
@@ -5551,11 +5551,11 @@ configure: failed program was:
 configure:4023: result: none needed
 configure:4029: checking whether yytext is a pointer
 configure:4045: gcc -o conftest.exe -g   conftest.c   >&5
-C:\Users\SINOMC~1\AppData\Local\Temp\ccADOgE1.o: In function `yylex':
+C:\Users\SINOMC~1\AppData\Local\Temp\cc8AtNK3.o: In function `yylex':
 e:\tools\snutils/lex.yy.c:881: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\ccADOgE1.o: In function `input':
+C:\Users\SINOMC~1\AppData\Local\Temp\cc8AtNK3.o: In function `input':
 e:\tools\snutils/lex.yy.c:1182: undefined reference to `yywrap'
-C:\Users\SINOMC~1\AppData\Local\Temp\ccADOgE1.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\cc8AtNK3.o: In function `main':
 e:\tools\snutils/conftest.l:17: undefined reference to `yywrap'
 collect2.exe: error: ld returned 1 exit status
 configure:4045: $? = 1
@@ -5563,12 +5563,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | /* end confdefs.h.  */
 | #define YYTEXT_POINTER 1
 | 
@@ -7375,12 +7375,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
 configure:4335: result: gcc -E
@@ -7394,12 +7394,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
 configure:4398: checking for grep that handles long lines and -e
@@ -7500,12 +7500,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
 | #define HAVE_SYS_STAT_H 1
@@ -7584,12 +7584,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
 | #define HAVE_SYS_STAT_H 1
@@ -7673,12 +7673,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
 | #define HAVE_SYS_STAT_H 1
@@ -7765,12 +7765,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
 | #define HAVE_SYS_STAT_H 1
@@ -7855,7 +7855,7 @@ configure:4856: gcc -o conftest.exe -g   conftest.c  >&5
 conftest.c:57:6: warning: conflicting types for built-in function 'bzero'
  char bzero ();
       ^
-C:\Users\SINOMC~1\AppData\Local\Temp\cc4XHn4j.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccOUIDcl.o: In function `main':
 e:\tools\snutils/conftest.c:68: undefined reference to `bzero'
 collect2.exe: error: ld returned 1 exit status
 configure:4856: $? = 1
@@ -7863,12 +7863,12 @@ configure: failed program was:
 | /* confdefs.h */
 | #define PACKAGE_NAME "gputils"
 | #define PACKAGE_TARNAME "gputils"
-| #define PACKAGE_VERSION "2.0.0_beta"
-| #define PACKAGE_STRING "gputils 2.0.0_beta"
+| #define PACKAGE_VERSION "2.0.0_beta1"
+| #define PACKAGE_STRING "gputils 2.0.0_beta1"
 | #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 | #define PACKAGE_URL ""
 | #define PACKAGE "gputils"
-| #define VERSION "2.0.0_beta"
+| #define VERSION "2.0.0_beta1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
 | #define HAVE_SYS_STAT_H 1
@@ -7992,11 +7992,10 @@ config.status:925: creating man/fr/gpvc.1
 config.status:925: creating man/fr/gpvo.1
 config.status:925: creating gputils.spec
 config.status:925: creating config.h
-config.status:1105: config.h is unchanged
 config.status:1153: executing depfiles commands
 configure:6435: result:
 
-gputils-2.0.0_beta is now configured for 
+gputils-2.0.0_beta1 is now configured for 
 
   Build:                i686-pc-mingw32
   Host:                 i686-pc-mingw32
@@ -8138,16 +8137,16 @@ OBJEXT='o'
 PACKAGE='gputils'
 PACKAGE_BUGREPORT='<URL:http://www.sinomcu.com>'
 PACKAGE_NAME='gputils'
-PACKAGE_STRING='gputils 2.0.0_beta'
+PACKAGE_STRING='gputils 2.0.0_beta1'
 PACKAGE_TARNAME='gputils'
 PACKAGE_URL=''
-PACKAGE_VERSION='2.0.0_beta'
+PACKAGE_VERSION='2.0.0_beta1'
 PATH_SEPARATOR=':'
 RANLIB='ranlib'
 SET_MAKE=''
 SHELL='/bin/sh'
 STRIP=''
-VERSION='2.0.0_beta'
+VERSION='2.0.0_beta1'
 YACC='bison -y'
 YFLAGS=''
 ac_ct_CC='gcc'
@@ -8204,12 +8203,12 @@ target_alias=''
 /* confdefs.h */
 #define PACKAGE_NAME "gputils"
 #define PACKAGE_TARNAME "gputils"
-#define PACKAGE_VERSION "2.0.0_beta"
-#define PACKAGE_STRING "gputils 2.0.0_beta"
+#define PACKAGE_VERSION "2.0.0_beta1"
+#define PACKAGE_STRING "gputils 2.0.0_beta1"
 #define PACKAGE_BUGREPORT "<URL:http://www.sinomcu.com>"
 #define PACKAGE_URL ""
 #define PACKAGE "gputils"
-#define VERSION "2.0.0_beta"
+#define VERSION "2.0.0_beta1"
 #define STDC_HEADERS 1
 #define HAVE_SYS_TYPES_H 1
 #define HAVE_SYS_STAT_H 1
