@@ -552,8 +552,8 @@ MAKEFLAGS=
 # Identity of this package.
 PACKAGE_NAME='gputils'
 PACKAGE_TARNAME='gputils'
-PACKAGE_VERSION='2.0.0_beta1'
-PACKAGE_STRING='gputils 2.0.0_beta1'
+PACKAGE_VERSION='2.0.0_beta2'
+PACKAGE_STRING='gputils 2.0.0_beta2'
 PACKAGE_BUGREPORT='<URL:http://www.sinomcu.com>'
 PACKAGE_URL=''
 
@@ -2719,7 +2719,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE='gputils'
- VERSION='2.0.0_beta1'
+ VERSION='2.0.0_beta2'
 
 
 cat >>confdefs.h <<_ACEOF

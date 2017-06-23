@@ -49,3 +49,4 @@ Rev:		Date:		Reason:
 1.9.8		
 		add processor 7030 for MC32P7030		17/05/25
 2.0.0_beta1 17/6/19	modify cod file for macro
+2.0.0_beta2 17/6/23	output section location when link error ocurrs

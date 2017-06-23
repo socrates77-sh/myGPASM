@@ -1284,11 +1284,22 @@ void gp_cofflink_reloc_unassigned(MemBlock *m,
     }
     else
     {
-      gp_error("no target memory available for section \"%s\"", current->name);
+      // zwr: output section location when link error ocurrs
+      char *location;
+      if ((current->flags & STYP_TEXT) ||
+        (current->flags & STYP_DATA_ROM))
+      {
+        location = "program";
+      }
+      else
+      {
+        location = "data";
+      }
+      gp_error("no target memory available for section \"%s\" (%s)", current->name, location);
       return;
     }
   }
-}
+} 
 
 /* update all symbols with their new relocated values  */
 
